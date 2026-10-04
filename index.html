@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b12">
+  <title>FF Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toast"></div>
+
+  <section id="authScreen" class="screen">
+    <div class="auth-card">
+      <div class="brand">FF <span>PANEL</span></div>
+      <p class="muted">Gaming dashboard demo</p>
+
+      <form id="loginForm">
+        <input id="loginEmail" type="email" placeholder="Email" required>
+        <input id="loginPassword" type="password" placeholder="Password" required>
+        <button class="primary" type="submit">LOGIN</button>
+        <p class="switch">New player? <button type="button" class="link" id="showRegister">Create account</button></p>
+      </form>
+
+      <form id="registerForm" class="hidden">
+        <input id="regName" type="text" placeholder="Player name" maxlength="30" required>
+        <input id="regEmail" type="email" placeholder="Email" required>
+        <input id="regPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required>
+        <button class="primary" type="submit">REGISTER</button>
+        <p class="switch">Already registered? <button type="button" class="link" id="showLogin">Login</button></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="appScreen" class="hidden">
+    <header class="topbar">
+      <div class="brand small">FF <span>PANEL</span></div>
+      <button id="logoutBtn" class="ghost">Logout</button>
+    </header>
+
+    <main class="container">
+      <section class="profile-card">
+        <div class="avatar">🎮</div>
+        <div class="profile-main">
+          <h2 id="playerName">Player</h2>
+          <p id="playerEmail"></p>
+          <small id="playerRole"></small>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat"><span>Coins</span><b id="coins">0</b></div>
+        <div class="stat"><span>Points</span><b id="points">0</b></div>
+        <div class="stat"><span>Matches</span><b id="matches">0</b></div>
+        <div class="stat"><span>Wins</span><b id="wins">0</b></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Profile</h2>
+          <button id="refreshBtn" class="ghost">Refresh</button>
+        </div>
+        <div class="profile-details">
+          <div><span>Name</span><b id="detailName">-</b></div>
+          <div><span>Email</span><b id="detailEmail">-</b></div>
+          <div><span>Role</span><b id="detailRole">-</b></div>
+          <div><span>Player ID</span><b id="detailUid">-</b></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Tournaments</h2>
+          <button id="refreshTournaments" class="ghost">Refresh</button>
+        </div>
+        <div id="tournamentList" class="list">
+          <div class="loading">Loading tournaments...</div>
+        </div>
+      </section>
+
+      <section id="adminPanel" class="panel hidden">
+        <div class="section-head">
+          <h2>Admin Panel</h2>
+          <span class="badge">ADMIN</span>
+        </div>
+
+        <form id="tournamentForm" class="admin-form">
+          <input type="hidden" id="editTournamentId">
+          <input id="tournamentName" type="text" placeholder="Tournament name" maxlength="60" required>
+          <div class="two">
+            <input id="tournamentEntry" type="number" min="0" placeholder="Entry points" required>
+            <input id="tournamentPrize" type="number" min="0" placeholder="Prize points" required>
+          </div>
+          <div class="two">
+            <input id="tournamentDate" type="datetime-local" required>
+            <select id="tournamentStatus">
+              <option value="upcoming">Upcoming</option>
+              <option value="live">Live</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div class="two">
+            <button class="primary" type="submit" id="saveTournament">Create Tournament</button>
+            <button class="ghost hidden" type="button" id="cancelEdit">Cancel Edit</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </section>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
