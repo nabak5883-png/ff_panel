@@ -7,7 +7,88 @@
   <title>FF Panel</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Telegram Button Styles */
+    /* ========== Splash / Intro Animation Styles ========== */
+    #splashScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b12 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #splashScreen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .splash-logo-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .splash-icon {
+      font-size: 64px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.6));
+      animation: pulseGlow 1.5s infinite alternate ease-in-out;
+    }
+    .splash-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      font-family: sans-serif;
+    }
+    .splash-title span {
+      color: #00aaff;
+      text-shadow: 0 0 12px rgba(0, 170, 255, 0.8);
+    }
+    .splash-sub {
+      color: #8888a0;
+      font-size: 13px;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+    /* Loading Bar */
+    .splash-loader-bar {
+      width: 140px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-top: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+    .splash-loader-progress {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #0088cc, #00ffcc);
+      position: absolute;
+      left: -100%;
+      animation: loadBar 1.8s ease-in-out forwards;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.4)); }
+      100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(0, 255, 200, 0.8)); }
+    }
+    @keyframes loadBar {
+      0% { left: -100%; }
+      50% { left: -20%; }
+      100% { left: 0%; }
+    }
+
+    /* ========== Telegram Button Styles ========== */
     .telegram-card-btn {
       display: flex;
       align-items: center;
@@ -46,7 +127,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Settings Modal Styles */
+    /* ========== Settings Modal Styles ========== */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -111,6 +192,18 @@
   </style>
 </head>
 <body>
+  <!-- Opening Intro / Splash Animation -->
+  <div id="splashScreen">
+    <div class="splash-logo-box">
+      <div class="splash-icon">🎮</div>
+      <div class="splash-title">FF <span>PANEL</span></div>
+      <p class="splash-sub">INITIALIZING PANEL...</p>
+      <div class="splash-loader-bar">
+        <div class="splash-loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast"></div>
 
   <section id="authScreen" class="screen">
@@ -253,8 +346,21 @@
     ✈️ Telegram
   </a>
 
-  <!-- Simple script for handling settings modal popup -->
+  <!-- Splash Screen & Settings Logic -->
   <script>
+    window.addEventListener('load', () => {
+      // Hide Splash screen smoothly after 1.8 seconds
+      setTimeout(() => {
+        const splash = document.getElementById('splashScreen');
+        if (splash) {
+          splash.classList.add('fade-out');
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 600);
+        }
+      }, 1800);
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       const settingsBtn = document.getElementById('settingsBtn');
       const closeSettingsBtn = document.getElementById('closeSettingsBtn');
