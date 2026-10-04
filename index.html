@@ -204,7 +204,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* ========== Settings Modal Styles ========== */
+    /* ========== Modals (Settings & Withdrawal) Styles ========== */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -287,7 +287,7 @@
         <input id="loginEmail" type="email" placeholder="Email" required>
         <input id="loginPassword" type="password" placeholder="Password" required>
         <!-- Security Access Key Input -->
-        <input id="loginKey" type="text" placeholder="Enter Access Key (e.g. FF-KEY)" required>
+        <input id="loginKey" type="text" placeholder="Enter Access Key" required>
         <button class="primary" type="submit">LOGIN</button>
         <p class="switch">New player? <button type="button" class="link" id="showRegister">Create account</button></p>
       </form>
@@ -312,6 +312,7 @@
             <button id="menuHomeBtn" class="dropdown-item">🏠 Home</button>
             <button id="menuLeaderboardBtn" class="dropdown-item">🏆 Leaderboard</button>
             <button id="menuReferBtn" class="dropdown-item">🎁 Refer</button>
+            <button id="menuWithdrawBtn" class="dropdown-item">💳 Withdrawal</button>
             <button id="menuSettingsBtn" class="dropdown-item">⚙️ Settings</button>
             <button id="logoutBtn" class="dropdown-item" style="color: #ff5555;">🚪 Log out</button>
           </div>
@@ -423,12 +424,33 @@
     </div>
   </div>
 
+  <!-- Withdrawal Modal Box -->
+  <div id="withdrawModal" class="modal-overlay hidden">
+    <div class="settings-modal">
+      <div class="modal-header">
+        <h3>💳 Withdraw Coins</h3>
+        <button id="closeWithdrawBtn" class="close-btn">&times;</button>
+      </div>
+      <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
+        <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+          <option value="">Select Payment Method</option>
+          <option value="UPI">UPI / GPay / PhonePe</option>
+          <option value="Paytm">Paytm</option>
+          <option value="Bkash">bKash</option>
+        </select>
+        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+        <button class="primary" type="submit" style="margin-top: 6px;">Submit Request</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Floating Telegram Quick Button -->
   <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-float-btn">
     ✈️ Telegram
   </a>
 
-  <!-- JavaScript for Left 3-Dot Menu, Key check, and Navigation -->
+  <!-- JavaScript Logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Key validation (Any key allowed)
@@ -453,9 +475,15 @@
       const menuHomeBtn = document.getElementById('menuHomeBtn');
       const menuLeaderboardBtn = document.getElementById('menuLeaderboardBtn');
       const menuReferBtn = document.getElementById('menuReferBtn');
+      const menuWithdrawBtn = document.getElementById('menuWithdrawBtn');
       const menuSettingsBtn = document.getElementById('menuSettingsBtn');
+      
       const settingsModal = document.getElementById('settingsModal');
       const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+      const withdrawModal = document.getElementById('withdrawModal');
+      const closeWithdrawBtn = document.getElementById('closeWithdrawBtn');
+      const withdrawForm = document.getElementById('withdrawForm');
 
       if (threeDotsBtn && dropdownMenu) {
         threeDotsBtn.addEventListener('click', (e) => {
@@ -490,6 +518,36 @@
         });
       }
 
+      // Withdrawal Modal Controls
+      if (menuWithdrawBtn && withdrawModal) {
+        menuWithdrawBtn.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+          withdrawModal.classList.remove('hidden');
+        });
+      }
+
+      if (closeWithdrawBtn && withdrawModal) {
+        closeWithdrawBtn.addEventListener('click', () => {
+          withdrawModal.classList.add('hidden');
+        });
+
+        withdrawModal.addEventListener('click', (e) => {
+          if (e.target === withdrawModal) {
+            withdrawModal.classList.add('hidden');
+          }
+        });
+      }
+
+      if (withdrawForm) {
+        withdrawForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          alert("✅ Withdrawal request submitted successfully! It will be processed soon.");
+          withdrawModal.classList.add('hidden');
+          withdrawForm.reset();
+        });
+      }
+
+      // Settings Modal Controls
       if (menuSettingsBtn && settingsModal) {
         menuSettingsBtn.addEventListener('click', () => {
           dropdownMenu.classList.add('hidden');
