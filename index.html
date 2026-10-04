@@ -367,12 +367,13 @@
       if (loginForm && loginKeyInput) {
         loginForm.addEventListener('submit', (e) => {
           const enteredKey = loginKeyInput.value.trim();
-          if (enteredKey !== VALID_SECRET_KEY) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            alert("❌ Invalid Access Key! Please provide the correct key to login.");
-            return false;
-          }
+if (!enteredKey) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  alert("❌ Please enter any Key to login!");
+  return false;
+}
+
         }, true);
       }
 
