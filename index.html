@@ -204,15 +204,15 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* ========== Modals (Settings & Withdrawal) Styles ========== */
+    /* ========== Modals (Settings & Withdrawal & Update) Styles ========== */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -261,6 +261,26 @@
     .settings-item:last-child {
       border-bottom: none;
     }
+
+    /* Update Modal Design */
+    .update-box {
+      text-align: center;
+    }
+    .update-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+    .update-btn {
+      display: block;
+      background: linear-gradient(135deg, #00c853, #64dd17);
+      color: #000;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 16px;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -277,6 +297,21 @@
   </div>
 
   <div id="toast"></div>
+
+  <!-- App Update Modal (Popup) -->
+  <div id="updateModal" class="modal-overlay hidden" style="z-index: 100000;">
+    <div class="settings-modal update-box">
+      <div class="update-icon">🚀</div>
+      <h3 style="margin: 0 0 8px 0; font-size: 20px;">Update Available!</h3>
+      <p style="color: #a0a0b8; font-size: 14px; margin: 0 0 16px 0;">
+        A new version of <b>FF Panel</b> is ready. Please update your app to enjoy the newest features and fixes.
+      </p>
+      <!-- MediaFire বা Telegram Download Link -->
+      <a id="updateNowBtn" href="https://t.me/nkwithprifut101" target="_blank" class="update-btn">
+        📥 UPDATE NOW
+      </a>
+    </div>
+  </div>
 
   <section id="authScreen" class="screen">
     <div class="auth-card">
@@ -304,7 +339,7 @@
 
   <section id="appScreen" class="hidden">
     <header class="topbar">
-      <!-- 3-Dot Menu Button on Bam Dik (Left) -->
+      <!-- 3-Dot Menu Button on Left -->
       <div class="topbar-left">
         <div class="menu-container">
           <button id="threeDotsBtn" class="three-dots-btn" title="Menu">⋮</button>
@@ -452,6 +487,23 @@
 
   <!-- JavaScript Logic -->
   <script>
+    // ========== 1. APP UPDATE CONTROLLER ==========
+    // আপনি যখন আপডেট দিতে চাইবেন, শুধু LATEST_VERSION বাড়িয়ে দেবেন (যেমন "1.0.3")
+    const CURRENT_VERSION = "1.0.2";
+    const LATEST_VERSION = "1.0.3"; // <-- নতুন আপডেট পাঠাতে এই নম্বরটি বড় করে দিন
+    const UPDATE_DOWNLOAD_URL = "https://t.me/nkwithprifut101"; // Mediafire বা Telegram লিংক
+
+    function checkAppUpdate() {
+      if (LATEST_VERSION > CURRENT_VERSION) {
+        const updateModal = document.getElementById('updateModal');
+        const updateNowBtn = document.getElementById('updateNowBtn');
+        if (updateModal) {
+          if (updateNowBtn) updateNowBtn.href = UPDATE_DOWNLOAD_URL;
+          updateModal.classList.remove('hidden');
+        }
+      }
+    }
+
     // Global Vibration Helper Function
     function triggerVibration(duration = 40) {
       const isVibrationOn = localStorage.getItem('app_vibration') !== 'false';
@@ -461,29 +513,26 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Any button click will trigger vibration
+      // Button Vibration
       document.body.addEventListener('click', (e) => {
         if (e.target.closest('button, a, input[type="submit"]')) {
           triggerVibration(40);
         }
       });
 
-      // 2. Vibration Toggle Setup in Settings
+      // Vibration Toggle Setup
       const vibrationToggle = document.getElementById('vibrationToggle');
       if (vibrationToggle) {
-        // Load saved state (default true)
         const savedState = localStorage.getItem('app_vibration');
         vibrationToggle.checked = savedState !== 'false';
 
         vibrationToggle.addEventListener('change', () => {
           localStorage.setItem('app_vibration', vibrationToggle.checked);
-          if (vibrationToggle.checked) {
-            triggerVibration(60); // Small test vibration when turned ON
-          }
+          if (vibrationToggle.checked) triggerVibration(60);
         });
       }
 
-      // 3. Key validation
+      // Key validation
       const loginForm = document.getElementById('loginForm');
       const loginKeyInput = document.getElementById('loginKey');
 
@@ -493,14 +542,14 @@
           if (!enteredKey) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            triggerVibration([100, 50, 100]); // Error vibration pattern
+            triggerVibration([100, 50, 100]);
             alert("❌ Please enter any Key to login!");
             return false;
           }
         }, true);
       }
 
-      // 4. Left 3-Dot Menu Actions
+      // 3-Dot Menu Actions
       const threeDotsBtn = document.getElementById('threeDotsBtn');
       const dropdownMenu = document.getElementById('dropdownMenu');
       const menuHomeBtn = document.getElementById('menuHomeBtn');
@@ -600,7 +649,7 @@
       }
     });
 
-    // 5. Splash Screen Auto Hide
+    // Splash Screen Auto Hide & Check for Update
     window.addEventListener('load', () => {
       setTimeout(() => {
         const splash = document.getElementById('splashScreen');
@@ -608,6 +657,8 @@
           splash.classList.add('fade-out');
           setTimeout(() => {
             splash.style.display = 'none';
+            // ইন্ট্রো অ্যানিমেশন শেষ হতেই আপডেট চেক করবে
+            checkAppUpdate();
           }, 600);
         }
       }, 1800);
