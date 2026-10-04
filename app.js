@@ -22,6 +22,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Secret Access Key Configuration
+const VALID_ACCESS_KEY = "743429";
+const ADMIN_EMAIL = "nabak5883@gmail.com";
+
 const $ = id => document.getElementById(id);
 let currentUser = null;
 let currentProfile = null;
@@ -55,8 +59,9 @@ $("registerForm").addEventListener("submit", async e => {
   const password = $("regPassword").value;
   try{
     const cred = await createUserWithEmailAndPassword(auth,email,password);
+    const assignedRole = email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : "user";
     await setDoc(doc(db,"users",cred.user.uid),{
-      name,email,role:"user",coins:0,points:0,matches:0,wins:0,createdAt:serverTimestamp()
+      name,email,role:assignedRole,coins:0,points:0,matches:0,wins:0,createdAt:serverTimestamp()
     });
     toast("Account created successfully.");
   }catch(err){ toast(err.message); }
@@ -64,6 +69,14 @@ $("registerForm").addEventListener("submit", async e => {
 
 $("loginForm").addEventListener("submit", async e => {
   e.preventDefault();
+
+  // Validate Access Key
+  const enteredKey = $("loginKey") ? $("loginKey").value.trim() : "";
+  if (enteredKey !== VALID_ACCESS_KEY) {
+    toast("Invalid Access Key! Use 743429 to login.");
+    return;
+  }
+
   try{
     await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value);
   }catch(err){ toast(err.message); }
@@ -91,6 +104,11 @@ async function refreshUser(){
   const snap = await getDoc(doc(db,"users",currentUser.uid));
   if(!snap.exists()){ toast("User profile not found."); return; }
   currentProfile = snap.data();
+
+  // Check if current user is the target admin
+  if (currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+    currentProfile.role = "admin";
+  }
 
   $("playerName").textContent = currentProfile.name || "Player";
   $("playerEmail").textContent = currentProfile.email || currentUser.email || "";
