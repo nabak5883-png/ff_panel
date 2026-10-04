@@ -45,6 +45,69 @@
       z-index: 9999;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    /* Settings Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .modal-overlay.hidden {
+      display: none !important;
+    }
+    .settings-modal {
+      background: #14141f;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 360px;
+      padding: 20px;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .settings-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+    .settings-item:last-child {
+      border-bottom: none;
+    }
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -75,7 +138,11 @@
   <section id="appScreen" class="hidden">
     <header class="topbar">
       <div class="brand small">FF <span>PANEL</span></div>
-      <button id="logoutBtn" class="ghost">Logout</button>
+      <div class="topbar-actions">
+        <!-- Settings Button -->
+        <button id="settingsBtn" class="ghost">⚙️ Settings</button>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
     </header>
 
     <main class="container">
@@ -153,10 +220,63 @@
     </main>
   </section>
 
+  <!-- Settings Modal Box -->
+  <div id="settingsModal" class="modal-overlay hidden">
+    <div class="settings-modal">
+      <div class="modal-header">
+        <h3>⚙️ App Settings</h3>
+        <button id="closeSettingsBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-item">
+          <span>Push Notifications</span>
+          <input type="checkbox" checked>
+        </div>
+        <div class="settings-item">
+          <span>In-Game Sounds</span>
+          <input type="checkbox" checked>
+        </div>
+        <div class="settings-item">
+          <span>Support Contact</span>
+          <a href="https://t.me/nkwithprifut101" target="_blank" style="color: #00aaff; text-decoration: none; font-weight: bold;">Telegram</a>
+        </div>
+        <div class="settings-item">
+          <span>App Version</span>
+          <span style="color: #888;">v1.0.2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Floating Telegram Quick Button -->
   <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-float-btn">
     ✈️ Telegram
   </a>
+
+  <!-- Simple script for handling settings modal popup -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const settingsBtn = document.getElementById('settingsBtn');
+      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+      const settingsModal = document.getElementById('settingsModal');
+
+      if (settingsBtn && settingsModal && closeSettingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+          settingsModal.classList.remove('hidden');
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+          settingsModal.classList.add('hidden');
+        });
+
+        settingsModal.addEventListener('click', (e) => {
+          if (e.target === settingsModal) {
+            settingsModal.classList.add('hidden');
+          }
+        });
+      }
+    });
+  </script>
 
   <script type="module" src="app.js"></script>
 </body>
