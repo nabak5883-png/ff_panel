@@ -17,14 +17,14 @@
   <link rel="stylesheet" href="style.css">
   <style>
     :root {
-      --bg-dark: #0f1017;
-      --card-bg: #171822;
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg-dark: #0b0c12;
+      --card-bg: #14151f;
+      --card-border: rgba(255, 255, 255, 0.07);
       --accent-cyan: #00d2ff;
       --accent-blue: #0072ff;
       --accent-gold: #ffb703;
       --text-main: #ffffff;
-      --text-sub: #8d92a3;
+      --text-sub: #7d8293;
     }
 
     body {
@@ -112,7 +112,7 @@
     .app-topbar {
       position: sticky;
       top: 0;
-      background: rgba(15, 16, 23, 0.95);
+      background: rgba(11, 12, 18, 0.95);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -400,6 +400,97 @@
       text-overflow: ellipsis;
     }
 
+    /* ========== Dedicated Profile Section (List Style) ========== */
+    #profileSection {
+      padding: 16px;
+    }
+    .profile-header-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 20px;
+    }
+    .profile-avatar-large {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    }
+    .profile-user-info h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .profile-user-info p {
+      margin: 3px 0 0 0;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .profile-user-info small {
+      font-size: 11px;
+      color: var(--accent-cyan);
+    }
+
+    .profile-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .profile-menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .profile-menu-row:active {
+      background: #1c1e2d;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .row-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .row-icon {
+      font-size: 18px;
+      color: var(--accent-cyan);
+      width: 24px;
+      text-align: center;
+    }
+    .row-text h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .row-text p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .row-arrow {
+      color: #4b5166;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     /* ========== Bottom Navigation Bar ========== */
     .bottom-nav {
       position: fixed;
@@ -593,8 +684,8 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main>
+    <!-- TAB 1: Home View -->
+    <main id="homeView">
       <!-- Notice Marquee -->
       <div class="notice-marquee">
         <div class="notice-icon">📢</div>
@@ -677,22 +768,6 @@
         </div>
       </div>
 
-      <!-- Hidden standard elements needed for Firebase app.js -->
-      <div style="display:none;">
-        <span id="playerName"></span>
-        <span id="playerEmail"></span>
-        <span id="playerRole"></span>
-        <span id="detailName"></span>
-        <span id="detailEmail"></span>
-        <span id="detailRole"></span>
-        <span id="detailUid"></span>
-        <span id="points">0</span>
-        <span id="matches">0</span>
-        <span id="wins">0</span>
-        <button id="refreshBtn"></button>
-        <button id="refreshTournaments"></button>
-      </div>
-
       <!-- Tournament List Section -->
       <section class="panel" style="margin: 16px;">
         <div class="section-head" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -733,6 +808,256 @@
         </form>
       </section>
     </main>
+
+    <!-- TAB 2: Full Profile Section -->
+    <main id="profileView" class="hidden">
+      <div id="profileSection">
+        <!-- Top Profile Card -->
+        <div class="profile-header-card">
+          <div class="profile-avatar-large" id="profileAvatarLetter">P</div>
+          <div class="profile-user-info">
+            <h2 id="profileDisplayName">Player</h2>
+            <p id="profileDisplayEmail">user@gmail.com</p>
+            <small id="profileDisplayUsername">@player_01</small>
+          </div>
+        </div>
+
+        <!-- 18 Options List Items -->
+        <div class="profile-menu-list">
+          <!-- 1. My Profile -->
+          <div class="profile-menu-row" id="rowMyProfile">
+            <div class="row-left">
+              <span class="row-icon">👤</span>
+              <div class="row-text">
+                <h4>My Profile</h4>
+                <p>Username: <span id="kycUsername">Player</span> • KYC: NONE</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 2. Notification Settings -->
+          <div class="profile-menu-row" id="rowNotification">
+            <div class="row-left">
+              <span class="row-icon">🔔</span>
+              <div class="row-text">
+                <h4>Notification Settings</h4>
+                <p>Enable alerts and manage subscriptions</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 3. My Wallet -->
+          <div class="profile-menu-row" id="rowWallet">
+            <div class="row-left">
+              <span class="row-icon">💳</span>
+              <div class="row-text">
+                <h4>My Wallet</h4>
+                <p>Total Balance Coin: <span id="walletRowBalance">0</span></p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 4. My Rewards -->
+          <div class="profile-menu-row" id="rowRewards">
+            <div class="row-left">
+              <span class="row-icon">🎁</span>
+              <div class="row-text">
+                <h4>My Rewards</h4>
+                <p>View Your Rewards History</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 5. Transaction History -->
+          <div class="profile-menu-row" id="rowTransactions">
+            <div class="row-left">
+              <span class="row-icon">⏱️</span>
+              <div class="row-text">
+                <h4>Transaction History</h4>
+                <p>View your deposits and withdrawals</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 6. My Matches -->
+          <div class="profile-menu-row" id="rowMyMatches">
+            <div class="row-left">
+              <span class="row-icon">🎮</span>
+              <div class="row-text">
+                <h4>My Matches</h4>
+                <p>View your Matches</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 7. Game Rules -->
+          <div class="profile-menu-row" id="rowGameRules">
+            <div class="row-left">
+              <span class="row-icon">📖</span>
+              <div class="row-text">
+                <h4>Game Rules</h4>
+                <p>Know how to play and win</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 8. Contact Us -->
+          <div class="profile-menu-row" id="rowContact">
+            <div class="row-left">
+              <span class="row-icon">🎧</span>
+              <div class="row-text">
+                <h4>Contact Us</h4>
+                <p>Get help or report an issue</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 9. Top Players -->
+          <div class="profile-menu-row" id="rowTopPlayers">
+            <div class="row-left">
+              <span class="row-icon">📊</span>
+              <div class="row-text">
+                <h4>Top Players</h4>
+                <p>See the leaderboard</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 10. FAQ -->
+          <div class="profile-menu-row" id="rowFaq">
+            <div class="row-left">
+              <span class="row-icon">❓</span>
+              <div class="row-text">
+                <h4>FAQ</h4>
+                <p>Frequently asked questions</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 11. About Us -->
+          <div class="profile-menu-row" id="rowAbout">
+            <div class="row-left">
+              <span class="row-icon">ℹ️</span>
+              <div class="row-text">
+                <h4>About Us</h4>
+                <p>Learn more about our app</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 12. Official Site -->
+          <div class="profile-menu-row" id="rowOfficialSite">
+            <div class="row-left">
+              <span class="row-icon">🌐</span>
+              <div class="row-text">
+                <h4>Official Site</h4>
+                <p>Visit our website</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 13. Privacy Policy -->
+          <div class="profile-menu-row" id="rowPrivacy">
+            <div class="row-left">
+              <span class="row-icon">🛡️</span>
+              <div class="row-text">
+                <h4>Privacy Policy</h4>
+                <p>How we protect your data</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 14. Terms & Conditions -->
+          <div class="profile-menu-row" id="rowTerms">
+            <div class="row-left">
+              <span class="row-icon">📄</span>
+              <div class="row-text">
+                <h4>Terms & Conditions</h4>
+                <p>Read our policies</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 15. Rate App -->
+          <div class="profile-menu-row" id="rowRate">
+            <div class="row-left">
+              <span class="row-icon">⭐</span>
+              <div class="row-text">
+                <h4>Rate App</h4>
+                <p>Share your experience</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 16. Share App -->
+          <div class="profile-menu-row" id="rowShare">
+            <div class="row-left">
+              <span class="row-icon">🔗</span>
+              <div class="row-text">
+                <h4>Share App</h4>
+                <p>Invite friends to join</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 17. More Apps -->
+          <div class="profile-menu-row" id="rowMoreApps">
+            <div class="row-left">
+              <span class="row-icon">📱</span>
+              <div class="row-text">
+                <h4>More Apps</h4>
+                <p>Explore our other creations</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+
+          <!-- 18. Logout -->
+          <div class="profile-menu-row" id="rowLogout">
+            <div class="row-left">
+              <span class="row-icon" style="color: #ff5555;">🚪</span>
+              <div class="row-text">
+                <h4 style="color: #ff5555;">Logout</h4>
+                <p>Sign out of your account</p>
+              </div>
+            </div>
+            <span class="row-arrow">❯</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Hidden elements for app.js integration -->
+    <div style="display:none;">
+      <span id="playerName"></span>
+      <span id="playerEmail"></span>
+      <span id="playerRole"></span>
+      <span id="detailName"></span>
+      <span id="detailEmail"></span>
+      <span id="detailRole"></span>
+      <span id="detailUid"></span>
+      <span id="points">0</span>
+      <span id="matches">0</span>
+      <span id="wins">0</span>
+      <button id="refreshBtn"></button>
+      <button id="refreshTournaments"></button>
+    </div>
 
     <!-- Bottom Navigation Bar (5 Items) -->
     <nav class="bottom-nav">
@@ -808,7 +1133,7 @@
     </div>
   </div>
 
-  <!-- JavaScript Logic with Back-Button & Full Interactivity -->
+  <!-- JavaScript Logic with Screen Tabs & Dynamic Profile Sync -->
   <script>
     if (screen.orientation && screen.orientation.lock) {
       screen.orientation.lock('portrait-primary').catch(() => {});
@@ -837,6 +1162,48 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // ========== TAB SWITCHING (Home <-> Profile) ==========
+      const homeView = document.getElementById('homeView');
+      const profileView = document.getElementById('profileView');
+      const navHome = document.getElementById('navHome');
+      const navProfile = document.getElementById('navProfile');
+      const actionProfile = document.getElementById('actionProfile');
+      const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+
+      function showTab(tabName) {
+        navItems.forEach(i => i.classList.remove('active'));
+        if (tabName === 'profile') {
+          homeView.classList.add('hidden');
+          profileView.classList.remove('hidden');
+          navProfile.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          syncProfileData();
+        } else {
+          profileView.classList.add('hidden');
+          homeView.classList.remove('hidden');
+          navHome.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
+      function syncProfileData() {
+        const pName = document.getElementById('playerName')?.textContent || "Player";
+        const pEmail = document.getElementById('playerEmail')?.textContent || "Registered User";
+        const pCoins = document.getElementById('coins')?.textContent || "0";
+
+        document.getElementById('profileDisplayName').textContent = pName;
+        document.getElementById('profileDisplayEmail').textContent = pEmail;
+        document.getElementById('profileAvatarLetter').textContent = pName.charAt(0).toUpperCase() || "P";
+        document.getElementById('profileDisplayUsername').textContent = "@" + pName.toLowerCase().replace(/\s+/g, '_');
+        document.getElementById('kycUsername').textContent = pName;
+        document.getElementById('walletRowBalance').textContent = pCoins;
+      }
+
+      navHome.addEventListener('click', () => showTab('home'));
+      navProfile.addEventListener('click', () => showTab('profile'));
+      if (actionProfile) actionProfile.addEventListener('click', () => showTab('profile'));
+
+      // Back Button Management
       window.history.pushState({ page: 'home' }, '');
       window.addEventListener('popstate', () => {
         let actionHandled = false;
@@ -856,6 +1223,12 @@
           actionHandled = true;
         }
 
+        // If inside profile view, back button goes to Home
+        if (!profileView.classList.contains('hidden')) {
+          showTab('home');
+          actionHandled = true;
+        }
+
         if (actionHandled) {
           window.history.pushState({ page: 'home' }, '');
         } else {
@@ -863,12 +1236,14 @@
         }
       });
 
+      // Global Vibration
       document.body.addEventListener('click', (e) => {
-        if (e.target.closest('button, a, .game-card, .coin-badge')) {
+        if (e.target.closest('button, a, .game-card, .coin-badge, .profile-menu-row')) {
           triggerVibration(35);
         }
       });
 
+      // Vibration Toggle
       const vibrationToggle = document.getElementById('vibrationToggle');
       if (vibrationToggle) {
         const saved = localStorage.getItem('app_vibration');
@@ -879,6 +1254,7 @@
         });
       }
 
+      // 3-Dot Dropdown
       const threeDotsBtn = document.getElementById('threeDotsBtn');
       const dropdownMenu = document.getElementById('dropdownMenu');
       if (threeDotsBtn && dropdownMenu) {
@@ -889,9 +1265,11 @@
         document.addEventListener('click', () => dropdownMenu.classList.add('hidden'));
       }
 
+      // Modals
       const menuWithdrawBtn = document.getElementById('menuWithdrawBtn');
       const walletQuickBtn = document.getElementById('walletQuickBtn');
       const navWallet = document.getElementById('navWallet');
+      const rowWallet = document.getElementById('rowWallet');
       const withdrawModal = document.getElementById('withdrawModal');
       const closeWithdrawBtn = document.getElementById('closeWithdrawBtn');
       const withdrawForm = document.getElementById('withdrawForm');
@@ -904,6 +1282,7 @@
       if (menuWithdrawBtn) menuWithdrawBtn.addEventListener('click', openWithdraw);
       if (walletQuickBtn) walletQuickBtn.addEventListener('click', openWithdraw);
       if (navWallet) navWallet.addEventListener('click', openWithdraw);
+      if (rowWallet) rowWallet.addEventListener('click', openWithdraw);
 
       if (closeWithdrawBtn && withdrawModal) {
         closeWithdrawBtn.addEventListener('click', () => withdrawModal.classList.add('hidden'));
@@ -920,61 +1299,95 @@
       }
 
       const menuSettingsBtn = document.getElementById('menuSettingsBtn');
+      const rowNotification = document.getElementById('rowNotification');
       const settingsModal = document.getElementById('settingsModal');
       const closeSettingsBtn = document.getElementById('closeSettingsBtn');
 
-      if (menuSettingsBtn && settingsModal) {
-        menuSettingsBtn.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-          settingsModal.classList.remove('hidden');
-        });
-      }
+      const openSettings = () => {
+        if (dropdownMenu) dropdownMenu.classList.add('hidden');
+        if (settingsModal) settingsModal.classList.remove('hidden');
+      };
+
+      if (menuSettingsBtn) menuSettingsBtn.addEventListener('click', openSettings);
+      if (rowNotification) rowNotification.addEventListener('click', openSettings);
       if (closeSettingsBtn && settingsModal) {
         closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
       }
 
-      const actionProfile = document.getElementById('actionProfile');
-      const navProfile = document.getElementById('navProfile');
+      // Profile Row Handlers
+      const rowMyProfile = document.getElementById('rowMyProfile');
+      if (rowMyProfile) rowMyProfile.addEventListener('click', () => alert("👤 KYC verification will be available in the upcoming update."));
+
+      const rowRewards = document.getElementById('rowRewards');
+      if (rowRewards) rowRewards.addEventListener('click', () => alert("🎁 No new reward history available yet."));
+
+      const rowTransactions = document.getElementById('rowTransactions');
+      if (rowTransactions) rowTransactions.addEventListener('click', () => alert("⏱️ No recent transactions found."));
+
+      const rowMyMatches = document.getElementById('rowMyMatches');
+      if (rowMyMatches) rowMyMatches.addEventListener('click', () => {
+        showTab('home');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
+
+      const rowGameRules = document.getElementById('rowGameRules');
+      if (rowGameRules) rowGameRules.addEventListener('click', () => alert("📖 Rules:\n1. No hacks/cheats allowed.\n2. Submit match screenshots after win.\n3. Room details will be shown 15 mins before match."));
+
+      const rowContact = document.getElementById('rowContact');
+      if (rowContact) rowContact.addEventListener('click', () => window.open('https://t.me/nkwithprifut101', '_blank'));
+
+      const rowTopPlayers = document.getElementById('rowTopPlayers');
+      if (rowTopPlayers) rowTopPlayers.addEventListener('click', () => alert("🏆 Leaderboard is updated weekly based on match points."));
+
+      const rowFaq = document.getElementById('rowFaq');
+      if (rowFaq) rowFaq.addEventListener('click', () => alert("❓ FAQ:\nQ: When will I get withdrawal?\nA: Within 24-48 hours via UPI/Bkash."));
+
+      const rowAbout = document.getElementById('rowAbout');
+      if (rowAbout) rowAbout.addEventListener('click', () => alert("ℹ️ FF PANEL - Professional eSports & Tournament Management Platform."));
+
+      const rowOfficialSite = document.getElementById('rowOfficialSite');
+      if (rowOfficialSite) rowOfficialSite.addEventListener('click', () => window.open('https://nabak5883-png.github.io/ff_panel/', '_blank'));
+
+      const rowPrivacy = document.getElementById('rowPrivacy');
+      if (rowPrivacy) rowPrivacy.addEventListener('click', () => alert("🛡️ Your data is stored safely with Firebase Encrypted authentication."));
+
+      const rowTerms = document.getElementById('rowTerms');
+      if (rowTerms) rowTerms.addEventListener('click', () => alert("📄 Terms: Fair play is mandatory. Accounts using unauthorized scripts will be banned immediately."));
+
+      const rowRate = document.getElementById('rowRate');
+      if (rowRate) rowRate.addEventListener('click', () => alert("⭐ Thank you for rating FF PANEL 5 stars!"));
+
+      const rowShare = document.getElementById('rowShare');
+      if (rowShare) rowShare.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({ title: 'FF PANEL', text: 'Download FF PANEL and join daily gaming tournaments!', url: window.location.href });
+        } else {
+          alert("🔗 Share Link: " + window.location.href);
+        }
+      });
+
+      const rowMoreApps = document.getElementById('rowMoreApps');
+      if (rowMoreApps) rowMoreApps.addEventListener('click', () => alert("📱 More gaming utilities coming soon!"));
+
+      const rowLogout = document.getElementById('rowLogout');
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (rowLogout) {
+        rowLogout.addEventListener('click', () => {
+          if (logoutBtn) logoutBtn.click();
+        });
+      }
+
+      // Home Quick Buttons
       const actionMatches = document.getElementById('actionMatches');
-      const actionTopPlayers = document.getElementById('actionTopPlayers');
-      const actionContact = document.getElementById('actionContact');
-
-      const showProfileInfo = () => {
-        const name = document.getElementById('playerName')?.textContent || "Player";
-        const email = document.getElementById('playerEmail')?.textContent || "Registered User";
-        alert(`👤 Player Profile:\nName: ${name}\nEmail: ${email}`);
-      };
-
-      if (actionProfile) actionProfile.addEventListener('click', showProfileInfo);
-      if (navProfile) navProfile.addEventListener('click', showProfileInfo);
-
       if (actionMatches) actionMatches.addEventListener('click', () => {
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       });
 
-      if (actionTopPlayers) actionTopPlayers.addEventListener('click', () => {
-        alert("🏆 Top Players Leaderboard is refreshing for this season!");
-      });
+      const actionTopPlayers = document.getElementById('actionTopPlayers');
+      if (actionTopPlayers) actionTopPlayers.addEventListener('click', () => alert("📊 Leaderboard rankings are live!"));
 
-      if (actionContact) actionContact.addEventListener('click', () => {
-        window.open('https://t.me/nkwithprifut101', '_blank');
-      });
-
-      const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-      navItems.forEach(btn => {
-        btn.addEventListener('click', () => {
-          navItems.forEach(i => i.classList.remove('active'));
-          btn.classList.add('active');
-        });
-      });
-
-      document.querySelectorAll('.game-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const mode = card.getAttribute('data-mode');
-          alert(`🎮 Selected Mode: ${mode}\nChecking available match rooms...`);
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        });
-      });
+      const actionContact = document.getElementById('actionContact');
+      if (actionContact) actionContact.addEventListener('click', () => window.open('https://t.me/nkwithprifut101', '_blank'));
 
       const manualRefresh = document.getElementById('manualRefreshTournaments');
       if (manualRefresh) {
@@ -982,8 +1395,18 @@
           document.getElementById('refreshTournaments')?.click();
         });
       }
+
+      // Game Cards Interaction
+      document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const mode = card.getAttribute('data-mode');
+          alert(`🎮 Selected Mode: ${mode}\nChecking available match rooms...`);
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+      });
     });
 
+    // Splash Screen Auto Hide
     window.addEventListener('load', () => {
       setTimeout(() => {
         const splash = document.getElementById('splashScreen');
