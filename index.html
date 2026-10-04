@@ -214,6 +214,8 @@
       <form id="loginForm">
         <input id="loginEmail" type="email" placeholder="Email" required>
         <input id="loginPassword" type="password" placeholder="Password" required>
+        <!-- Security Access Key Input -->
+        <input id="loginKey" type="text" placeholder="Enter Access Key (e.g. FF-KEY)" required>
         <button class="primary" type="submit">LOGIN</button>
         <p class="switch">New player? <button type="button" class="link" id="showRegister">Create account</button></p>
       </form>
@@ -346,22 +348,29 @@
     ✈️ Telegram
   </a>
 
-  <!-- Splash Screen & Settings Logic -->
+  <!-- Key Validation Script & UI Helpers -->
   <script>
-    window.addEventListener('load', () => {
-      // Hide Splash screen smoothly after 1.8 seconds
-      setTimeout(() => {
-        const splash = document.getElementById('splashScreen');
-        if (splash) {
-          splash.classList.add('fade-out');
-          setTimeout(() => {
-            splash.style.display = 'none';
-          }, 600);
-        }
-      }, 1800);
-    });
+    // আপনার সিক্রেট কী (এটি পরিবর্তন করে নিজের ইচ্ছা মতো কী দিতে পারেন)
+    const VALID_SECRET_KEY = "FF-2026-KEY";
 
     document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const loginKeyInput = document.getElementById('loginKey');
+
+      if (loginForm && loginKeyInput) {
+        // ফর্ম সাবমিট হওয়ার শুরুতে কী ভ্যালিডেশন
+        loginForm.addEventListener('submit', (e) => {
+          const enteredKey = loginKeyInput.value.trim();
+          if (enteredKey !== VALID_SECRET_KEY) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            alert("❌ Invalid Access Key! Please provide the correct key to login.");
+            return false;
+          }
+        }, true); // Capturing phase যাতে ভুল কী দিলে app.js-এর লগইন না চলে
+      }
+
+      // Settings Modal Setup
       const settingsBtn = document.getElementById('settingsBtn');
       const closeSettingsBtn = document.getElementById('closeSettingsBtn');
       const settingsModal = document.getElementById('settingsModal');
@@ -381,6 +390,19 @@
           }
         });
       }
+    });
+
+    // Splash Screen
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splashScreen');
+        if (splash) {
+          splash.classList.add('fade-out');
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 600);
+        }
+      }, 1800);
     });
   </script>
 
