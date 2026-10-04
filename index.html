@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0b12">
   <title>FF Panel</title>
+
+  <!-- PWA Manifest Linking -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FF Panel">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/686/686589.png">
+
   <link rel="stylesheet" href="style.css">
   <style>
     /* ========== Splash / Intro Animation Styles ========== */
@@ -55,7 +64,6 @@
       margin-top: 6px;
       letter-spacing: 1px;
     }
-    /* Loading Bar */
     .splash-loader-bar {
       width: 140px;
       height: 4px;
@@ -350,7 +358,6 @@
 
   <!-- Key Validation Script & UI Helpers -->
   <script>
-    // আপনার সিক্রেট কী (এটি পরিবর্তন করে নিজের ইচ্ছা মতো কী দিতে পারেন)
     const VALID_SECRET_KEY = "FF-2026-KEY";
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -358,7 +365,6 @@
       const loginKeyInput = document.getElementById('loginKey');
 
       if (loginForm && loginKeyInput) {
-        // ফর্ম সাবমিট হওয়ার শুরুতে কী ভ্যালিডেশন
         loginForm.addEventListener('submit', (e) => {
           const enteredKey = loginKeyInput.value.trim();
           if (enteredKey !== VALID_SECRET_KEY) {
@@ -367,7 +373,7 @@
             alert("❌ Invalid Access Key! Please provide the correct key to login.");
             return false;
           }
-        }, true); // Capturing phase যাতে ভুল কী দিলে app.js-এর লগইন না চলে
+        }, true);
       }
 
       // Settings Modal Setup
