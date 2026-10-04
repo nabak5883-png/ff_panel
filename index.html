@@ -6,6 +6,46 @@
   <meta name="theme-color" content="#0b0b12">
   <title>FF Panel</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Telegram Button Styles */
+    .telegram-card-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #0088cc, #00aaff);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      margin: 16px 0;
+      box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .telegram-card-btn:active {
+      transform: scale(0.98);
+    }
+    .telegram-float-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      background: #0088cc;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      z-index: 9999;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
 </head>
 <body>
   <div id="toast"></div>
@@ -54,6 +94,11 @@
         <div class="stat"><span>Matches</span><b id="matches">0</b></div>
         <div class="stat"><span>Wins</span><b id="wins">0</b></div>
       </section>
+
+      <!-- Telegram Channel Button Inside App -->
+      <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-card-btn">
+        ✈️ Join Official Telegram Channel
+      </a>
 
       <section class="panel">
         <div class="section-head">
@@ -107,6 +152,11 @@
       </section>
     </main>
   </section>
+
+  <!-- Floating Telegram Quick Button -->
+  <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-float-btn">
+    ✈️ Telegram
+  </a>
 
   <script type="module" src="app.js"></script>
 </body>
