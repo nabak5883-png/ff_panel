@@ -525,5 +525,25 @@
   </script>
 
   <script type="module" src="app.js"></script>
+<!-- Withdrawal Modal Box -->
+<div id="withdrawModal" class="modal-overlay hidden">
+  <div class="settings-modal">
+    <div class="modal-header">
+      <h3>💳 Withdraw Coins</h3>
+      <button id="closeWithdrawBtn" class="close-btn">&times;</button>
+    </div>
+    <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
+      <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+        <option value="">Select Payment Method</option>
+        <option value="UPI">UPI / GPay / PhonePe</option>
+        <option value="Paytm">Paytm</option>
+        <option value="Bkash">bKash</option>
+      </select>
+      <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+      <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+      <button class="primary" type="submit" style="margin-top: 6px;">Submit Request</button>
+    </form>
+  </div>
+</div>
 </body>
 </html>
