@@ -96,6 +96,75 @@
       100% { left: 0%; }
     }
 
+    /* ========== Left Side 3-Dot Menu Styles ========== */
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-container {
+      position: relative;
+      display: inline-block;
+    }
+    .three-dots-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .three-dots-btn:active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      background: #161622;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      width: 190px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 10001;
+      padding: 6px 0;
+    }
+    .dropdown-menu.hidden {
+      display: none !important;
+    }
+    .dropdown-item {
+      padding: 12px 18px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      box-sizing: border-box;
+      font-family: inherit;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    .dropdown-item:active, .dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #00aaff;
+    }
+
     /* ========== Telegram Button Styles ========== */
     .telegram-card-btn {
       display: flex;
@@ -147,7 +216,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      z-index: 10002;
       padding: 16px;
       box-sizing: border-box;
     }
@@ -192,11 +261,6 @@
     .settings-item:last-child {
       border-bottom: none;
     }
-    .topbar-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
   </style>
 </head>
 <body>
@@ -240,11 +304,19 @@
 
   <section id="appScreen" class="hidden">
     <header class="topbar">
-      <div class="brand small">FF <span>PANEL</span></div>
-      <div class="topbar-actions">
-        <!-- Settings Button -->
-        <button id="settingsBtn" class="ghost">⚙️ Settings</button>
-        <button id="logoutBtn" class="ghost">Logout</button>
+      <!-- 3-Dot Menu Button on Bam Dik (Left) -->
+      <div class="topbar-left">
+        <div class="menu-container">
+          <button id="threeDotsBtn" class="three-dots-btn" title="Menu">⋮</button>
+          <div id="dropdownMenu" class="dropdown-menu hidden">
+            <button id="menuHomeBtn" class="dropdown-item">🏠 Home</button>
+            <button id="menuLeaderboardBtn" class="dropdown-item">🏆 Leaderboard</button>
+            <button id="menuReferBtn" class="dropdown-item">🎁 Refer</button>
+            <button id="menuSettingsBtn" class="dropdown-item">⚙️ Settings</button>
+            <button id="logoutBtn" class="dropdown-item" style="color: #ff5555;">🚪 Log out</button>
+          </div>
+        </div>
+        <div class="brand small">FF <span>PANEL</span></div>
       </div>
     </header>
 
@@ -356,37 +428,76 @@
     ✈️ Telegram
   </a>
 
-  <!-- Key Validation Script & UI Helpers -->
+  <!-- JavaScript for Left 3-Dot Menu, Key check, and Navigation -->
   <script>
-    const VALID_SECRET_KEY = "FF-2026-KEY";
-
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Key validation (Any key allowed)
       const loginForm = document.getElementById('loginForm');
       const loginKeyInput = document.getElementById('loginKey');
 
       if (loginForm && loginKeyInput) {
         loginForm.addEventListener('submit', (e) => {
           const enteredKey = loginKeyInput.value.trim();
-if (!enteredKey) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  alert("❌ Please enter any Key to login!");
-  return false;
-}
-
+          if (!enteredKey) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            alert("❌ Please enter any Key to login!");
+            return false;
+          }
         }, true);
       }
 
-      // Settings Modal Setup
-      const settingsBtn = document.getElementById('settingsBtn');
-      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+      // 2. Left 3-Dot Menu Actions
+      const threeDotsBtn = document.getElementById('threeDotsBtn');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      const menuHomeBtn = document.getElementById('menuHomeBtn');
+      const menuLeaderboardBtn = document.getElementById('menuLeaderboardBtn');
+      const menuReferBtn = document.getElementById('menuReferBtn');
+      const menuSettingsBtn = document.getElementById('menuSettingsBtn');
       const settingsModal = document.getElementById('settingsModal');
+      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
 
-      if (settingsBtn && settingsModal && closeSettingsBtn) {
-        settingsBtn.addEventListener('click', () => {
-          settingsModal.classList.remove('hidden');
+      if (threeDotsBtn && dropdownMenu) {
+        threeDotsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle('hidden');
         });
 
+        document.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+        });
+      }
+
+      // Menu Button Events
+      if (menuHomeBtn) {
+        menuHomeBtn.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      if (menuLeaderboardBtn) {
+        menuLeaderboardBtn.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+          alert("🏆 Leaderboard coming soon in the next update!");
+        });
+      }
+
+      if (menuReferBtn) {
+        menuReferBtn.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+          alert("🎁 Refer & Earn: Share this app with your friends to win points!");
+        });
+      }
+
+      if (menuSettingsBtn && settingsModal) {
+        menuSettingsBtn.addEventListener('click', () => {
+          dropdownMenu.classList.add('hidden');
+          settingsModal.classList.remove('hidden');
+        });
+      }
+
+      if (closeSettingsBtn && settingsModal) {
         closeSettingsBtn.addEventListener('click', () => {
           settingsModal.classList.add('hidden');
         });
@@ -399,7 +510,7 @@ if (!enteredKey) {
       }
     });
 
-    // Splash Screen
+    // 3. Splash Screen Auto Hide
     window.addEventListener('load', () => {
       setTimeout(() => {
         const splash = document.getElementById('splashScreen');
