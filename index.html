@@ -405,11 +405,11 @@
       </div>
       <div class="settings-content">
         <div class="settings-item">
-          <span>Push Notifications</span>
-          <input type="checkbox" checked>
+          <span>Haptic Vibration</span>
+          <input id="vibrationToggle" type="checkbox" checked>
         </div>
         <div class="settings-item">
-          <span>In-Game Sounds</span>
+          <span>Push Notifications</span>
           <input type="checkbox" checked>
         </div>
         <div class="settings-item">
@@ -452,8 +452,38 @@
 
   <!-- JavaScript Logic -->
   <script>
+    // Global Vibration Helper Function
+    function triggerVibration(duration = 40) {
+      const isVibrationOn = localStorage.getItem('app_vibration') !== 'false';
+      if (isVibrationOn && navigator.vibrate) {
+        navigator.vibrate(duration);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Key validation (Any key allowed)
+      // 1. Any button click will trigger vibration
+      document.body.addEventListener('click', (e) => {
+        if (e.target.closest('button, a, input[type="submit"]')) {
+          triggerVibration(40);
+        }
+      });
+
+      // 2. Vibration Toggle Setup in Settings
+      const vibrationToggle = document.getElementById('vibrationToggle');
+      if (vibrationToggle) {
+        // Load saved state (default true)
+        const savedState = localStorage.getItem('app_vibration');
+        vibrationToggle.checked = savedState !== 'false';
+
+        vibrationToggle.addEventListener('change', () => {
+          localStorage.setItem('app_vibration', vibrationToggle.checked);
+          if (vibrationToggle.checked) {
+            triggerVibration(60); // Small test vibration when turned ON
+          }
+        });
+      }
+
+      // 3. Key validation
       const loginForm = document.getElementById('loginForm');
       const loginKeyInput = document.getElementById('loginKey');
 
@@ -463,13 +493,14 @@
           if (!enteredKey) {
             e.preventDefault();
             e.stopImmediatePropagation();
+            triggerVibration([100, 50, 100]); // Error vibration pattern
             alert("❌ Please enter any Key to login!");
             return false;
           }
         }, true);
       }
 
-      // 2. Left 3-Dot Menu Actions
+      // 4. Left 3-Dot Menu Actions
       const threeDotsBtn = document.getElementById('threeDotsBtn');
       const dropdownMenu = document.getElementById('dropdownMenu');
       const menuHomeBtn = document.getElementById('menuHomeBtn');
@@ -541,6 +572,7 @@
       if (withdrawForm) {
         withdrawForm.addEventListener('submit', (e) => {
           e.preventDefault();
+          triggerVibration(60);
           alert("✅ Withdrawal request submitted successfully! It will be processed soon.");
           withdrawModal.classList.add('hidden');
           withdrawForm.reset();
@@ -568,7 +600,7 @@
       }
     });
 
-    // 3. Splash Screen Auto Hide
+    // 5. Splash Screen Auto Hide
     window.addEventListener('load', () => {
       setTimeout(() => {
         const splash = document.getElementById('splashScreen');
