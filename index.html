@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b0b12">
-  <title>FF Panel</title>
+  <meta name="theme-color" content="#0d0e15">
+  <title>FF Panel - Tournament Platform</title>
 
   <!-- PWA Manifest Linking -->
   <link rel="manifest" href="manifest.json">
@@ -16,14 +16,33 @@
 
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ========== Splash / Intro Animation Styles ========== */
+    :root {
+      --bg-dark: #0f1017;
+      --card-bg: #171822;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #00d2ff;
+      --accent-blue: #0072ff;
+      --accent-gold: #ffb703;
+      --text-main: #ffffff;
+      --text-sub: #8d92a3;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: 75px;
+    }
+
+    /* ========== Splash / Intro Animation ========== */
     #splashScreen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b12 100%);
+      inset: 0;
+      background: radial-gradient(circle at center, #181a28 0%, #08090d 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -44,22 +63,20 @@
     .splash-icon {
       font-size: 64px;
       margin-bottom: 12px;
-      filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.6));
-      animation: pulseGlow 1.5s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
     }
     .splash-title {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 800;
       letter-spacing: 2px;
-      color: #ffffff;
-      font-family: sans-serif;
+      color: #fff;
     }
     .splash-title span {
-      color: #00aaff;
-      text-shadow: 0 0 12px rgba(0, 170, 255, 0.8);
+      color: var(--accent-cyan);
+      text-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
     }
     .splash-sub {
-      color: #8888a0;
+      color: var(--text-sub);
       font-size: 13px;
       margin-top: 6px;
       letter-spacing: 1px;
@@ -69,14 +86,14 @@
       height: 4px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      margin-top: 28px;
+      margin-top: 26px;
       overflow: hidden;
       position: relative;
     }
     .splash-loader-progress {
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, #0088cc, #00ffcc);
+      background: linear-gradient(90deg, var(--accent-cyan), #00ffa2);
       position: absolute;
       left: -100%;
       animation: loadBar 1.8s ease-in-out forwards;
@@ -86,17 +103,24 @@
       0% { transform: scale(0.6); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
-    @keyframes pulseGlow {
-      0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.4)); }
-      100% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(0, 255, 200, 0.8)); }
-    }
     @keyframes loadBar {
       0% { left: -100%; }
-      50% { left: -20%; }
       100% { left: 0%; }
     }
 
-    /* ========== Left Side 3-Dot Menu Styles ========== */
+    /* ========== Modern Header ========== */
+    .app-topbar {
+      position: sticky;
+      top: 0;
+      background: rgba(15, 16, 23, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      z-index: 1000;
+      border-bottom: 1px solid var(--card-border);
+    }
     .topbar-left {
       display: flex;
       align-items: center;
@@ -107,29 +131,78 @@
       display: inline-block;
     }
     .three-dots-btn {
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      font-size: 26px;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      font-size: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      cursor: pointer;
     }
-    .three-dots-btn:active {
-      background: rgba(255, 255, 255, 0.1);
+    .brand-meta h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #fff, var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+    .brand-meta p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .coin-badge {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 183, 3, 0.12);
+      border: 1px solid rgba(255, 183, 3, 0.35);
+      padding: 6px 12px;
+      border-radius: 20px;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .coin-badge span {
+      font-size: 15px;
+    }
+    .coin-badge b {
+      color: var(--accent-gold);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .notif-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      font-size: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* ========== Dropdown Menu ========== */
     .dropdown-menu {
       position: absolute;
-      top: 120%;
+      top: 115%;
       left: 0;
-      background: #161622;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
+      background: #191b26;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8);
+      border-radius: 14px;
       width: 190px;
       display: flex;
       flex-direction: column;
@@ -142,8 +215,7 @@
     }
     .dropdown-item {
       padding: 12px 18px;
-      color: #ffffff;
-      text-decoration: none;
+      color: #fff;
       font-size: 14px;
       display: flex;
       align-items: center;
@@ -154,63 +226,226 @@
       text-align: left;
       cursor: pointer;
       box-sizing: border-box;
-      font-family: inherit;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
     .dropdown-item:last-child {
       border-bottom: none;
     }
-    .dropdown-item:active, .dropdown-item:hover {
+    .dropdown-item:active {
       background: rgba(255, 255, 255, 0.08);
-      color: #00aaff;
+      color: var(--accent-cyan);
     }
 
-    /* ========== Telegram Button Styles ========== */
-    .telegram-card-btn {
+    /* ========== Marquee Banner ========== */
+    .notice-marquee {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(90deg, #1b2033, #151722);
+      border: 1px solid rgba(0, 210, 255, 0.2);
+      border-radius: 12px;
+      margin: 12px 16px;
+      padding: 10px 14px;
+      gap: 12px;
+    }
+    .notice-icon {
+      font-size: 18px;
+      color: var(--accent-cyan);
+    }
+    .notice-text {
+      flex: 1;
+      font-size: 13px;
+      color: #e0e5ff;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ========== Account Details Actions (4 Circles) ========== */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 16px 16px 12px 16px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      padding: 0;
+    }
+    .action-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #1c1e2b;
+      border: 1px solid var(--card-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #0088cc, #00aaff);
-      color: #ffffff;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 15px;
-      margin: 16px 0;
-      box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 22px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.15s;
     }
-    .telegram-card-btn:active {
-      transform: scale(0.98);
+    .action-btn:active .action-circle {
+      transform: scale(0.92);
+      border-color: var(--accent-cyan);
     }
-    .telegram-float-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      background: #0088cc;
-      color: #ffffff;
-      padding: 12px 18px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-      z-index: 9999;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    .action-btn span {
+      font-size: 12px;
+      color: var(--text-sub);
+      font-weight: 500;
     }
 
-    /* ========== Modals (Settings & Withdrawal & Update) Styles ========== */
-    .modal-overlay {
+    /* ========== Feature Promo Card ========== */
+    .promo-card {
+      margin: 18px 16px;
+      background: linear-gradient(135deg, #181a28, #10121d);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .promo-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    .promo-overlay {
+      padding: 12px 16px;
+      background: rgba(16, 18, 29, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .promo-info h4 {
+      margin: 0;
+      font-size: 14px;
+      color: #fff;
+    }
+    .promo-info p {
+      margin: 4px 0 0 0;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .promo-btn {
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ========== Esports Games Grid (3x3 Cards) ========== */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .game-card:active {
+      transform: scale(0.96);
+      border-color: var(--accent-cyan);
+    }
+    .game-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      background: #252837;
+    }
+    .game-label {
+      padding: 8px 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e6f3;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      width: 100%;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ========== Bottom Navigation Bar ========== */
+    .bottom-nav {
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 62px;
+      background: rgba(14, 15, 23, 0.98);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: color 0.15s;
+    }
+    .nav-icon {
+      font-size: 20px;
+    }
+    .nav-item.active {
+      color: var(--accent-cyan);
+    }
+    .nav-item.active .nav-icon {
+      filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+    }
+
+    /* ========== Modals (Universal) ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(6px);
       display: flex;
@@ -224,14 +459,14 @@
       display: none !important;
     }
     .settings-modal {
-      background: #14141f;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
+      background: #141520;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
       width: 100%;
       max-width: 360px;
       padding: 20px;
       color: #fff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     .modal-header {
       display: flex;
@@ -246,8 +481,8 @@
     .close-btn {
       background: transparent;
       border: none;
-      color: #888;
-      font-size: 20px;
+      color: var(--text-sub);
+      font-size: 22px;
       cursor: pointer;
     }
     .settings-item {
@@ -261,15 +496,6 @@
     .settings-item:last-child {
       border-bottom: none;
     }
-
-    /* Update Modal Design */
-    .update-box {
-      text-align: center;
-    }
-    .update-icon {
-      font-size: 48px;
-      margin-bottom: 8px;
-    }
     .update-btn {
       display: block;
       background: linear-gradient(135deg, #00c853, #64dd17);
@@ -279,17 +505,17 @@
       border-radius: 10px;
       text-decoration: none;
       margin-top: 16px;
-      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <!-- Opening Intro / Splash Animation -->
+  <!-- Opening Splash Screen -->
   <div id="splashScreen">
     <div class="splash-logo-box">
-      <div class="splash-icon">🎮</div>
-      <div class="splash-title">FF <span>PANEL</span></div>
-      <p class="splash-sub">INITIALIZING PANEL...</p>
+      <div class="splash-icon">🔥</div>
+      <div class="splash-title">FIRE <span>BATTLE</span></div>
+      <p class="splash-sub">TOURNAMENT PLATFORM</p>
       <div class="splash-loader-bar">
         <div class="splash-loader-progress"></div>
       </div>
@@ -298,13 +524,13 @@
 
   <div id="toast"></div>
 
-  <!-- App Update Modal (Popup) -->
+  <!-- App Update Modal -->
   <div id="updateModal" class="modal-overlay hidden" style="z-index: 100000;">
-    <div class="settings-modal update-box">
-      <div class="update-icon">🚀</div>
+    <div class="settings-modal" style="text-align: center;">
+      <div style="font-size: 44px; margin-bottom: 8px;">🚀</div>
       <h3 style="margin: 0 0 8px 0; font-size: 20px;">Update Available!</h3>
-      <p style="color: #a0a0b8; font-size: 14px; margin: 0 0 16px 0;">
-        A new version of <b>FF Panel</b> is ready. Please update your app to enjoy the newest features and fixes.
+      <p style="color: #8d92a3; font-size: 14px; margin: 0 0 16px 0;">
+        A new version of FireBattle is ready. Update now to enjoy all new features.
       </p>
       <a id="updateNowBtn" href="https://t.me/nkwithprifut101" target="_blank" class="update-btn">
         📥 UPDATE NOW
@@ -312,16 +538,16 @@
     </div>
   </div>
 
+  <!-- Auth Screen -->
   <section id="authScreen" class="screen">
     <div class="auth-card">
-      <div class="brand">FF <span>PANEL</span></div>
-      <p class="muted">Gaming dashboard demo</p>
+      <div class="brand">FIRE <span>BATTLE</span></div>
+      <p class="muted">Free Fire Tournament Platform</p>
 
       <form id="loginForm">
         <input id="loginEmail" type="email" placeholder="Email" required>
         <input id="loginPassword" type="password" placeholder="Password" required>
-        <!-- Security Access Key Input -->
-        <input id="loginKey" type="text" placeholder="Enter Access Key" required>
+        <input id="loginKey" type="text" placeholder="Enter Access Key (e.g. 743429)" required>
         <button class="primary" type="submit">LOGIN</button>
         <p class="switch">New player? <button type="button" class="link" id="showRegister">Create account</button></p>
       </form>
@@ -336,10 +562,12 @@
     </div>
   </section>
 
+  <!-- Main App Screen -->
   <section id="appScreen" class="hidden">
-    <header class="topbar">
-      <!-- 3-Dot Menu Button on Left -->
+    <!-- Top Header -->
+    <header class="app-topbar">
       <div class="topbar-left">
+        <!-- 3-Dot Menu -->
         <div class="menu-container">
           <button id="threeDotsBtn" class="three-dots-btn" title="Menu">⋮</button>
           <div id="dropdownMenu" class="dropdown-menu hidden">
@@ -351,83 +579,184 @@
             <button id="logoutBtn" class="dropdown-item" style="color: #ff5555;">🚪 Log out</button>
           </div>
         </div>
-        <div class="brand small">FF <span>PANEL</span></div>
+        <div class="brand-meta">
+          <h1>FireBattle</h1>
+          <p>Tournament Platform</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button id="notifBtn" class="notif-btn">🔔</button>
+        <div class="coin-badge" id="walletQuickBtn">
+          <span>🪙</span>
+          <b id="coins">0</b>
+        </div>
       </div>
     </header>
 
-    <main class="container">
-      <section class="profile-card">
-        <div class="avatar">🎮</div>
-        <div class="profile-main">
-          <h2 id="playerName">Player</h2>
-          <p id="playerEmail"></p>
-          <small id="playerRole"></small>
+    <!-- Main Content Area -->
+    <main>
+      <!-- Notice Marquee -->
+      <div class="notice-marquee">
+        <div class="notice-icon">📢</div>
+        <div class="notice-text">Welcome to FireBattle! Daily custom tournaments are now live.</div>
+      </div>
+
+      <!-- Account Details Grid -->
+      <div class="section-title">Account Details</div>
+      <div class="actions-grid">
+        <button class="action-btn" id="actionProfile">
+          <div class="action-circle">👤</div>
+          <span>My Profile</span>
+        </button>
+        <button class="action-btn" id="actionMatches">
+          <div class="action-circle">🎮</div>
+          <span>My Matches</span>
+        </button>
+        <button class="action-btn" id="actionTopPlayers">
+          <div class="action-circle">📊</div>
+          <span>Top Players</span>
+        </button>
+        <button class="action-btn" id="actionContact">
+          <div class="action-circle">🎧</div>
+          <span>Contact Us</span>
+        </button>
+      </div>
+
+      <!-- Promo Featured Card -->
+      <div class="promo-card">
+        <img class="promo-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop" alt="Tutorial">
+        <div class="promo-overlay">
+          <div class="promo-info">
+            <h4>Official Guide & Rules</h4>
+            <p>How to join rooms & submit ID</p>
+          </div>
+          <button class="promo-btn" id="watchGuideBtn">Watch</button>
         </div>
-      </section>
+      </div>
 
-      <section class="stats-grid">
-        <div class="stat"><span>Coins</span><b id="coins">0</b></div>
-        <div class="stat"><span>Points</span><b id="points">0</b></div>
-        <div class="stat"><span>Matches</span><b id="matches">0</b></div>
-        <div class="stat"><span>Wins</span><b id="wins">0</b></div>
-      </section>
-
-      <!-- Telegram Channel Button Inside App -->
-      <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-card-btn">
-        ✈️ Join Official Telegram Channel
-      </a>
-
-      <section class="panel">
-        <div class="section-head">
-          <h2>Profile</h2>
-          <button id="refreshBtn" class="ghost">Refresh</button>
+      <!-- Esports Games Grid (3x3) -->
+      <div class="section-title">Esports Games</div>
+      <div class="games-grid">
+        <div class="game-card" data-mode="BATTLE ROYALE">
+          <img class="game-img" src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=300&auto=format&fit=crop" alt="BR">
+          <div class="game-label">Battle Royale</div>
         </div>
-        <div class="profile-details">
-          <div><span>Name</span><b id="detailName">-</b></div>
-          <div><span>Email</span><b id="detailEmail">-</b></div>
-          <div><span>Role</span><b id="detailRole">-</b></div>
-          <div><span>Player ID</span><b id="detailUid">-</b></div>
+        <div class="game-card" data-mode="CLASH SQUAD">
+          <img class="game-img" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&auto=format&fit=crop" alt="CS">
+          <div class="game-label">Clash Squad</div>
         </div>
-      </section>
+        <div class="game-card" data-mode="LONE WOLF">
+          <img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="Lone Wolf">
+          <div class="game-label">Lone Wolf</div>
+        </div>
 
-      <section class="panel">
-        <div class="section-head">
-          <h2>Tournaments</h2>
-          <button id="refreshTournaments" class="ghost">Refresh</button>
+        <div class="game-card" data-mode="BR SURVIVAL">
+          <img class="game-img" src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="Survival">
+          <div class="game-label">BR Survival</div>
+        </div>
+        <div class="game-card" data-mode="CS HARDCORE">
+          <img class="game-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CS Squad">
+          <div class="game-label">CS Hardcore</div>
+        </div>
+        <div class="game-card" data-mode="LONE WOLF 2V2">
+          <img class="game-img" src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="Lone Wolf 2v2">
+          <div class="game-label">Lone Wolf 2v2</div>
+        </div>
+
+        <div class="game-card" data-mode="GUN CHALLENGE">
+          <img class="game-img" src="https://images.unsplash.com/photo-1552824722-ddab137b0169?w=300&auto=format&fit=crop" alt="Gun Challenge">
+          <div class="game-label">Gun Challenge</div>
+        </div>
+        <div class="game-card" data-mode="BR 4V4">
+          <img class="game-img" src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=300&auto=format&fit=crop" alt="BR 4v4">
+          <div class="game-label">BR 4v4</div>
+        </div>
+        <div class="game-card" data-mode="CS 4V4">
+          <img class="game-img" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop" alt="CS 4v4">
+          <div class="game-label">CS 4v4</div>
+        </div>
+      </div>
+
+      <!-- Hidden standard elements needed for Firebase app.js -->
+      <div style="display:none;">
+        <span id="playerName"></span>
+        <span id="playerEmail"></span>
+        <span id="playerRole"></span>
+        <span id="detailName"></span>
+        <span id="detailEmail"></span>
+        <span id="detailRole"></span>
+        <span id="detailUid"></span>
+        <span id="points">0</span>
+        <span id="matches">0</span>
+        <span id="wins">0</span>
+        <button id="refreshBtn"></button>
+        <button id="refreshTournaments"></button>
+      </div>
+
+      <!-- Tournament List Section -->
+      <section class="panel" style="margin: 16px;">
+        <div class="section-head" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h2 style="font-size: 16px; margin: 0;">Live Tournaments</h2>
+          <button id="manualRefreshTournaments" class="ghost" style="padding: 6px 12px; border-radius: 8px;">Refresh</button>
         </div>
         <div id="tournamentList" class="list">
           <div class="loading">Loading tournaments...</div>
         </div>
       </section>
 
-      <section id="adminPanel" class="panel hidden">
-        <div class="section-head">
-          <h2>Admin Panel</h2>
-          <span class="badge">ADMIN</span>
+      <!-- Admin Panel Section -->
+      <section id="adminPanel" class="panel hidden" style="margin: 16px; background: #161825; padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 183, 3, 0.3);">
+        <div class="section-head" style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="font-size: 16px; margin: 0;">Admin Management</h2>
+          <span class="badge" style="background: var(--accent-gold); color: #000; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
         </div>
 
-        <form id="tournamentForm" class="admin-form">
+        <form id="tournamentForm" class="admin-form" style="margin-top: 14px;">
           <input type="hidden" id="editTournamentId">
-          <input id="tournamentName" type="text" placeholder="Tournament name" maxlength="60" required>
-          <div class="two">
-            <input id="tournamentEntry" type="number" min="0" placeholder="Entry points" required>
-            <input id="tournamentPrize" type="number" min="0" placeholder="Prize points" required>
+          <input id="tournamentName" type="text" placeholder="Tournament name" maxlength="60" required style="width: 100%; box-sizing: border-box; margin-bottom: 8px; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
+          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+            <input id="tournamentEntry" type="number" min="0" placeholder="Entry fee" required style="flex: 1; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
+            <input id="tournamentPrize" type="number" min="0" placeholder="Prize pool" required style="flex: 1; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
           </div>
-          <div class="two">
-            <input id="tournamentDate" type="datetime-local" required>
-            <select id="tournamentStatus">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <input id="tournamentDate" type="datetime-local" required style="flex: 1; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
+            <select id="tournamentStatus" style="flex: 1; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
               <option value="upcoming">Upcoming</option>
               <option value="live">Live</option>
               <option value="completed">Completed</option>
             </select>
           </div>
-          <div class="two">
-            <button class="primary" type="submit" id="saveTournament">Create Tournament</button>
-            <button class="ghost hidden" type="button" id="cancelEdit">Cancel Edit</button>
+          <div style="display: flex; gap: 8px;">
+            <button class="primary" type="submit" id="saveTournament" style="flex: 1; padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Create Tournament</button>
+            <button class="ghost hidden" type="button" id="cancelEdit" style="padding: 12px; border-radius: 8px;">Cancel</button>
           </div>
         </form>
       </section>
     </main>
+
+    <!-- Bottom Navigation Bar (5 Items) -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" id="navHome">
+        <div class="nav-icon">🏠</div>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" id="navVideo">
+        <div class="nav-icon">▶️</div>
+        <span>Video</span>
+      </button>
+      <button class="nav-item" id="navEarn">
+        <div class="nav-icon">🎁</div>
+        <span>Earn</span>
+      </button>
+      <button class="nav-item" id="navWallet">
+        <div class="nav-icon">💳</div>
+        <span>Wallet</span>
+      </button>
+      <button class="nav-item" id="navProfile">
+        <div class="nav-icon">👤</div>
+        <span>Profile</span>
+      </button>
+    </nav>
   </section>
 
   <!-- Settings Modal Box -->
@@ -448,7 +777,7 @@
         </div>
         <div class="settings-item">
           <span>Support Contact</span>
-          <a href="https://t.me/nkwithprifut101" target="_blank" style="color: #00aaff; text-decoration: none; font-weight: bold;">Telegram</a>
+          <a href="https://t.me/nkwithprifut101" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: bold;">Telegram</a>
         </div>
         <div class="settings-item">
           <span>App Version</span>
@@ -466,35 +795,27 @@
         <button id="closeWithdrawBtn" class="close-btn">&times;</button>
       </div>
       <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
-        <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
+        <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
           <option value="">Select Payment Method</option>
           <option value="UPI">UPI / GPay / PhonePe</option>
           <option value="Paytm">Paytm</option>
           <option value="Bkash">bKash</option>
         </select>
-        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
-        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0b0b12; color: #fff; border: 1px solid rgba(255,255,255,0.2);" required>
-        <button class="primary" type="submit" style="margin-top: 6px;">Submit Request</button>
+        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
+        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
+        <button class="primary" type="submit" style="margin-top: 6px; padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Submit Request</button>
       </form>
     </div>
   </div>
 
-  <!-- Floating Telegram Quick Button -->
-  <a href="https://t.me/nkwithprifut101" target="_blank" rel="noopener noreferrer" class="telegram-float-btn">
-    ✈️ Telegram
-  </a>
-
-  <!-- JavaScript Logic with Back Button Navigation & Orientation Lock -->
+  <!-- JavaScript Logic with Back-Button & Full Interactivity -->
   <script>
-    // ========== ধাপে ২: PORTRAIT ORIENTATION LOCK ==========
     if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock('portrait-primary').catch(() => {
-        // কিছু ব্রাউজার বা ডিভাইসে হ্যান্ডলার অনুমতি না দিলে এরর এড়িয়ে যাওয়া
-      });
+      screen.orientation.lock('portrait-primary').catch(() => {});
     }
 
     const CURRENT_VERSION = "1.0.2";
-    const LATEST_VERSION = "1.0.2"; // দুটি সমান থাকায় আপডেট লেখা উঠবে না
+    const LATEST_VERSION = "1.0.2";
     const UPDATE_DOWNLOAD_URL = "https://t.me/nkwithprifut101";
 
     function checkAppUpdate() {
@@ -516,34 +837,19 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // ========== BACK BUTTON HANDLER LOGIC ==========
       window.history.pushState({ page: 'home' }, '');
-
       window.addEventListener('popstate', () => {
         let actionHandled = false;
 
-        // ১. আপডেট মডাল খোলা থাকলে বন্ধ করা
-        const updateModal = document.getElementById('updateModal');
-        if (updateModal && !updateModal.classList.contains('hidden')) {
-          updateModal.classList.add('hidden');
-          actionHandled = true;
-        }
+        const modals = ['updateModal', 'withdrawModal', 'settingsModal'];
+        modals.forEach(id => {
+          const m = document.getElementById(id);
+          if (m && !m.classList.contains('hidden')) {
+            m.classList.add('hidden');
+            actionHandled = true;
+          }
+        });
 
-        // ২. উইথড্রয়াল মডাল খোলা থাকলে বন্ধ করা
-        const withdrawModal = document.getElementById('withdrawModal');
-        if (withdrawModal && !withdrawModal.classList.contains('hidden')) {
-          withdrawModal.classList.add('hidden');
-          actionHandled = true;
-        }
-
-        // ৩. সেটিংস মডাল খোলা থাকলে বন্ধ করা
-        const settingsModal = document.getElementById('settingsModal');
-        if (settingsModal && !settingsModal.classList.contains('hidden')) {
-          settingsModal.classList.add('hidden');
-          actionHandled = true;
-        }
-
-        // ৪. ড্রপডাউন মেনু খোলা থাকলে বন্ধ করা
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
           dropdownMenu.classList.add('hidden');
@@ -557,118 +863,65 @@
         }
       });
 
-      // বাটন ভাইব্রেশন
       document.body.addEventListener('click', (e) => {
-        if (e.target.closest('button, a, input[type="submit"]')) {
-          triggerVibration(40);
+        if (e.target.closest('button, a, .game-card, .coin-badge')) {
+          triggerVibration(35);
         }
       });
 
-      // ভাইব্রেশন টগল
       const vibrationToggle = document.getElementById('vibrationToggle');
       if (vibrationToggle) {
-        const savedState = localStorage.getItem('app_vibration');
-        vibrationToggle.checked = savedState !== 'false';
-
+        const saved = localStorage.getItem('app_vibration');
+        vibrationToggle.checked = saved !== 'false';
         vibrationToggle.addEventListener('change', () => {
           localStorage.setItem('app_vibration', vibrationToggle.checked);
-          if (vibrationToggle.checked) triggerVibration(60);
+          if (vibrationToggle.checked) triggerVibration(50);
         });
       }
 
-      // কী ভ্যালিডেশন
-      const loginForm = document.getElementById('loginForm');
-      const loginKeyInput = document.getElementById('loginKey');
-
-      if (loginForm && loginKeyInput) {
-        loginForm.addEventListener('submit', (e) => {
-          const enteredKey = loginKeyInput.value.trim();
-          if (!enteredKey) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            triggerVibration([100, 50, 100]);
-            alert("❌ Please enter any Key to login!");
-            return false;
-          }
-        }, true);
-      }
-
-      // ৩-ডট মেনু কন্ট্রোল
       const threeDotsBtn = document.getElementById('threeDotsBtn');
       const dropdownMenu = document.getElementById('dropdownMenu');
-      const menuHomeBtn = document.getElementById('menuHomeBtn');
-      const menuLeaderboardBtn = document.getElementById('menuLeaderboardBtn');
-      const menuReferBtn = document.getElementById('menuReferBtn');
-      const menuWithdrawBtn = document.getElementById('menuWithdrawBtn');
-      const menuSettingsBtn = document.getElementById('menuSettingsBtn');
-      
-      const settingsModal = document.getElementById('settingsModal');
-      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-
-      const withdrawModal = document.getElementById('withdrawModal');
-      const closeWithdrawBtn = document.getElementById('closeWithdrawBtn');
-      const withdrawForm = document.getElementById('withdrawForm');
-
       if (threeDotsBtn && dropdownMenu) {
         threeDotsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           dropdownMenu.classList.toggle('hidden');
         });
-
-        document.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-        });
+        document.addEventListener('click', () => dropdownMenu.classList.add('hidden'));
       }
 
-      if (menuHomeBtn) {
-        menuHomeBtn.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
+      const menuWithdrawBtn = document.getElementById('menuWithdrawBtn');
+      const walletQuickBtn = document.getElementById('walletQuickBtn');
+      const navWallet = document.getElementById('navWallet');
+      const withdrawModal = document.getElementById('withdrawModal');
+      const closeWithdrawBtn = document.getElementById('closeWithdrawBtn');
+      const withdrawForm = document.getElementById('withdrawForm');
 
-      if (menuLeaderboardBtn) {
-        menuLeaderboardBtn.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-          alert("🏆 Leaderboard coming soon in the next update!");
-        });
-      }
+      const openWithdraw = () => {
+        if (dropdownMenu) dropdownMenu.classList.add('hidden');
+        if (withdrawModal) withdrawModal.classList.remove('hidden');
+      };
 
-      if (menuReferBtn) {
-        menuReferBtn.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-          alert("🎁 Refer & Earn: Share this app with your friends to win points!");
-        });
-      }
-
-      if (menuWithdrawBtn && withdrawModal) {
-        menuWithdrawBtn.addEventListener('click', () => {
-          dropdownMenu.classList.add('hidden');
-          withdrawModal.classList.remove('hidden');
-        });
-      }
+      if (menuWithdrawBtn) menuWithdrawBtn.addEventListener('click', openWithdraw);
+      if (walletQuickBtn) walletQuickBtn.addEventListener('click', openWithdraw);
+      if (navWallet) navWallet.addEventListener('click', openWithdraw);
 
       if (closeWithdrawBtn && withdrawModal) {
-        closeWithdrawBtn.addEventListener('click', () => {
-          withdrawModal.classList.add('hidden');
-        });
-
-        withdrawModal.addEventListener('click', (e) => {
-          if (e.target === withdrawModal) {
-            withdrawModal.classList.add('hidden');
-          }
-        });
+        closeWithdrawBtn.addEventListener('click', () => withdrawModal.classList.add('hidden'));
       }
 
       if (withdrawForm) {
         withdrawForm.addEventListener('submit', (e) => {
           e.preventDefault();
           triggerVibration(60);
-          alert("✅ Withdrawal request submitted successfully! It will be processed soon.");
+          alert("✅ Withdrawal request submitted! It will be reviewed shortly.");
           withdrawModal.classList.add('hidden');
           withdrawForm.reset();
         });
       }
+
+      const menuSettingsBtn = document.getElementById('menuSettingsBtn');
+      const settingsModal = document.getElementById('settingsModal');
+      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
 
       if (menuSettingsBtn && settingsModal) {
         menuSettingsBtn.addEventListener('click', () => {
@@ -676,16 +929,57 @@
           settingsModal.classList.remove('hidden');
         });
       }
-
       if (closeSettingsBtn && settingsModal) {
-        closeSettingsBtn.addEventListener('click', () => {
-          settingsModal.classList.add('hidden');
-        });
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+      }
 
-        settingsModal.addEventListener('click', (e) => {
-          if (e.target === settingsModal) {
-            settingsModal.classList.add('hidden');
-          }
+      const actionProfile = document.getElementById('actionProfile');
+      const navProfile = document.getElementById('navProfile');
+      const actionMatches = document.getElementById('actionMatches');
+      const actionTopPlayers = document.getElementById('actionTopPlayers');
+      const actionContact = document.getElementById('actionContact');
+
+      const showProfileInfo = () => {
+        const name = document.getElementById('playerName')?.textContent || "Player";
+        const email = document.getElementById('playerEmail')?.textContent || "Registered User";
+        alert(`👤 Player Profile:\nName: ${name}\nEmail: ${email}`);
+      };
+
+      if (actionProfile) actionProfile.addEventListener('click', showProfileInfo);
+      if (navProfile) navProfile.addEventListener('click', showProfileInfo);
+
+      if (actionMatches) actionMatches.addEventListener('click', () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
+
+      if (actionTopPlayers) actionTopPlayers.addEventListener('click', () => {
+        alert("🏆 Top Players Leaderboard is refreshing for this season!");
+      });
+
+      if (actionContact) actionContact.addEventListener('click', () => {
+        window.open('https://t.me/nkwithprifut101', '_blank');
+      });
+
+      const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+      navItems.forEach(btn => {
+        btn.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const mode = card.getAttribute('data-mode');
+          alert(`🎮 Selected Mode: ${mode}\nChecking available match rooms...`);
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+      });
+
+      const manualRefresh = document.getElementById('manualRefreshTournaments');
+      if (manualRefresh) {
+        manualRefresh.addEventListener('click', () => {
+          document.getElementById('refreshTournaments')?.click();
         });
       }
     });
