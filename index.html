@@ -6,14 +6,6 @@
   <meta name="theme-color" content="#1a90ff">
   <title>FF PANEL - Tournament Platform</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="FF PANEL">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/686/686589.png">
-
-  <link rel="stylesheet" href="style.css">
   <style>
     :root {
       --bg-dark: #0f1015;
@@ -24,6 +16,8 @@
       --text-main: #ffffff;
       --text-sub: #828799;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -38,25 +32,7 @@
 
     .hidden { display: none !important; }
 
-    /* Splash Screen */
-    #splashScreen {
-      position: fixed;
-      inset: 0;
-      background: #0f1015;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-    #splashScreen.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* Top Blue Header */
+    /* Top Header */
     .app-topbar {
       position: sticky;
       top: 0;
@@ -66,7 +42,6 @@
       justify-content: space-between;
       padding: 10px 16px;
       z-index: 1000;
-      box-shadow: 0 4px 15px rgba(26, 144, 255, 0.2);
     }
     .topbar-left {
       display: flex;
@@ -74,14 +49,14 @@
       gap: 10px;
     }
     .app-icon-badge {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      font-size: 18px;
     }
     .brand-meta h1 {
       margin: 0;
@@ -93,19 +68,7 @@
     .brand-meta p {
       margin: 2px 0 0 0;
       font-size: 10px;
-      color: rgba(255, 255, 255, 0.8);
-    }
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .notif-btn {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
+      color: rgba(255, 255, 255, 0.85);
     }
     .coin-badge {
       display: flex;
@@ -121,7 +84,7 @@
       font-size: 13px;
     }
 
-    /* Notice Marquee */
+    /* Marquee Banner */
     .notice-marquee {
       display: flex;
       align-items: center;
@@ -136,21 +99,19 @@
       flex: 1;
       font-size: 13px;
       color: #fff;
-      font-weight: 500;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
 
-    /* Section Title */
+    /* Sections */
     .section-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       margin: 16px;
       color: #fff;
     }
 
-    /* Account Details Grid */
     .actions-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -166,8 +127,8 @@
       padding: 0;
     }
     .action-circle {
-      width: 52px;
-      height: 52px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background: #20222b;
       border: 1px solid var(--card-border);
@@ -175,32 +136,31 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      margin: 0 auto 8px auto;
+      margin: 0 auto 6px auto;
     }
     .action-btn span {
       font-size: 12px;
       color: var(--text-sub);
     }
 
-    /* Support Promo Card */
     .promo-card {
-      margin: 18px 16px;
+      margin: 16px;
       background: linear-gradient(135deg, #2b1111, #13141b);
       border: 1px solid rgba(255, 68, 68, 0.2);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    /* 9-Card Esports Games Grid */
+    /* 9 Games Grid */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       padding: 0 16px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .game-card {
       background: var(--card-bg);
@@ -226,7 +186,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Video Screen */
+    /* Video Tab */
     .search-box {
       margin: 16px;
       background: #181920;
@@ -234,7 +194,7 @@
       padding: 12px 16px;
       border: 1px solid var(--card-border);
       color: #888;
-      font-size: 14px;
+      font-size: 13px;
     }
     .video-card {
       background: var(--card-bg);
@@ -245,19 +205,19 @@
       cursor: pointer;
     }
 
-    /* Earn Screen */
+    /* Earn Tab */
     .earn-card {
       border-radius: 14px;
-      padding: 18px 16px;
-      margin: 0 16px 14px 16px;
+      padding: 16px;
+      margin: 0 16px 12px 16px;
       display: flex;
       align-items: center;
       gap: 14px;
       cursor: pointer;
     }
     .earn-circle {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
@@ -266,9 +226,9 @@
       font-size: 20px;
     }
     .earn-info h3 { margin: 0; font-size: 15px; color: #fff; }
-    .earn-info p { margin: 4px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.8); }
+    .earn-info p { margin: 3px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.8); }
 
-    /* Wallet Screen */
+    /* Wallet Tab */
     .wallet-card-main {
       background: #0056b3;
       border-radius: 16px;
@@ -299,7 +259,7 @@
     }
     .wallet-btn {
       flex: 1;
-      padding: 14px;
+      padding: 12px;
       border-radius: 25px;
       font-weight: 700;
       border: none;
@@ -307,7 +267,7 @@
       cursor: pointer;
     }
 
-    /* Profile Screen */
+    /* Profile Tab */
     .profile-header-card {
       display: flex;
       align-items: center;
@@ -319,15 +279,15 @@
       border: 1px solid var(--card-border);
     }
     .profile-avatar-large {
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: #5061ff;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
     }
     .profile-menu-list {
@@ -335,7 +295,7 @@
       flex-direction: column;
       gap: 8px;
       padding: 0 16px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .profile-menu-row {
       display: flex;
@@ -348,11 +308,11 @@
       cursor: pointer;
     }
     .row-left { display: flex; align-items: center; gap: 12px; }
-    .row-icon { font-size: 16px; color: #5061ff; width: 20px; }
+    .row-icon { font-size: 16px; color: #5061ff; width: 20px; text-align: center; }
     .row-text h4 { margin: 0; font-size: 13px; color: #fff; }
     .row-text p { margin: 2px 0 0 0; font-size: 10px; color: var(--text-sub); }
 
-    /* Bottom Nav Bar */
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -378,9 +338,7 @@
       gap: 3px;
       padding: 4px;
     }
-    .nav-item.active {
-      color: #1a90ff;
-    }
+    .nav-item.active { color: #1a90ff; }
     .nav-icon-box {
       width: 32px;
       height: 22px;
@@ -395,45 +353,23 @@
       color: #fff;
     }
 
-    /* Universal Modal */
-    .modal-overlay {
+    #toast {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10002;
-      padding: 16px;
-    }
-    .settings-modal {
-      background: #141520;
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      width: 100%;
-      max-width: 360px;
-      padding: 20px;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
       color: #fff;
-    }
-    .settings-modal input, .settings-modal select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px;
-      border-radius: 8px;
-      background: #0b0c12;
-      border: 1px solid var(--card-border);
-      color: #fff;
-      margin-bottom: 10px;
+      padding: 10px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 13px;
+      display: none;
+      z-index: 100000;
     }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splashScreen">
-    <div style="font-size: 60px; margin-bottom: 12px;">🔥</div>
-    <div style="font-size: 26px; font-weight: 800;">FF <span style="color:#1a90ff">PANEL</span></div>
-    <p style="color:#888; font-size:12px; letter-spacing:1px; margin-top:6px;">TOURNAMENT PLATFORM</p>
-  </div>
 
   <div id="toast"></div>
 
@@ -444,25 +380,24 @@
       <p style="text-align: center; font-size: 13px; color: var(--text-sub); margin-bottom: 20px;">Tournament Platform Login</p>
 
       <form id="loginForm">
-        <input id="loginEmail" type="email" placeholder="Email" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
-        <input id="loginPassword" type="password" placeholder="Password" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="loginEmail" type="email" placeholder="Email" required style="width:100%; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="loginPassword" type="password" placeholder="Password" required style="width:100%; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
         <button type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: #1a90ff; border: none; font-weight: 700; color: #fff;">LOGIN</button>
         <p style="text-align: center; font-size: 13px; margin-top: 14px;">New player? <button type="button" id="showRegister" style="background: none; border: none; color: #1a90ff; cursor: pointer; font-weight: bold;">Create account</button></p>
       </form>
 
       <form id="registerForm" class="hidden">
-        <input id="regName" type="text" placeholder="Player name" maxlength="30" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
-        <input id="regEmail" type="email" placeholder="Email" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
-        <input id="regPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="regName" type="text" placeholder="Player name" maxlength="30" required style="width:100%; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="regEmail" type="email" placeholder="Email" required style="width:100%; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="regPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required style="width:100%; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
         <button type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: #1a90ff; border: none; font-weight: 700; color: #fff;">REGISTER</button>
         <p style="text-align: center; font-size: 13px; margin-top: 14px;">Already registered? <button type="button" id="showLogin" style="background: none; border: none; color: #1a90ff; cursor: pointer; font-weight: bold;">Login</button></p>
       </form>
     </div>
   </section>
 
-  <!-- App Main Screen -->
+  <!-- Main App Screen -->
   <section id="appScreen" class="hidden">
-    <!-- Top Blue Header (Shared Across Tabs) -->
     <header class="app-topbar">
       <div class="topbar-left">
         <div class="app-icon-badge">🔥</div>
@@ -471,8 +406,8 @@
           <p>Tournament Platform</p>
         </div>
       </div>
-      <div class="topbar-right">
-        <button id="notifBtn" class="notif-btn" type="button">🔔</button>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:18px;">🔔</span>
         <div class="coin-badge" id="walletQuickBtn">
           <span>🪙</span>
           <b id="coins">0.00</b>
@@ -480,11 +415,11 @@
       </div>
     </header>
 
-    <!-- 1. HOME TAB VIEW -->
+    <!-- 1. HOME TAB -->
     <main id="homeView">
       <div class="notice-marquee">
         <span style="font-size: 16px; color:#1a90ff;">📢</span>
-        <div id="appNoticeText" class="notice-text">Welcome to FF PANEL! Match rooms are now live.</div>
+        <div class="notice-text">Welcome to FF PANEL! Match rooms are now live.</div>
       </div>
 
       <div class="section-title">Account Details</div>
@@ -531,18 +466,18 @@
           <span style="background: #ffb703; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
         </div>
         <form id="tournamentForm">
-          <input id="tournamentName" type="text" placeholder="Tournament name" required style="width:100%; box-sizing:border-box; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:8px;">
+          <input id="tournamentName" type="text" placeholder="Tournament name" required style="width:100%; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:8px;">
           <div style="display:flex; gap:8px; margin-bottom:8px;">
             <input id="tournamentEntry" type="number" min="0" placeholder="Entry" required style="flex:1; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff;">
             <input id="tournamentPrize" type="number" min="0" placeholder="Prize" required style="flex:1; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff;">
           </div>
-          <input id="tournamentDate" type="datetime-local" required style="width:100%; box-sizing:border-box; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:10px;">
+          <input id="tournamentDate" type="datetime-local" required style="width:100%; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:10px;">
           <button type="submit" style="width:100%; padding:10px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:bold;">Create Tournament</button>
         </form>
       </section>
     </main>
 
-    <!-- 2. VIDEO TAB VIEW -->
+    <!-- 2. VIDEO TAB -->
     <main id="videoView" class="hidden">
       <div class="search-box">Search by topic or title...</div>
       <div class="section-title">Tutorial Videos (1)</div>
@@ -553,7 +488,7 @@
       </div>
     </main>
 
-    <!-- 3. EARN TAB VIEW -->
+    <!-- 3. EARN TAB -->
     <main id="earnView" class="hidden">
       <div class="section-title">Earn Center</div>
       <div class="earn-card" id="earnCardRefer" style="background:#0a4ca3;">
@@ -586,7 +521,7 @@
       </div>
     </main>
 
-    <!-- 4. WALLET TAB VIEW -->
+    <!-- 4. WALLET TAB -->
     <main id="walletView" class="hidden">
       <div class="wallet-card-main">
         <span style="font-size:13px; opacity:0.9;">Total Wallet Balance</span>
@@ -617,7 +552,7 @@
       </div>
     </main>
 
-    <!-- 5. PROFILE TAB VIEW (18 Menu Items) -->
+    <!-- 5. PROFILE TAB -->
     <main id="profileView" class="hidden">
       <div class="profile-header-card">
         <div class="profile-avatar-large" id="profileAvatarLetter">P</div>
@@ -641,7 +576,7 @@
         <div class="profile-menu-row" id="rowFaq"><div class="row-left"><span class="row-icon">❓</span><div class="row-text"><h4>FAQ</h4><p>Frequently asked questions</p></div></div><span style="color:#555;">❯</span></div>
         <div class="profile-menu-row" id="rowAbout"><div class="row-left"><span class="row-icon">ℹ️</span><div class="row-text"><h4>About Us</h4><p>Learn more about our app</p></div></div><span style="color:#555;">❯</span></div>
         <div class="profile-menu-row" id="rowOfficialSite"><div class="row-left"><span class="row-icon">🌐</span><div class="row-text"><h4>Official Site</h4><p>Visit our website</p></div></div><span style="color:#555;">❯</span></div>
-        <div class="profile-menu-row" id="rowPrivacy"><div class="row-left"><span class="row-icon">🛡️</span><div class="row-text"><h4>Privacy Policy</h4><p>How we protect your data</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowPrivacy"><div class="row-left"><span class="row-icon">🛡️️</span><div class="row-text"><h4>Privacy Policy</h4><p>How we protect your data</p></div></div><span style="color:#555;">❯</span></div>
         <div class="profile-menu-row" id="rowTerms"><div class="row-left"><span class="row-icon">📄</span><div class="row-text"><h4>Terms & Conditions</h4><p>Read our policies</p></div></div><span style="color:#555;">❯</span></div>
         <div class="profile-menu-row" id="rowRate"><div class="row-left"><span class="row-icon">⭐</span><div class="row-text"><h4>Rate App</h4><p>Share your experience</p></div></div><span style="color:#555;">❯</span></div>
         <div class="profile-menu-row" id="rowShare"><div class="row-left"><span class="row-icon">🔗</span><div class="row-text"><h4>Share App</h4><p>Invite friends to join</p></div></div><span style="color:#555;">❯</span></div>
@@ -650,13 +585,7 @@
       </div>
     </main>
 
-    <!-- Hidden sync elements -->
-    <div style="display:none;">
-      <span id="playerName"></span>
-      <span id="playerEmail"></span>
-    </div>
-
-    <!-- 5-Item Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
       <button class="nav-item active" id="navHome" type="button"><div class="nav-icon-box">🏠</div><span>Home</span></button>
       <button class="nav-item" id="navVideo" type="button"><div class="nav-icon-box">▶️</div><span>Video</span></button>
@@ -665,37 +594,6 @@
       <button class="nav-item" id="navProfile" type="button"><div class="nav-icon-box">👤</div><span>Profile</span></button>
     </nav>
   </section>
-
-  <!-- Withdraw Modal -->
-  <div id="withdrawModal" class="modal-overlay hidden">
-    <div class="settings-modal">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3 style="margin:0; font-size:16px;">💳 Withdraw Coins</h3>
-        <button id="closeWithdrawBtn" type="button" style="background:transparent; border:none; color:#888; font-size:20px;">&times;</button>
-      </div>
-      <form id="withdrawForm">
-        <select id="withdrawMethod" required>
-          <option value="">Select Payment Method</option>
-          <option value="UPI">UPI / GPay / PhonePe</option>
-          <option value="Paytm">Paytm</option>
-          <option value="Bkash">bKash</option>
-        </select>
-        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" required>
-        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" required>
-        <button type="submit" style="width:100%; padding:12px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:700;">Submit Request</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    setTimeout(function() {
-      var splash = document.getElementById('splashScreen');
-      if (splash) {
-        splash.classList.add('fade-out');
-        setTimeout(function() { splash.style.display = 'none'; }, 400);
-      }
-    }, 1200);
-  </script>
 
   <script type="module" src="app.js"></script>
 </body>
