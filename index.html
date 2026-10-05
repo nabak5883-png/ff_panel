@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0d0e15">
-  <title>FF PANEL - Gaming Platform</title>
+  <meta name="theme-color" content="#1a90ff">
+  <title>FF PANEL - Tournament Platform</title>
 
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -16,14 +16,13 @@
   <link rel="stylesheet" href="style.css">
   <style>
     :root {
-      --bg-dark: #0b0c12;
-      --card-bg: #14151f;
-      --card-border: rgba(255, 255, 255, 0.07);
-      --accent-cyan: #00d2ff;
-      --accent-blue: #0072ff;
+      --bg-dark: #0f1015;
+      --card-bg: #181920;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary-blue: #1a90ff;
       --accent-gold: #ffb703;
       --text-main: #ffffff;
-      --text-sub: #7d8293;
+      --text-sub: #828799;
     }
 
     body {
@@ -34,193 +33,124 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      padding-bottom: 75px;
+      padding-bottom: 72px;
     }
 
     .hidden { display: none !important; }
 
+    /* Splash Screen */
     #splashScreen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #181a28 0%, #08090d 100%);
+      background: #0f1015;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 99999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
     #splashScreen.fade-out {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-    .splash-icon {
-      font-size: 64px;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
-    }
-    .splash-title {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #fff;
-    }
-    .splash-title span {
-      color: var(--accent-cyan);
-      text-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
-    }
-    .splash-sub {
-      color: var(--text-sub);
-      font-size: 13px;
-      margin-top: 6px;
-      letter-spacing: 1px;
-    }
-    .splash-loader-bar {
-      width: 140px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-      margin-top: 26px;
-      overflow: hidden;
-      position: relative;
-    }
-    .splash-loader-progress {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-cyan), #00ffa2);
-      position: absolute;
-      left: -100%;
-      animation: loadBar 1.2s ease-in-out forwards;
-    }
-    @keyframes loadBar {
-      0% { left: -100%; }
-      100% { left: 0%; }
-    }
 
-    .auth-card {
-      background: #141520;
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 24px;
-      width: 90%;
-      max-width: 380px;
-      margin: 50px auto;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
-    }
-    .auth-card input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px;
-      border-radius: 10px;
-      background: #0b0c12;
-      border: 1px solid var(--card-border);
-      color: #fff;
-      margin-bottom: 12px;
-      font-size: 14px;
-    }
-
+    /* Top Blue Header */
     .app-topbar {
       position: sticky;
       top: 0;
-      background: rgba(11, 12, 18, 0.95);
-      backdrop-filter: blur(10px);
+      background: #1a90ff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
+      padding: 10px 16px;
       z-index: 1000;
-      border-bottom: 1px solid var(--card-border);
+      box-shadow: 0 4px 15px rgba(26, 144, 255, 0.2);
     }
     .topbar-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-    .app-icon-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+    .app-icon-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      padding: 5px;
-      box-sizing: border-box;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     .brand-meta h1 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      background: linear-gradient(90deg, #fff, var(--accent-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #fff;
+      line-height: 1.1;
     }
     .brand-meta p {
       margin: 2px 0 0 0;
-      font-size: 11px;
-      color: var(--text-sub);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .notif-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
     }
     .coin-badge {
       display: flex;
       align-items: center;
-      background: rgba(255, 183, 3, 0.12);
-      border: 1px solid rgba(255, 183, 3, 0.35);
-      padding: 6px 12px;
+      background: #000000;
+      padding: 5px 12px;
       border-radius: 20px;
       gap: 6px;
       cursor: pointer;
     }
     .coin-badge b {
-      color: var(--accent-gold);
-      font-size: 14px;
+      color: #ffb703;
+      font-size: 13px;
     }
 
-    .dropdown-menu {
-      position: absolute;
-      top: 115%;
-      left: 0;
-      background: #191b26;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8);
-      border-radius: 14px;
-      width: 190px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 10001;
-      padding: 6px 0;
-    }
-    .dropdown-item {
-      padding: 12px 18px;
-      color: #fff;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: transparent;
-      border: none;
-      width: 100%;
-      text-align: left;
-      cursor: pointer;
-      box-sizing: border-box;
-    }
-
+    /* Notice Marquee */
     .notice-marquee {
       display: flex;
       align-items: center;
-      background: linear-gradient(90deg, #1b2033, #151722);
-      border: 1px solid rgba(0, 210, 255, 0.2);
+      background: #141722;
+      border: 1px solid var(--card-border);
       border-radius: 12px;
       margin: 12px 16px;
       padding: 10px 14px;
-      gap: 12px;
+      gap: 10px;
     }
-    .notice-text { flex: 1; font-size: 13px; color: #e0e5ff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .notice-text {
+      flex: 1;
+      font-size: 13px;
+      color: #fff;
+      font-weight: 500;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
-    .section-title { font-size: 16px; font-weight: 700; margin: 16px; }
+    /* Section Title */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 16px;
+      color: #fff;
+    }
+
+    /* Account Details Grid */
     .actions-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -228,134 +158,333 @@
       padding: 0 16px;
       text-align: center;
     }
-    .action-btn { background: transparent; border: none; color: #fff; cursor: pointer; padding: 0; }
-    .action-circle {
-      width: 52px; height: 52px; border-radius: 50%; background: #1c1e2b;
-      border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin: 0 auto 8px auto;
+    .action-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 0;
     }
-    .action-btn span { font-size: 12px; color: var(--text-sub); }
+    .action-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #20222b;
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin: 0 auto 8px auto;
+    }
+    .action-btn span {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
 
-    .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 24px; }
-    .game-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; text-align: center; }
-    .game-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
-    .game-label { padding: 8px 4px; font-size: 11px; font-weight: 700; color: #e2e6f3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Support Promo Card */
+    .promo-card {
+      margin: 18px 16px;
+      background: linear-gradient(135deg, #2b1111, #13141b);
+      border: 1px solid rgba(255, 68, 68, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-    /* Admin Hub Styles */
-    .admin-card-box {
-      background: #141520;
+    /* 9-Card Esports Games Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      cursor: pointer;
+    }
+    .game-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+    }
+    .game-label {
+      padding: 7px 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #e2e6f3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Video Screen */
+    .search-box {
+      margin: 16px;
+      background: #181920;
+      border-radius: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--card-border);
+      color: #888;
+      font-size: 14px;
+    }
+    .video-card {
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 14px;
-    }
-    .admin-card-box h3 { margin: 0 0 10px 0; font-size: 14px; color: var(--accent-cyan); }
-    .admin-card-box input, .admin-card-box select, .admin-card-box textarea {
-      width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px;
-      background: #0b0c12; border: 1px solid var(--card-border); color: #fff; margin-bottom: 8px; font-size: 13px;
-    }
-    .admin-card-box button {
-      padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;
+      padding: 16px;
+      margin: 0 16px 12px 16px;
+      cursor: pointer;
     }
 
-    #profileSection { padding: 16px; }
-    .profile-header-card { display: flex; align-items: center; gap: 14px; background: var(--card-bg); padding: 16px; border-radius: 16px; border: 1px solid var(--card-border); margin-bottom: 20px; }
-    .profile-avatar-large { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #06b6d4); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; }
-    .profile-menu-list { display: flex; flex-direction: column; gap: 10px; }
-    .profile-menu-row { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 16px; cursor: pointer; }
-    .row-left { display: flex; align-items: center; gap: 14px; }
-    .row-icon { font-size: 18px; color: var(--accent-cyan); width: 24px; }
+    /* Earn Screen */
+    .earn-card {
+      border-radius: 14px;
+      padding: 18px 16px;
+      margin: 0 16px 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+    }
+    .earn-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .earn-info h3 { margin: 0; font-size: 15px; color: #fff; }
+    .earn-info p { margin: 4px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.8); }
 
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 62px; background: rgba(14, 15, 23, 0.98); border-top: 1px solid var(--card-border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
-    .nav-item { background: transparent; border: none; color: var(--text-sub); font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .nav-item.active { color: var(--accent-cyan); }
-    .nav-icon { font-size: 20px; }
-
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 10002; padding: 16px; }
-    .settings-modal { background: #141520; border: 1px solid var(--card-border); border-radius: 18px; width: 100%; max-width: 360px; padding: 20px; color: #fff; }
-
-    #toast {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
+    /* Wallet Screen */
+    .wallet-card-main {
+      background: #0056b3;
+      border-radius: 16px;
+      margin: 16px;
+      padding: 20px;
       color: #fff;
-      padding: 10px 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 13px;
-      display: none;
-      z-index: 100000;
+    }
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 16px;
+      margin-bottom: 16px;
+    }
+    .wallet-stat-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .wallet-stat-box span { font-size: 12px; color: var(--text-sub); }
+    .wallet-stat-box b { display: block; font-size: 18px; margin-top: 4px; color: #fff; }
+    .wallet-btn-row {
+      display: flex;
+      gap: 12px;
+      padding: 0 16px;
+      margin-bottom: 20px;
+    }
+    .wallet-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 25px;
+      font-weight: 700;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Profile Screen */
+    .profile-header-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 16px;
+      margin: 16px;
+      border: 1px solid var(--card-border);
+    }
+    .profile-avatar-large {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #5061ff;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .profile-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+    .profile-menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+    }
+    .row-left { display: flex; align-items: center; gap: 12px; }
+    .row-icon { font-size: 16px; color: #5061ff; width: 20px; }
+    .row-text h4 { margin: 0; font-size: 13px; color: #fff; }
+    .row-text p { margin: 2px 0 0 0; font-size: 10px; color: var(--text-sub); }
+
+    /* Bottom Nav Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #0d0e14;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+    }
+    .nav-item {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 4px;
+    }
+    .nav-item.active {
+      color: #1a90ff;
+    }
+    .nav-icon-box {
+      width: 32px;
+      height: 22px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .nav-item.active .nav-icon-box {
+      background: #1a90ff;
+      color: #fff;
+    }
+
+    /* Universal Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10002;
+      padding: 16px;
+    }
+    .settings-modal {
+      background: #141520;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 360px;
+      padding: 20px;
+      color: #fff;
+    }
+    .settings-modal input, .settings-modal select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 8px;
+      background: #0b0c12;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <!-- Independent Splash Screen -->
+  <!-- Splash Screen -->
   <div id="splashScreen">
-    <div class="splash-icon">🎮</div>
-    <div class="splash-title">FF <span>PANEL</span></div>
-    <p class="splash-sub">GAMING PLATFORM</p>
-    <div class="splash-loader-bar"><div class="splash-loader-progress"></div></div>
+    <div style="font-size: 60px; margin-bottom: 12px;">🔥</div>
+    <div style="font-size: 26px; font-weight: 800;">FF <span style="color:#1a90ff">PANEL</span></div>
+    <p style="color:#888; font-size:12px; letter-spacing:1px; margin-top:6px;">TOURNAMENT PLATFORM</p>
   </div>
 
   <div id="toast"></div>
 
   <!-- Auth Screen -->
   <section id="authScreen" class="screen">
-    <div class="auth-card">
-      <div style="text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 6px;">FF <span style="color:var(--accent-cyan)">PANEL</span></div>
-      <p style="text-align: center; font-size: 13px; color: var(--text-sub); margin-bottom: 20px;">Player Account Login</p>
+    <div style="background:#141520; border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:24px; width:90%; max-width:380px; margin:60px auto;">
+      <div style="text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 6px;">FF <span style="color:#1a90ff">PANEL</span></div>
+      <p style="text-align: center; font-size: 13px; color: var(--text-sub); margin-bottom: 20px;">Tournament Platform Login</p>
 
       <form id="loginForm">
-        <input id="loginEmail" type="email" placeholder="Email" required>
-        <input id="loginPassword" type="password" placeholder="Password" required>
-        <button class="primary" type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: var(--accent-cyan); border: none; font-weight: 700; color: #000;">LOGIN</button>
-        <p style="text-align: center; font-size: 13px; margin-top: 14px;">New player? <button type="button" id="showRegister" style="background: none; border: none; color: var(--accent-cyan); cursor: pointer; font-weight: bold;">Create account</button></p>
+        <input id="loginEmail" type="email" placeholder="Email" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="loginPassword" type="password" placeholder="Password" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <button type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: #1a90ff; border: none; font-weight: 700; color: #fff;">LOGIN</button>
+        <p style="text-align: center; font-size: 13px; margin-top: 14px;">New player? <button type="button" id="showRegister" style="background: none; border: none; color: #1a90ff; cursor: pointer; font-weight: bold;">Create account</button></p>
       </form>
 
       <form id="registerForm" class="hidden">
-        <input id="regName" type="text" placeholder="Player name" maxlength="30" required>
-        <input id="regEmail" type="email" placeholder="Email" required>
-        <input id="regPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required>
-        <button class="primary" type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: var(--accent-cyan); border: none; font-weight: 700; color: #000;">REGISTER</button>
-        <p style="text-align: center; font-size: 13px; margin-top: 14px;">Already registered? <button type="button" id="showLogin" style="background: none; border: none; color: var(--accent-cyan); cursor: pointer; font-weight: bold;">Login</button></p>
+        <input id="regName" type="text" placeholder="Player name" maxlength="30" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="regEmail" type="email" placeholder="Email" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <input id="regPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required style="width:100%; box-sizing:border-box; padding:12px; border-radius:10px; background:#0b0c12; border:1px solid rgba(255,255,255,0.08); color:#fff; margin-bottom:12px;">
+        <button type="submit" style="width: 100%; padding: 12px; border-radius: 10px; background: #1a90ff; border: none; font-weight: 700; color: #fff;">REGISTER</button>
+        <p style="text-align: center; font-size: 13px; margin-top: 14px;">Already registered? <button type="button" id="showLogin" style="background: none; border: none; color: #1a90ff; cursor: pointer; font-weight: bold;">Login</button></p>
       </form>
     </div>
   </section>
 
-  <!-- Main App Screen -->
+  <!-- App Main Screen -->
   <section id="appScreen" class="hidden">
+    <!-- Top Blue Header (Shared Across Tabs) -->
     <header class="app-topbar">
       <div class="topbar-left">
-        <div style="position: relative;">
-          <button id="threeDotsBtn" class="app-icon-btn" title="Menu" type="button">
-            <img style="width: 100%; height: 100%; object-fit: contain;" src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="App Icon">
-          </button>
-          <div id="dropdownMenu" class="dropdown-menu hidden">
-            <button id="menuHomeBtn" class="dropdown-item" type="button">🏠 Home</button>
-            <button id="menuWithdrawBtn" class="dropdown-item" type="button">💳 Withdrawal</button>
-            <button id="logoutBtn" class="dropdown-item" type="button" style="color: #ff5555;">🚪 Log out</button>
-          </div>
-        </div>
+        <div class="app-icon-badge">🔥</div>
         <div class="brand-meta">
           <h1>FF PANEL</h1>
-          <p>Gaming Platform</p>
+          <p>Tournament Platform</p>
         </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div class="topbar-right">
+        <button id="notifBtn" class="notif-btn" type="button">🔔</button>
         <div class="coin-badge" id="walletQuickBtn">
           <span>🪙</span>
-          <b id="coins">0</b>
+          <b id="coins">0.00</b>
         </div>
       </div>
     </header>
 
-    <!-- TAB 1: Home View -->
+    <!-- 1. HOME TAB VIEW -->
     <main id="homeView">
       <div class="notice-marquee">
-        <span style="font-size: 18px; color: var(--accent-cyan);">📢</span>
-        <div id="appNoticeText" class="notice-text">Welcome to FF PANEL! Custom tournaments are now live.</div>
+        <span style="font-size: 16px; color:#1a90ff;">📢</span>
+        <div id="appNoticeText" class="notice-text">Welcome to FF PANEL! Match rooms are now live.</div>
       </div>
 
       <div class="section-title">Account Details</div>
@@ -363,143 +492,197 @@
         <button class="action-btn" id="actionProfile" type="button"><div class="action-circle">👤</div><span>My Profile</span></button>
         <button class="action-btn" id="actionMatches" type="button"><div class="action-circle">🎮</div><span>My Matches</span></button>
         <button class="action-btn" id="actionTopPlayers" type="button"><div class="action-circle">📊</div><span>Top Players</span></button>
-        <button class="action-btn" id="actionContact" type="button"><div class="action-circle">🎧</div><span>Support</span></button>
+        <button class="action-btn" id="actionContact" type="button"><div class="action-circle">🎧</div><span>Contact Us</span></button>
+      </div>
+
+      <div class="promo-card">
+        <div>
+          <span style="font-size: 11px; font-weight:800; color:#ff4444; letter-spacing:1px;">GET SUPPORT</span>
+          <h4 style="margin:4px 0 0 0; font-size:14px;">Contact Us Via Telegram</h4>
+        </div>
+        <button id="joinSupportBtn" style="background:#1a90ff; border:none; color:#fff; padding:8px 16px; border-radius:20px; font-weight:700; font-size:12px;" type="button">Chat</button>
       </div>
 
       <div class="section-title">Esports Games</div>
       <div class="games-grid">
-        <div class="game-card">
-          <img class="game-img" src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=300&auto=format&fit=crop" alt="BR">
-          <div class="game-label">Battle Royale</div>
-        </div>
-        <div class="game-card">
-          <img class="game-img" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&auto=format&fit=crop" alt="CS">
-          <div class="game-label">Clash Squad</div>
-        </div>
-        <div class="game-card">
-          <img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="LW">
-          <div class="game-label">Lone Wolf</div>
-        </div>
+        <div class="game-card" data-mode="BATTLE ROYALE"><img class="game-img" src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=300&auto=format&fit=crop" alt="BR"><div class="game-label">Battle Royale</div></div>
+        <div class="game-card" data-mode="CLASH SQUAD"><img class="game-img" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&auto=format&fit=crop" alt="CS"><div class="game-label">Clash Squad</div></div>
+        <div class="game-card" data-mode="LONE WOLF"><img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="LW"><div class="game-label">Lone Wolf</div></div>
+        <div class="game-card" data-mode="BR SURVIVAL"><img class="game-img" src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="BRS"><div class="game-label">BR Survival</div></div>
+        <div class="game-card" data-mode="CS 4V4"><img class="game-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CS4"><div class="game-label">CS 4v4</div></div>
+        <div class="game-card" data-mode="LONE WOLF 2V2"><img class="game-img" src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="LW2"><div class="game-label">Lone Wolf 2v2</div></div>
+        <div class="game-card" data-mode="GUN CHALLENGE"><img class="game-img" src="https://images.unsplash.com/photo-1552824722-ddab137b0169?w=300&auto=format&fit=crop" alt="GC"><div class="game-label">Gun Challenge</div></div>
+        <div class="game-card" data-mode="BR 4V4"><img class="game-img" src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=300&auto=format&fit=crop" alt="BR4"><div class="game-label">BR 4v4</div></div>
+        <div class="game-card" data-mode="CS HARDCORE"><img class="game-img" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop" alt="CSH"><div class="game-label">CS Hardcore</div></div>
       </div>
 
-      <!-- Live Tournaments List -->
       <section style="margin: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <h2 style="font-size: 16px; margin: 0;">Live Tournaments</h2>
           <button id="refreshTournaments" type="button" style="padding: 6px 12px; border-radius: 8px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);">Refresh</button>
         </div>
-        <div id="tournamentList">
-          <div style="text-align: center; color: #888;">Loading tournaments...</div>
-        </div>
+        <div id="tournamentList"><div style="text-align: center; color: #888;">Loading tournaments...</div></div>
       </section>
 
-      <!-- Advanced Admin Control Hub -->
+      <!-- Admin Panel Section -->
       <section id="adminPanel" class="hidden" style="margin: 16px; background: #161825; padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 183, 3, 0.4);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <h2 style="font-size: 16px; margin: 0; color: var(--accent-gold);">👑 Master Admin Hub</h2>
-          <span style="background: var(--accent-gold); color: #000; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">SUPER ADMIN</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h2 style="font-size: 15px; margin: 0; color: #ffb703;">Admin Management</h2>
+          <span style="background: #ffb703; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
         </div>
-
-        <!-- 1. Notice & Telegram Link Customization -->
-        <div class="admin-card-box">
-          <h3>📢 Notice & Telegram Controls</h3>
-          <input id="adminNoticeInput" type="text" placeholder="Set global notice text">
-          <input id="adminTelegramInput" type="text" placeholder="Set Telegram link (https://t.me/...)">
-          <button id="saveAppSettingsBtn" type="button" style="width:100%; background:var(--accent-cyan); color:#000;">Save App Settings</button>
-        </div>
-
-        <!-- 2. Coin Management (Add/Deduct Coins) -->
-        <div class="admin-card-box">
-          <h3>🪙 User Coin Controller</h3>
-          <input id="coinTargetEmail" type="email" placeholder="User email address">
-          <input id="coinAmountInput" type="number" placeholder="Coins to add (e.g. 100 or -50)">
-          <button id="updateUserCoinsBtn" type="button" style="width:100%; background:var(--accent-gold); color:#000;">Update User Balance</button>
-        </div>
-
-        <!-- 3. Withdrawal Requests Review -->
-        <div class="admin-card-box">
-          <h3>💳 Pending Withdraw Requests</h3>
-          <div id="adminWithdrawList" style="max-height: 180px; overflow-y: auto;">
-            <div style="font-size: 12px; color: #888;">Loading requests...</div>
+        <form id="tournamentForm">
+          <input id="tournamentName" type="text" placeholder="Tournament name" required style="width:100%; box-sizing:border-box; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:8px;">
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input id="tournamentEntry" type="number" min="0" placeholder="Entry" required style="flex:1; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff;">
+            <input id="tournamentPrize" type="number" min="0" placeholder="Prize" required style="flex:1; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff;">
           </div>
-        </div>
-
-        <!-- 4. Tournament Creator -->
-        <div class="admin-card-box">
-          <h3>🎮 Create Tournament</h3>
-          <form id="tournamentForm">
-            <input id="tournamentName" type="text" placeholder="Tournament name" required>
-            <div style="display: flex; gap: 8px;">
-              <input id="tournamentEntry" type="number" min="0" placeholder="Entry" required>
-              <input id="tournamentPrize" type="number" min="0" placeholder="Prize" required>
-            </div>
-            <input id="tournamentDate" type="datetime-local" required>
-            <select id="tournamentStatus">
-              <option value="upcoming">Upcoming</option>
-              <option value="live">Live</option>
-              <option value="completed">Completed</option>
-            </select>
-            <button type="submit" style="width: 100%; background: #00ffa2; color: #000;">Launch Tournament</button>
-          </form>
-        </div>
+          <input id="tournamentDate" type="datetime-local" required style="width:100%; box-sizing:border-box; padding:10px; border-radius:8px; background:#0b0c12; border:1px solid rgba(255,255,255,0.1); color:#fff; margin-bottom:10px;">
+          <button type="submit" style="width:100%; padding:10px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:bold;">Create Tournament</button>
+        </form>
       </section>
     </main>
 
-    <!-- TAB 2: Full Profile View -->
-    <main id="profileView" class="hidden">
-      <div id="profileSection">
-        <div class="profile-header-card">
-          <div class="profile-avatar-large" id="profileAvatarLetter">P</div>
-          <div>
-            <h2 id="profileDisplayName" style="margin: 0; font-size: 18px;">Player</h2>
-            <p id="profileDisplayEmail" style="margin: 3px 0 0 0; font-size: 12px; color: var(--text-sub);">user@gmail.com</p>
-          </div>
-        </div>
+    <!-- 2. VIDEO TAB VIEW -->
+    <main id="videoView" class="hidden">
+      <div class="search-box">Search by topic or title...</div>
+      <div class="section-title">Tutorial Videos (1)</div>
+      <div class="video-card" id="videoTutorialCard">
+        <h4 style="margin:0 0 6px 0; font-size:14px;">How To Change In-game Name And Level</h4>
+        <div style="font-size:12px; color:#1a90ff; margin-bottom:6px;">Topic: match join</div>
+        <div style="font-size:11px; color:var(--text-sub);">Tap to watch in YouTube</div>
+      </div>
+    </main>
 
-        <div class="profile-menu-list">
-          <div class="profile-menu-row" id="rowWallet">
-            <div class="row-left"><span class="row-icon">💳</span><div><h4 style="margin: 0; font-size: 14px;">My Wallet</h4><p style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub);">Withdraw Coins</p></div></div><span>❯</span>
-          </div>
-          <div class="profile-menu-row" id="rowContact">
-            <div class="row-left"><span class="row-icon">🎧</span><div><h4 style="margin: 0; font-size: 14px;">Support</h4><p style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub);">Telegram Support</p></div></div><span>❯</span>
-          </div>
-          <div class="profile-menu-row" id="rowLogout">
-            <div class="row-left"><span class="row-icon" style="color: #ff5555;">🚪</span><div><h4 style="margin: 0; font-size: 14px; color: #ff5555;">Logout</h4><p style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub);">Sign out</p></div></div><span>❯</span>
-          </div>
+    <!-- 3. EARN TAB VIEW -->
+    <main id="earnView" class="hidden">
+      <div class="section-title">Earn Center</div>
+      <div class="earn-card" id="earnCardRefer" style="background:#0a4ca3;">
+        <div class="earn-circle">👤</div>
+        <div class="earn-info">
+          <h3>Refer and Earn</h3>
+          <p>Invite to your friends to this app and Earn Huge!</p>
+        </div>
+      </div>
+      <div class="earn-card" id="earnCardWatch" style="background:#b37400;">
+        <div class="earn-circle">▶️</div>
+        <div class="earn-info">
+          <h3>Watch and Earn</h3>
+          <p>Watch reward video and Earn!</p>
+        </div>
+      </div>
+      <div class="earn-card" id="earnCardLucky" style="background:#137333;">
+        <div class="earn-circle">⭐</div>
+        <div class="earn-info">
+          <h3>Lucky Draw</h3>
+          <p>Buy lottery ticket and try your luck!</p>
+        </div>
+      </div>
+      <div class="earn-card" id="earnCardPlay" style="background:#282a36;">
+        <div class="earn-circle">🎮</div>
+        <div class="earn-info">
+          <h3>Play and Earn</h3>
+          <p>Join Tournament and Earn!</p>
         </div>
       </div>
     </main>
 
+    <!-- 4. WALLET TAB VIEW -->
+    <main id="walletView" class="hidden">
+      <div class="wallet-card-main">
+        <span style="font-size:13px; opacity:0.9;">Total Wallet Balance</span>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+          <span style="font-size:24px;">🪙</span>
+          <h2 style="margin:0; font-size:28px;" id="walletTotalBalance">0.00</h2>
+        </div>
+      </div>
+
+      <div class="wallet-grid">
+        <div class="wallet-stat-box"><span>Deposit</span><b id="walletDeposit">0.00</b></div>
+        <div class="wallet-stat-box"><span>Winnings</span><b id="walletWinnings">0.00</b></div>
+        <div class="wallet-stat-box"><span>Bonus</span><b id="walletBonus">0.00</b></div>
+        <div class="wallet-stat-box"><span>Referral</span><b id="walletReferral">0.00</b></div>
+      </div>
+
+      <div class="wallet-btn-row">
+        <button id="addFundsBtn" class="wallet-btn" style="background:#1a90ff; color:#fff;" type="button">Add Funds</button>
+        <button id="withdrawBtnAction" class="wallet-btn" style="background:#181920; color:#fff; border:1px solid rgba(255,255,255,0.1);" type="button">Withdraw</button>
+      </div>
+
+      <div style="background:#141520; border-radius:14px; margin:16px; padding:16px; border:1px solid var(--card-border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h4 style="margin:0; font-size:14px;">Latest 10 Transactions</h4>
+          <span style="font-size:12px; color:#888;">View all</span>
+        </div>
+        <div style="font-size:12px; color:#666; text-align:center; padding:12px 0;">No Firebase transactions found</div>
+      </div>
+    </main>
+
+    <!-- 5. PROFILE TAB VIEW (18 Menu Items) -->
+    <main id="profileView" class="hidden">
+      <div class="profile-header-card">
+        <div class="profile-avatar-large" id="profileAvatarLetter">P</div>
+        <div>
+          <h2 id="profileDisplayName" style="margin:0; font-size:16px;">Player</h2>
+          <p id="profileDisplayEmail" style="margin:3px 0 0 0; font-size:12px; color:var(--text-sub);">player@gmail.com</p>
+          <small id="profileDisplayUsername" style="color:#1a90ff; font-size:11px;">@player_01</small>
+        </div>
+      </div>
+
+      <div class="profile-menu-list">
+        <div class="profile-menu-row" id="rowMyProfile"><div class="row-left"><span class="row-icon">👤</span><div class="row-text"><h4>My Profile</h4><p>Username: <span id="kycUsername">player</span> • KYC: NONE</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowNotification"><div class="row-left"><span class="row-icon">🔔</span><div class="row-text"><h4>Notification Settings</h4><p>Enable alerts and manage subscriptions</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowWallet"><div class="row-left"><span class="row-icon">💳</span><div class="row-text"><h4>My Wallet</h4><p>Total Balance Coin: <span id="walletRowBalance">0.00</span></p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowRewards"><div class="row-left"><span class="row-icon">🎁</span><div class="row-text"><h4>My Rewards</h4><p>View Your Rewards History</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowTransactions"><div class="row-left"><span class="row-icon">⏱️</span><div class="row-text"><h4>Transaction History</h4><p>View your deposits and withdrawals</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowMyMatches"><div class="row-left"><span class="row-icon">🎮</span><div class="row-text"><h4>My Matches</h4><p>View your Matches</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowGameRules"><div class="row-left"><span class="row-icon">📖</span><div class="row-text"><h4>Game Rules</h4><p>Know how to play and win</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowContact"><div class="row-left"><span class="row-icon">🎧</span><div class="row-text"><h4>Contact Us</h4><p>Get help or report an issue</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowTopPlayers"><div class="row-left"><span class="row-icon">📊</span><div class="row-text"><h4>Top Players</h4><p>See the leaderboard</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowFaq"><div class="row-left"><span class="row-icon">❓</span><div class="row-text"><h4>FAQ</h4><p>Frequently asked questions</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowAbout"><div class="row-left"><span class="row-icon">ℹ️</span><div class="row-text"><h4>About Us</h4><p>Learn more about our app</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowOfficialSite"><div class="row-left"><span class="row-icon">🌐</span><div class="row-text"><h4>Official Site</h4><p>Visit our website</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowPrivacy"><div class="row-left"><span class="row-icon">🛡️</span><div class="row-text"><h4>Privacy Policy</h4><p>How we protect your data</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowTerms"><div class="row-left"><span class="row-icon">📄</span><div class="row-text"><h4>Terms & Conditions</h4><p>Read our policies</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowRate"><div class="row-left"><span class="row-icon">⭐</span><div class="row-text"><h4>Rate App</h4><p>Share your experience</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowShare"><div class="row-left"><span class="row-icon">🔗</span><div class="row-text"><h4>Share App</h4><p>Invite friends to join</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowMoreApps"><div class="row-left"><span class="row-icon">📱</span><div class="row-text"><h4>More Apps</h4><p>Explore our other creations</p></div></div><span style="color:#555;">❯</span></div>
+        <div class="profile-menu-row" id="rowLogout"><div class="row-left"><span class="row-icon" style="color:#ff5555;">🚪</span><div class="row-text"><h4 style="color:#ff5555;">Logout</h4><p>Sign out of your account</p></div></div><span style="color:#555;">❯</span></div>
+      </div>
+    </main>
+
+    <!-- Hidden sync elements -->
     <div style="display:none;">
       <span id="playerName"></span>
       <span id="playerEmail"></span>
     </div>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- 5-Item Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <button class="nav-item active" id="navHome" type="button"><div class="nav-icon">🏠</div><span>Home</span></button>
-      <button class="nav-item" id="navWallet" type="button"><div class="nav-icon">💳</div><span>Wallet</span></button>
-      <button class="nav-item" id="navProfile" type="button"><div class="nav-icon">👤</div><span>Profile</span></button>
+      <button class="nav-item active" id="navHome" type="button"><div class="nav-icon-box">🏠</div><span>Home</span></button>
+      <button class="nav-item" id="navVideo" type="button"><div class="nav-icon-box">▶️</div><span>Video</span></button>
+      <button class="nav-item" id="navEarn" type="button"><div class="nav-icon-box">🎁</div><span>Earn</span></button>
+      <button class="nav-item" id="navWallet" type="button"><div class="nav-icon-box">💳</div><span>Wallet</span></button>
+      <button class="nav-item" id="navProfile" type="button"><div class="nav-icon-box">👤</div><span>Profile</span></button>
     </nav>
   </section>
 
   <!-- Withdraw Modal -->
   <div id="withdrawModal" class="modal-overlay hidden">
     <div class="settings-modal">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="margin: 0;">💳 Withdraw Coins</h3>
-        <button id="closeWithdrawBtn" type="button" style="background: transparent; border: none; color: #888; font-size: 20px;">&times;</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3 style="margin:0; font-size:16px;">💳 Withdraw Coins</h3>
+        <button id="closeWithdrawBtn" type="button" style="background:transparent; border:none; color:#888; font-size:20px;">&times;</button>
       </div>
-      <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
-        <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
+      <form id="withdrawForm">
+        <select id="withdrawMethod" required>
           <option value="">Select Payment Method</option>
           <option value="UPI">UPI / GPay / PhonePe</option>
           <option value="Paytm">Paytm</option>
           <option value="Bkash">bKash</option>
         </select>
-        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
-        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
-        <button type="submit" style="padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700; color: #000;">Submit Request</button>
+        <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" required>
+        <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" required>
+        <button type="submit" style="width:100%; padding:12px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:700;">Submit Request</button>
       </form>
     </div>
   </div>
