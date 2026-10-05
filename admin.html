@@ -239,7 +239,20 @@
       <div class="card">
         <h2>🕹️ Edit & Add Esports Game Modes</h2>
         <form id="modesForm">
-          <div id="modesInputsContainer"></div>
+          <di>
+
+      <!-- Edit & Add Profile Section Menu Card -->
+      <div class="card">
+        <h2>👤 Edit & Add Profile Menu Options</h2>
+        <p style="font-size:11px; color:var(--sub); margin-top:0;">Customize Profile tab options, change names, or add new links/popups:</p>
+        <form id="profileMenuForm">
+          <div id="profileMenuInputsContainer"></div>
+          <button type="button" id="addProfileItemBtn" class="btn" style="background:#2ecc71; margin-bottom:10px;">+ Add New Profile Option</button>
+          <button type="submit" class="btn" style="background:var(--gold); color:#000;">💾 Save Profile Menu</button>
+        </form>
+      </div>
+
+ id="modesInputsContainer"></div>
           <button type="button" id="addModeBoxBtn" class="btn" style="background:#2ecc71; margin-bottom:10px;">+ Add New Mode Box</button>
           <button type="submit" class="btn" style="background:var(--gold); color:#000;">💾 Save All Game Modes</button>
         </form>
@@ -657,6 +670,95 @@
         maintenanceMsg: msg
       }, { merge: true });
       toast(status === "ON" ? "🔴 Maintenance Mode Activated!" : "🟢 App is Live Now!");
+    };
+    // --- Dynamic Profile Section Edit / Add / Delete Logic ---
+    let currentProfileMenu = [
+      { title: "💳 My Wallet", type: "WALLET", value: "" },
+      { title: "🎮 My Matches", type: "MATCHES", value: "" },
+      { title: "📋 Game Rules", type: "RULES", value: "" },
+      { title: "🎧 Contact Support", type: "SUPPORT", value: "" },
+      { title: "🌐 Official Website", type: "WEBSITE", value: "" },
+      { title: "🔗 Share App", type: "SHARE", value: "https://nabak5883-png.github.io/ff_panel/download.html" }
+    ];
+
+    function syncProfileInputs() {
+      const titles = document.querySelectorAll(".prof-title-inp");
+      const types = document.querySelectorAll(".prof-type-inp");
+      const vals = document.querySelectorAll(".prof-val-inp");
+      if (titles.length) {
+        currentProfileMenu = [];
+        titles.forEach((t, i) => {
+          currentProfileMenu.push({
+            title: t.value.trim(),
+            type: types[i].value,
+            value: vals[i].value.trim()
+          });
+        });
+      }
+    }
+
+    function renderProfileMenuInputs() {
+      const box = document.getElementById("profileMenuInputsContainer");
+      if (!box) return;
+      box.innerHTML = "";
+      currentProfileMenu.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.style.cssText = "background:#0b0c10; padding:10px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border);";
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <b style="font-size:12px; color:var(--gold);">Profile Option #${i + 1}</b>
+            <button type="button" data-rm-prof="${i}" style="background:var(--danger); color:#fff; border:none; padding:3px 8px; border-radius:5px; font-size:10px; cursor:pointer;">Delete</button>
+          </div>
+          <label>Option Title (with Emoji)</label>
+          <input type="text" class="input-field prof-title-inp" value="${item.title}" placeholder="e.g. 📺 Our YouTube Channel" required>
+          <label>When Player Taps This Option:</label>
+          <select class="input-field prof-type-inp">
+            <option value="LINK" ${item.type === "LINK" ? "selected" : ""}>🌐 Open Custom Link / URL</option>
+            <option value="POPUP" ${item.type === "POPUP" ? "selected" : ""}>💬 Show Popup Message / Info</option>
+            <option value="WALLET" ${item.type === "WALLET" ? "selected" : ""}>💳 Go to My Wallet Tab</option>
+            <option value="MATCHES" ${item.type === "MATCHES" ? "selected" : ""}>🎮 Go to Live Matches</option>
+            <option value="RULES" ${item.type === "RULES" ? "selected" : ""}>📋 Open Game Rules</option>
+            <option value="SUPPORT" ${item.type === "SUPPORT" ? "selected" : ""}>🎧 Open Customer Support</option>
+            <option value="WEBSITE" ${item.type === "WEBSITE" ? "selected" : ""}>🌐 Open Official Website</option>
+            <option value="SHARE" ${item.type === "SHARE" ? "selected" : ""}>🔗 Share App Link</option>
+          </select>
+          <label>Custom Link URL or Popup Text (if Custom Link/Popup selected)</label>
+          <input type="text" class="input-field prof-val-inp" style="margin-bottom:0;" value="${item.value || ""}" placeholder="https://... or Custom popup message">
+        `;
+        div.querySelector("[data-rm-prof]").onclick = () => {
+          syncProfileInputs();
+          currentProfileMenu.splice(i, 1);
+          renderProfileMenuInputs();
+        };
+        box.appendChild(div);
+      });
+    }
+
+    renderProfileMenuInputs();
+
+    document.getElementById("addProfileItemBtn").onclick = () => {
+      syncProfileInputs();
+      currentProfileMenu.push({
+        title: "⭐ New Option",
+        type: "LINK",
+        value: "https://t.me/nkwithprifut101"
+      });
+      renderProfileMenuInputs();
+      toast("➕ New Profile Option Added!");
+    };
+
+    getDoc(doc(db, "settings", "global")).then(snap => {
+      if (snap.exists() && Array.isArray(snap.data().profileMenu)) {
+        currentProfileMenu = snap.data().profileMenu;
+        renderProfileMenuInputs();
+      }
+    });
+
+    document.getElementById("profileMenuForm").onsubmit = async e => {
+      e.preventDefault();
+      syncProfileInputs();
+      await setDoc(doc(db, "settings", "global"), { profileMenu: currentProfileMenu }, { merge: true });
+      toast("✅ Profile Menu Saved!");
     };
 
   </script>
