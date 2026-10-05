@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#e63946">
+  <title>FF PANEL - Admin Control</title>
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #15171e;
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #1a90ff;
+      --danger: #ff4d4d;
+      --success: #2ecc71;
+      --gold: #ffb703;
+      --text: #ffffff;
+      --sub: #8a90a2;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      padding: 0 0 40px 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      background: #1c1e26;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar h1 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .logout-btn {
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .card h2 {
+      margin: 0 0 14px 0;
+      font-size: 15px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      background: #0b0c10;
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 13px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn-danger {
+      background: var(--danger);
+      padding: 6px 12px;
+      width: auto;
+      font-size: 11px;
+      border-radius: 6px;
+    }
+
+    .item-row {
+      background: #0b0c10;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 1px solid var(--primary);
+      font-size: 13px;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast"></div>
+
+  <!-- Admin Login Screen -->
+  <section id="adminAuth" class="container" style="margin-top: 60px;">
+    <div class="card">
+      <h2 style="text-align:center; font-size:18px; color:var(--gold);">🛡️ FF PANEL ADMIN</h2>
+      <p style="text-align:center; font-size:12px; color:var(--sub); margin-bottom:16px;">Authorized Access Only</p>
+      <form id="adminLoginForm">
+        <input id="adminEmail" class="input-field" type="email" placeholder="Admin Email" required>
+        <input id="adminPass" class="input-field" type="password" placeholder="Admin Password" required>
+        <button type="submit" class="btn">LOGIN TO DASHBOARD</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Admin Dashboard -->
+  <section id="adminDashboard" class="hidden">
+    <header class="topbar">
+      <h1>🛡️ ADMIN PANEL</h1>
+      <button id="adminLogout" class="logout-btn">Logout</button>
+    </header>
+
+    <div class="container">
+
+      <!-- 1. App Notice & Support Link -->
+      <div class="card">
+        <h2>📢 App Notice & Support Link</h2>
+        <form id="settingsForm">
+          <input id="noticeInput" class="input-field" type="text" placeholder="Welcome Banner Notice Text" required>
+          <input id="telegramInput" class="input-field" type="url" placeholder="Telegram / Support Link (https://...)" required>
+          <button type="submit" class="btn">Save Settings</button>
+        </form>
+      </div>
+
+      <!-- 2. Create New Tournament -->
+      <div class="card">
+        <h2>🎮 Create New Match / Tournament</h2>
+        <form id="createMatchForm">
+          <input id="matchName" class="input-field" type="text" placeholder="Match Title (e.g. BR Solo #12)" required>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <input id="matchEntry" class="input-field" type="number" placeholder="Entry Fee (Coins)" required>
+            <input id="matchPrize" class="input-field" type="number" placeholder="Winning Prize" required>
+          </div>
+          <input id="matchDate" class="input-field" type="text" placeholder="Time (e.g. Today 8:00 PM)" required>
+          <select id="matchStatus" class="input-field">
+            <option value="OPEN">OPEN</option>
+            <option value="LIVE">LIVE</option>
+            <option value="FULL">FULL</option>
+          </select>
+          <button type="submit" class="btn" style="background:var(--success);">+ Publish Match</button>
+        </form>
+
+        <h3 style="font-size:13px; margin:16px 0 8px 0; color:var(--sub);">Active Matches:</h3>
+        <div id="adminMatchList">Loading matches...</div>
+      </div>
+
+      <!-- 3. Manage User Coins -->
+      <div class="card">
+        <h2>🪙 Add / Update User Coins</h2>
+        <form id="coinForm">
+          <input id="targetEmail" class="input-field" type="email" placeholder="Player Email Address" required>
+          <input id="newCoinAmount" class="input-field" type="number" step="0.01" placeholder="New Total Coins (e.g. 500)" required>
+          <button type="submit" class="btn" style="background:var(--gold); color:#000;">Update Player Balance</button>
+        </form>
+      </div>
+
+      <!-- 4. Withdrawal Requests -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h2 style="margin:0; border:none; padding:0;">💳 Withdrawal Requests</h2>
+          <button id="refreshWithdrawals" style="background:none; border:1px solid var(--border); color:#fff; padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Refresh</button>
+        </div>
+        <div id="withdrawList">Loading requests...</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Embedded Admin Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import {
+      getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import {
+      getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc,
+      collection, addDoc, getDocs, query, where, orderBy, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxIXXfNW4vizhU3lpjfk2rjUd70Bj7QGI",
+      authDomain: "nk-ff-a89ee.firebaseapp.com",
+      projectId: "nk-ff-a89ee",
+      storageBucket: "nk-ff-a89ee.firebasestorage.app",
+      messagingSenderId: "106376072531",
+      appId: "1:106376072531:web:ebb5be26decf66e25fe5a6",
+      measurementId: "G-YTX39QEV12"
+    };
+
+    const ADMIN_EMAIL = "nabak5883@gmail.com";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const $ = id => document.getElementById(id);
+
+    function toast(msg) {
+      const t = $("toast");
+      t.textContent = msg;
+      t.style.display = "block";
+      clearTimeout(window._t);
+      window._t = setTimeout(() => t.style.display = "none", 2600);
+    }
+
+    // Login Handler
+    $("adminLoginForm").onsubmit = async e => {
+      e.preventDefault();
+      const email = $("adminEmail").value.trim().toLowerCase();
+      const pass = $("adminPass").value;
+      if (email !== ADMIN_EMAIL) {
+        toast("Access Denied! Only Admin Email Allowed.");
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (err) {
+        toast(err.message);
+      }
+    };
+
+    // Auth Check
+    onAuthStateChanged(auth, async user => {
+      if (!user || user.email.toLowerCase() !== ADMIN_EMAIL) {
+        if (user) await signOut(auth);
+        $("adminAuth").classList.remove("hidden");
+        $("adminDashboard").classList.add("hidden");
+        return;
+      }
+      $("adminAuth").classList.add("hidden");
+      $("adminDashboard").classList.remove("hidden");
+      loadSettings();
+      loadMatches();
+      loadWithdrawals();
+    });
+
+    $("adminLogout").onclick = () => signOut(auth);
+
+    // 1. Save & Load Settings
+    async function loadSettings() {
+      try {
+        const snap = await getDoc(doc(db, "settings", "global"));
+        if (snap.exists()) {
+          const d = snap.data();
+          if (d.notice) $("noticeInput").value = d.notice;
+          if (d.telegram) $("telegramInput").value = d.telegram;
+        }
+      } catch (e) {}
+    }
+
+    $("settingsForm").onsubmit = async e => {
+      e.preventDefault();
+      try {
+        await setDoc(doc(db, "settings", "global"), {
+          notice: $("noticeInput").value.trim(),
+          telegram: $("telegramInput").value.trim()
+        }, { merge: true });
+        toast("Settings Updated!");
+      } catch (err) { toast(err.message); }
+    };
+
+    // 2. Create & Delete Matches
+    $("createMatchForm").onsubmit = async e => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "tournaments"), {
+          name: $("matchName").value.trim(),
+          entry: Number($("matchEntry").value),
+          prize: Number($("matchPrize").value),
+          dateText: $("matchDate").value.trim(),
+          status: $("matchStatus").value,
+          createdAt: serverTimestamp()
+        });
+        toast("Match Published!");
+        $("createMatchForm").reset();
+        loadMatches();
+      } catch (err) { toast(err.message); }
+    };
+
+    async function loadMatches() {
+      const box = $("adminMatchList");
+      try {
+        const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          box.innerHTML = '<div style="color:#8a90a2; font-size:12px;">No active matches.</div>';
+          return;
+        }
+        box.innerHTML = "";
+        snap.forEach(d => {
+          const m = d.data();
+          const row = document.createElement("div");
+          row.className = "item-row";
+          row.innerHTML = `
+            <div>
+              <b style="color:#fff;">${m.name}</b> (${m.status})<br>
+              <span style="color:#8a90a2;">Entry: ${m.entry} | Prize: ${m.prize} | ${m.dateText}</span>
+            </div>
+            <button class="btn btn-danger" data-del="${d.id}">Delete</button>
+          `;
+          row.querySelector("[data-del]").onclick = async () => {
+            await deleteDoc(doc(db, "tournaments", d.id));
+            toast("Match Deleted!");
+            loadMatches();
+          };
+          box.appendChild(row);
+        });
+      } catch (e) {}
+    }
+
+    // 3. Update User Coins by Email
+    $("coinForm").onsubmit = async e => {
+      e.preventDefault();
+      const email = $("targetEmail").value.trim();
+      const newCoins = Number($("newCoinAmount").value);
+      try {
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          toast("No player found with this email!");
+          return;
+        }
+        for (const userDoc of snap.docs) {
+          await updateDoc(doc(db, "users", userDoc.id), {
+            coins: newCoins,
+            deposit: newCoins
+          });
+        }
+        toast(`Updated ${email} to ${newCoins} Coins!`);
+        $("coinForm").reset();
+      } catch (err) { toast(err.message); }
+    };
+
+    // 4. Load & Complete Withdrawals
+    async function loadWithdrawals() {
+      const box = $("withdrawList");
+      try {
+        const q = query(collection(db, "withdrawals"), orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          box.innerHTML = '<div style="color:#8a90a2; font-size:12px;">No pending requests.</div>';
+          return;
+        }
+        box.innerHTML = "";
+        snap.forEach(d => {
+          const w = d.data();
+          const row = document.createElement("div");
+          row.className = "item-row";
+          row.innerHTML = `
+            <div>
+              <b style="color:var(--gold);">🪙 ${w.coins} Coins</b> (${w.method})<br>
+              <span style="color:#fff;">Number/ID: ${w.number}</span><br>
+              <span style="color:#8a90a2;">Player: ${w.userEmail}</span>
+            </div>
+            <button class="btn btn-danger" style="background:var(--success);" data-done="${d.id}">Paid / Clear</button>
+          `;
+          row.querySelector("[data-done]").onclick = async () => {
+            await deleteDoc(doc(db, "withdrawals", d.id));
+            toast("Request Marked as Paid!");
+            loadWithdrawals();
+          };
+          box.appendChild(row);
+        });
+      } catch (e) {}
+    }
+
+    $("refreshWithdrawals").onclick = loadWithdrawals;
+  </script>
+</body>
+</html>
