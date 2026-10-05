@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#0d0e15">
   <title>FF PANEL - Gaming Platform</title>
 
+  <!-- PWA Manifest Linking -->
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,6 +38,11 @@
       padding-bottom: 75px;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
+    /* ========== Splash / Intro Animation ========== */
     #splashScreen {
       position: fixed;
       inset: 0;
@@ -46,7 +52,7 @@
       align-items: center;
       justify-content: center;
       z-index: 99999;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
     #splashScreen.fade-out {
       opacity: 0;
@@ -56,7 +62,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
     .splash-icon {
       font-size: 64px;
@@ -94,19 +99,15 @@
       background: linear-gradient(90deg, var(--accent-cyan), #00ffa2);
       position: absolute;
       left: -100%;
-      animation: loadBar 1.8s ease-in-out forwards;
+      animation: loadBar 1.5s ease-in-out forwards;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0.6); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
     @keyframes loadBar {
       0% { left: -100%; }
       100% { left: 0%; }
     }
 
-    /* Auth Page Styles */
+    /* ========== Auth Box Styles ========== */
     .auth-card {
       background: #141520;
       border: 1px solid var(--card-border);
@@ -172,6 +173,7 @@
       color: var(--text-sub);
     }
 
+    /* ========== Modern Header ========== */
     .app-topbar {
       position: sticky;
       top: 0;
@@ -259,9 +261,6 @@
       z-index: 10001;
       padding: 6px 0;
     }
-    .dropdown-menu.hidden {
-      display: none !important;
-    }
     .dropdown-item {
       padding: 12px 18px;
       color: #fff;
@@ -338,8 +337,22 @@
     .nav-icon { font-size: 20px; }
 
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 10002; padding: 16px; }
-    .modal-overlay.hidden { display: none !important; }
     .settings-modal { background: #141520; border: 1px solid var(--card-border); border-radius: 18px; width: 100%; max-width: 360px; padding: 20px; color: #fff; }
+    
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 13px;
+      display: none;
+      z-index: 100000;
+    }
   </style>
 </head>
 <body>
@@ -357,27 +370,27 @@
 
   <div id="toast"></div>
 
-  <!-- Auth Screen (OTP, Phone, Email & Google) -->
+  <!-- Auth Screen -->
   <section id="authScreen" class="screen">
     <div class="auth-card">
       <div class="brand" style="text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 6px;">FF <span>PANEL</span></div>
       <p class="muted" style="text-align: center; font-size: 13px; color: var(--text-sub); margin-bottom: 20px;">Fast & Secure Verification Login</p>
 
       <div class="auth-tabs">
-        <button id="tabPhoneBtn" class="auth-tab-btn active">Phone OTP</button>
-        <button id="tabEmailBtn" class="auth-tab-btn">Email Login</button>
+        <button id="tabPhoneBtn" class="auth-tab-btn active" type="button">Phone OTP</button>
+        <button id="tabEmailBtn" class="auth-tab-btn" type="button">Email Login</button>
       </div>
 
       <!-- Phone Login View -->
       <div id="phoneAuthBox">
         <div id="phoneStep1">
-          <input id="phoneNumber" type="tel" placeholder="Enter Phone (e.g. +91XXXXXXXXXX)" required>
+          <input id="phoneNumber" type="tel" placeholder="Enter Phone (e.g. +91XXXXXXXXXX)">
           <div id="recaptcha-container"></div>
-          <button class="primary" id="sendOtpBtn" style="width: 100%; padding: 12px; border-radius: 10px; background: var(--accent-cyan); border: none; font-weight: 700; margin-top: 8px;">GET OTP</button>
+          <button class="primary" id="sendOtpBtn" type="button" style="width: 100%; padding: 12px; border-radius: 10px; background: var(--accent-cyan); border: none; font-weight: 700; margin-top: 8px;">GET OTP</button>
         </div>
         <div id="phoneStep2" class="hidden" style="margin-top: 10px;">
-          <input id="otpCode" type="number" placeholder="Enter 6-digit OTP" required>
-          <button class="primary" id="verifyOtpBtn" style="width: 100%; padding: 12px; border-radius: 10px; background: #00ffa2; border: none; font-weight: 700;">VERIFY & ENTER</button>
+          <input id="otpCode" type="number" placeholder="Enter 6-digit OTP">
+          <button class="primary" id="verifyOtpBtn" type="button" style="width: 100%; padding: 12px; border-radius: 10px; background: #00ffa2; border: none; font-weight: 700;">VERIFY & ENTER</button>
         </div>
       </div>
 
@@ -398,8 +411,8 @@
 
       <div style="text-align: center; color: var(--text-sub); font-size: 12px; margin: 12px 0;">── OR ──</div>
 
-      <!-- Google Sign In -->
-      <button id="googleSignInBtn" class="google-btn">
+      <!-- Google Sign In Button -->
+      <button id="googleSignInBtn" class="google-btn" type="button">
         <img width="18" height="18" src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9zqoA7INrfqMIeqfh40nrtnQ27vAssXBu" alt="Google">
         Continue with Google
       </button>
@@ -411,16 +424,16 @@
     <header class="app-topbar">
       <div class="topbar-left">
         <div class="menu-container">
-          <button id="threeDotsBtn" class="app-icon-btn" title="Menu">
+          <button id="threeDotsBtn" class="app-icon-btn" title="Menu" type="button">
             <img class="header-logo-img" src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="App Icon">
           </button>
           <div id="dropdownMenu" class="dropdown-menu hidden">
-            <button id="menuHomeBtn" class="dropdown-item">🏠 Home</button>
-            <button id="menuLeaderboardBtn" class="dropdown-item">🏆 Leaderboard</button>
-            <button id="menuReferBtn" class="dropdown-item">🎁 Refer</button>
-            <button id="menuWithdrawBtn" class="dropdown-item">💳 Withdrawal</button>
-            <button id="menuSettingsBtn" class="dropdown-item">⚙️ Settings</button>
-            <button id="logoutBtn" class="dropdown-item" style="color: #ff5555;">🚪 Log out</button>
+            <button id="menuHomeBtn" class="dropdown-item" type="button">🏠 Home</button>
+            <button id="menuLeaderboardBtn" class="dropdown-item" type="button">🏆 Leaderboard</button>
+            <button id="menuReferBtn" class="dropdown-item" type="button">🎁 Refer</button>
+            <button id="menuWithdrawBtn" class="dropdown-item" type="button">💳 Withdrawal</button>
+            <button id="menuSettingsBtn" class="dropdown-item" type="button">⚙️ Settings</button>
+            <button id="logoutBtn" class="dropdown-item" type="button" style="color: #ff5555;">🚪 Log out</button>
           </div>
         </div>
         <div class="brand-meta">
@@ -429,7 +442,7 @@
         </div>
       </div>
       <div class="topbar-right">
-        <button id="notifBtn" class="notif-btn" style="background: transparent; border:none; font-size: 18px; color: #fff;">🔔</button>
+        <button id="notifBtn" type="button" style="background: transparent; border:none; font-size: 18px; color: #fff;">🔔</button>
         <div class="coin-badge" id="walletQuickBtn">
           <span>🪙</span>
           <b id="coins">0</b>
@@ -446,10 +459,10 @@
 
       <div class="section-title">Account Details</div>
       <div class="actions-grid">
-        <button class="action-btn" id="actionProfile"><div class="action-circle">👤</div><span>My Profile</span></button>
-        <button class="action-btn" id="actionMatches"><div class="action-circle">🎮</div><span>My Matches</span></button>
-        <button class="action-btn" id="actionTopPlayers"><div class="action-circle">📊</div><span>Top Players</span></button>
-        <button class="action-btn" id="actionContact"><div class="action-circle">🎧</div><span>Contact Us</span></button>
+        <button class="action-btn" id="actionProfile" type="button"><div class="action-circle">👤</div><span>My Profile</span></button>
+        <button class="action-btn" id="actionMatches" type="button"><div class="action-circle">🎮</div><span>My Matches</span></button>
+        <button class="action-btn" id="actionTopPlayers" type="button"><div class="action-circle">📊</div><span>Top Players</span></button>
+        <button class="action-btn" id="actionContact" type="button"><div class="action-circle">🎧</div><span>Contact Us</span></button>
       </div>
 
       <div class="promo-card">
@@ -459,7 +472,7 @@
             <h4 style="margin: 0; font-size: 14px;">Official Guide & Rules</h4>
             <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-sub);">How to join rooms & submit ID</p>
           </div>
-          <button class="promo-btn" style="background: var(--accent-cyan); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700;">Watch</button>
+          <button style="background: var(--accent-cyan); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700;" type="button">Watch</button>
         </div>
       </div>
 
@@ -477,24 +490,12 @@
           <img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="LW">
           <div class="game-label">Lone Wolf</div>
         </div>
-        <div class="game-card" data-mode="BR SURVIVAL">
-          <img class="game-img" src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="BRS">
-          <div class="game-label">BR Survival</div>
-        </div>
-        <div class="game-card" data-mode="CS HARDCORE">
-          <img class="game-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CSH">
-          <div class="game-label">CS Hardcore</div>
-        </div>
-        <div class="game-card" data-mode="LONE WOLF 2V2">
-          <img class="game-img" src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="LW2">
-          <div class="game-label">Lone Wolf 2v2</div>
-        </div>
       </div>
 
       <section class="panel" style="margin: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <h2 style="font-size: 16px; margin: 0;">Live Tournaments</h2>
-          <button id="refreshTournaments" class="ghost" style="padding: 6px 12px; border-radius: 8px;">Refresh</button>
+          <button id="refreshTournaments" class="ghost" type="button" style="padding: 6px 12px; border-radius: 8px;">Refresh</button>
         </div>
         <div id="tournamentList" class="list">
           <div class="loading">Loading tournaments...</div>
@@ -505,9 +506,9 @@
       <section id="adminPanel" class="panel hidden" style="margin: 16px; background: #161825; padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 183, 3, 0.3);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <h2 style="font-size: 16px; margin: 0;">Admin Management</h2>
-          <span class="badge" style="background: var(--accent-gold); color: #000; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
+          <span style="background: var(--accent-gold); color: #000; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
         </div>
-        <form id="tournamentForm" class="admin-form" style="margin-top: 14px;">
+        <form id="tournamentForm" style="margin-top: 14px;">
           <input type="hidden" id="editTournamentId">
           <input id="tournamentName" type="text" placeholder="Tournament name" maxlength="60" required style="width: 100%; box-sizing: border-box; margin-bottom: 8px; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
           <div style="display: flex; gap: 8px; margin-bottom: 8px;">
@@ -523,8 +524,8 @@
             </select>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button class="primary" type="submit" id="saveTournament" style="flex: 1; padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Create Tournament</button>
-            <button class="ghost hidden" type="button" id="cancelEdit" style="padding: 12px; border-radius: 8px;">Cancel</button>
+            <button type="submit" id="saveTournament" style="flex: 1; padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700; color: #000;">Create Tournament</button>
+            <button class="hidden" type="button" id="cancelEdit" style="padding: 12px; border-radius: 8px;">Cancel</button>
           </div>
         </form>
       </section>
@@ -574,15 +575,15 @@
       <span id="points">0</span>
       <span id="matches">0</span>
       <span id="wins">0</span>
-      <button id="refreshBtn"></button>
+      <button id="refreshBtn" type="button"></button>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <button class="nav-item active" id="navHome"><div class="nav-icon">🏠</div><span>Home</span></button>
-      <button class="nav-item" id="navEarn"><div class="nav-icon">🎁</div><span>Earn</span></button>
-      <button class="nav-item" id="navWallet"><div class="nav-icon">💳</div><span>Wallet</span></button>
-      <button class="nav-item" id="navProfile"><div class="nav-icon">👤</div><span>Profile</span></button>
+      <button class="nav-item active" id="navHome" type="button"><div class="nav-icon">🏠</div><span>Home</span></button>
+      <button class="nav-item" id="navEarn" type="button"><div class="nav-icon">🎁</div><span>Earn</span></button>
+      <button class="nav-item" id="navWallet" type="button"><div class="nav-icon">💳</div><span>Wallet</span></button>
+      <button class="nav-item" id="navProfile" type="button"><div class="nav-icon">👤</div><span>Profile</span></button>
     </nav>
   </section>
 
@@ -591,7 +592,7 @@
     <div class="settings-modal">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h3 style="margin: 0;">💳 Withdraw Coins</h3>
-        <button id="closeWithdrawBtn" style="background: transparent; border: none; color: #888; font-size: 20px;">&times;</button>
+        <button id="closeWithdrawBtn" type="button" style="background: transparent; border: none; color: #888; font-size: 20px;">&times;</button>
       </div>
       <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
         <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
@@ -602,10 +603,22 @@
         </select>
         <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
         <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
-        <button class="primary" type="submit" style="padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Submit Request</button>
+        <button type="submit" style="padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700; color: #000;">Submit Request</button>
       </form>
     </div>
   </div>
+
+  <!-- Crash Safeguard Script -->
+  <script>
+    // স্ক্রিপ্ট এরর হলেও যাতে স্ক্রিন সাদা না থাকে, সেজন্য স্প্ল্যাশ স্ক্রিন জোরপূর্বক সরিয়ে দেওয়া
+    setTimeout(() => {
+      const splash = document.getElementById('splashScreen');
+      if (splash) {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.style.display = 'none', 500);
+      }
+    }, 2000);
+  </script>
 
   <script type="module" src="app.js"></script>
 </body>
