@@ -51,6 +51,14 @@
 
   <div id="toast"></div>
 
+  <!-- Under Maintenance Full Screen Lock -->
+  <div id="maintenanceOverlay" class="hidden" style="position:fixed;inset:0;background:#0b0c10;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;">
+    <div style="font-size:56px;margin-bottom:14px;">🛠️</div>
+    <h2 style="color:#ffb703;margin:0 0 10px 0;font-size:22px;">UNDER MAINTENANCE</h2>
+    <p id="maintenanceText" style="color:#8a90a2;font-size:14px;line-height:1.6;max-width:320px;margin:0 0 24px 0;">App is currently under maintenance for server upgrade. We will be back soon!</p>
+    <div style="padding:10px 20px;border-radius:25px;background:#15171e;border:1px solid rgba(255,255,255,0.08);font-size:12px;color:#1a90ff;font-weight:700;">⏳ Please wait, updating servers...</div>
+  </div>
+
   <!-- Login / Register Screen -->
   <section id="authScreen" style="max-width:350px;width:90%;margin:60px auto;background:var(--card);padding:22px;border-radius:16px;border:1px solid var(--border);">
     <h2 id="authBrandTitle" style="text-align:center;margin:0 0 4px;color:var(--blue);">FF PANEL</h2>
@@ -279,6 +287,16 @@
         }
       }
 
+      // Check Under Maintenance Mode Live
+      const maintBox = document.getElementById("maintenanceOverlay");
+      if (maintBox) {
+        if (d.maintenanceMode === "ON") {
+          maintBox.classList.remove("hidden");
+          if (d.maintenanceMsg) document.getElementById("maintenanceText").textContent = d.maintenanceMsg;
+        } else {
+          maintBox.classList.add("hidden");
+        }
+      }
       
       Object.assign(cfg, d);
     });
