@@ -1,10 +1,10 @@
 {
-  "name": "FF Panel",
-  "short_name": "FF Panel",
+  "name": "FF PANEL",
+  "short_name": "FF PANEL",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0b0b12",
-  "theme_color": "#0b0b12",
+  "background_color": "#0b0c10",
+  "theme_color": "#1a90ff",
   "orientation": "portrait-primary",
   "icons": [
     {
