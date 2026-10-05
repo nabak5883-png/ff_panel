@@ -258,6 +258,20 @@
       if(d.logoUrl) $("appLogoImg").src=d.logoUrl;
       if(d.notice) $("appNoticeText").textContent=d.notice;
       if(d.videoTitle) $("videoDynamicTitle").textContent=d.videoTitle;
+      
+            if (Array.isArray(d.gameModes) && d.gameModes.length === 9) {
+        const cards = document.querySelectorAll(".game-card, .esport-card");
+        d.gameModes.forEach((m, i) => {
+          if (cards[i]) {
+            cards[i].setAttribute("data-mode", m.title);
+            const img = cards[i].querySelector("img");
+            const txt = cards[i].querySelector("div");
+            if (img) img.src = m.img;
+            if (txt) txt.textContent = m.title;
+          }
+        });
+            }
+      
       Object.assign(cfg, d);
     });
 
