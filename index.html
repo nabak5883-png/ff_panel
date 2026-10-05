@@ -24,652 +24,237 @@
       --text-sub: #8a90a2;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      margin: 0; padding: 0;
+      background-color: var(--bg-dark); color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      user-select: none;
-      padding-bottom: 74px;
-      overflow-x: hidden;
+      user-select: none; padding-bottom: 74px; overflow-x: hidden;
     }
 
     .hidden { display: none !important; }
 
-    /* ========== Top Blue Header ========== */
     .app-topbar {
-      position: sticky;
-      top: 0;
-      background: var(--primary-blue);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: sticky; top: 0; background: var(--primary-blue);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .topbar-left { display: flex; align-items: center; gap: 10px; }
     .app-logo-circle {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #000000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      overflow: hidden;
+      width: 38px; height: 38px; border-radius: 50%; background: #000;
+      display: flex; align-items: center; justify-content: center; padding: 6px; overflow: hidden;
     }
-    .app-logo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .brand-meta h1 {
-      margin: 0;
-      font-size: 17px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .brand-meta p {
-      margin: 1px 0 0 0;
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.85);
-    }
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .bell-btn {
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      font-size: 20px;
-      cursor: pointer;
-      padding: 0;
-    }
+    .app-logo-circle img { width: 100%; height: 100%; object-fit: contain; }
+    .brand-meta h1 { margin: 0; font-size: 17px; font-weight: 800; color: #fff; }
+    .brand-meta p { margin: 1px 0 0 0; font-size: 11px; color: rgba(255, 255, 255, 0.85); }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .bell-btn { background: transparent; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 0; }
     .coin-pill {
-      display: flex;
-      align-items: center;
-      background: #0b0c10;
-      padding: 6px 12px;
-      border-radius: 25px;
-      gap: 6px;
-      cursor: pointer;
+      display: flex; align-items: center; background: #0b0c10;
+      padding: 6px 12px; border-radius: 25px; gap: 6px; cursor: pointer;
     }
     .coin-pill-icon {
-      width: 18px;
-      height: 18px;
-      background: var(--accent-gold);
-      color: #000;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 900;
+      width: 18px; height: 18px; background: var(--accent-gold); color: #000;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 900;
     }
-    .coin-pill b {
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 700;
-    }
+    .coin-pill b { color: #fff; font-size: 13px; font-weight: 700; }
 
-    /* ========== Home Tab Components ========== */
     .welcome-banner {
-      display: flex;
-      align-items: center;
-      background: var(--card-bg);
-      border-radius: 10px;
-      margin: 14px 16px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-      height: 48px;
+      display: flex; align-items: center; background: var(--card-bg);
+      border-radius: 10px; margin: 14px 16px; overflow: hidden;
+      border: 1px solid var(--card-border); height: 48px;
     }
     .welcome-icon-box {
-      background: var(--primary-blue);
-      width: 52px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: #fff;
-      flex-shrink: 0;
+      background: var(--primary-blue); width: 52px; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff; flex-shrink: 0;
     }
     .welcome-text {
-      padding: 0 14px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 0 14px; font-size: 14px; font-weight: 700; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    .section-heading {
-      font-size: 16px;
-      font-weight: 700;
-      margin: 18px 16px 12px 16px;
-      color: #ffffff;
-    }
+    .section-heading { font-size: 16px; font-weight: 700; margin: 18px 16px 12px 16px; color: #fff; }
 
     .account-circles-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 0 16px;
-      text-align: center;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 16px; text-align: center;
     }
     .circle-item {
-      background: transparent;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: transparent; border: none; color: #fff; cursor: pointer; padding: 0;
+      display: flex; flex-direction: column; align-items: center;
     }
     .circle-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: #23252f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      margin-bottom: 8px;
-      color: #ffffff;
+      width: 54px; height: 54px; border-radius: 50%; background: #23252f;
+      display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 8px; color: #fff;
     }
-    .circle-item:active .circle-icon {
-      background: var(--primary-blue);
-    }
-    .circle-item span {
-      font-size: 11px;
-      color: #c9cdd8;
-      font-weight: 500;
-    }
+    .circle-item:active .circle-icon { background: var(--primary-blue); }
+    .circle-item span { font-size: 11px; color: #c9cdd8; font-weight: 500; }
 
     .support-banner-card {
-      margin: 18px 16px;
-      border-radius: 14px;
+      margin: 18px 16px; border-radius: 14px;
       background: linear-gradient(135deg, #2a0808 0%, #10121a 100%);
-      border: 1px solid rgba(255, 80, 80, 0.25);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
+      border: 1px solid rgba(255, 80, 80, 0.25); padding: 16px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .support-banner-left h3 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--accent-gold);
-    }
-    .support-banner-left p {
-      margin: 4px 0 10px 0;
-      font-size: 11px;
-      color: #ffffff;
-      font-weight: 600;
-    }
-    .social-badges-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .support-banner-left h3 { margin: 0; font-size: 16px; font-weight: 800; color: var(--accent-gold); }
+    .support-banner-left p { margin: 4px 0 10px 0; font-size: 11px; color: #fff; font-weight: 600; }
+    .social-badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .social-pill {
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff;
-      border: none;
-      cursor: pointer;
+      padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer; border: none;
     }
 
-    /* 3x3 Esports Games Grid */
     .esports-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding: 0 16px;
-      margin-bottom: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px; margin-bottom: 20px;
     }
     .esport-card {
-      background: #1c1e26;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-      cursor: pointer;
-      text-align: center;
-      padding: 6px;
+      background: #1c1e26; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--card-border); cursor: pointer; text-align: center; padding: 6px;
     }
-    .esport-card img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 6px;
-      display: block;
-      background: #252834;
-    }
+    .esport-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; display: block; background: #252834; }
     .esport-title {
-      font-size: 10px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-top: 7px;
-      margin-bottom: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-transform: uppercase;
+      font-size: 10px; font-weight: 700; color: #fff; margin-top: 7px; margin-bottom: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase;
     }
 
-    /* ========== Video Tab ========== */
     .video-search-wrap { margin: 16px; }
     .video-search-input {
-      width: 100%;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 14px 16px;
-      border-radius: 12px;
-      color: #ffffff;
-      font-size: 14px;
-      outline: none;
+      width: 100%; background: var(--card-bg); border: 1px solid var(--card-border);
+      padding: 14px 16px; border-radius: 12px; color: #fff; font-size: 14px; outline: none;
     }
     .tutorial-item-card {
-      margin: 0 16px 12px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
+      margin: 0 16px 12px 16px; background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer;
     }
     .tutorial-thumb {
-      width: 90px;
-      height: 64px;
-      border-radius: 8px;
-      background: #232634;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: #ff3b3b;
-      flex-shrink: 0;
+      width: 90px; height: 64px; border-radius: 8px; background: #232634;
+      display: flex; align-items: center; justify-content: center; font-size: 24px; color: #ff3b3b; flex-shrink: 0;
     }
-    .tutorial-meta h4 {
-      margin: 0 0 5px 0;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    .tutorial-meta .topic-tag {
-      font-size: 12px;
-      color: var(--primary-blue);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .tutorial-meta .yt-sub {
-      font-size: 11px;
-      color: var(--text-sub);
-    }
+    .tutorial-meta h4 { margin: 0 0 5px 0; font-size: 14px; color: #fff; }
+    .tutorial-meta .topic-tag { font-size: 12px; color: var(--primary-blue); font-weight: 600; margin-bottom: 4px; }
+    .tutorial-meta .yt-sub { font-size: 11px; color: var(--text-sub); }
 
-    /* ========== Earn Center Tab ========== */
     .earn-banner-card {
-      margin: 0 16px 14px 16px;
-      border-radius: 16px;
-      padding: 20px 18px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      cursor: pointer;
+      margin: 0 16px 14px 16px; border-radius: 16px; padding: 20px 18px;
+      display: flex; align-items: center; gap: 16px; cursor: pointer;
     }
     .earn-icon-circle {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      color: #fff;
-      flex-shrink: 0;
+      width: 52px; height: 52px; border-radius: 50%; background: rgba(255, 255, 255, 0.18);
+      display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; flex-shrink: 0;
     }
-    .earn-text-box h3 {
-      margin: 0 0 5px 0;
-      font-size: 16px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .earn-text-box p {
-      margin: 0;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.88);
-    }
+    .earn-text-box h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 800; color: #fff; }
+    .earn-text-box p { margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.88); }
 
-    /* ========== Wallet Tab ========== */
     .wallet-hero-card {
-      margin: 16px;
-      background: var(--wallet-blue);
-      border-radius: 16px;
-      padding: 22px 20px;
-      color: #ffffff;
+      margin: 16px; background: var(--wallet-blue); border-radius: 16px; padding: 22px 20px; color: #fff;
     }
-    .wallet-hero-card p {
-      margin: 0 0 10px 0;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .wallet-balance-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .wallet-hero-card p { margin: 0 0 10px 0; font-size: 14px; font-weight: 600; }
+    .wallet-balance-row { display: flex; align-items: center; gap: 10px; }
     .wallet-gold-coin {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 18px;
+      width: 32px; height: 32px; border-radius: 50%; background: var(--accent-gold); color: #000;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px;
     }
-    .wallet-balance-row h2 {
-      margin: 0;
-      font-size: 30px;
-      font-weight: 800;
-    }
+    .wallet-balance-row h2 { margin: 0; font-size: 30px; font-weight: 800; }
 
     .wallet-sub-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 0 16px;
-      margin-bottom: 18px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 18px;
     }
     .wallet-sub-card {
-      background: #1c1e26;
-      border-radius: 12px;
-      padding: 16px;
-      border: 1px solid var(--card-border);
+      background: #1c1e26; border-radius: 12px; padding: 16px; border: 1px solid var(--card-border);
     }
-    .wallet-sub-card span {
-      font-size: 12px;
-      color: #b0b5c4;
-      display: block;
-      margin-bottom: 6px;
-    }
-    .wallet-sub-card b {
-      font-size: 18px;
-      color: #ffffff;
-      font-weight: 800;
-    }
+    .wallet-sub-card span { font-size: 12px; color: #b0b5c4; display: block; margin-bottom: 6px; }
+    .wallet-sub-card b { font-size: 18px; color: #fff; font-weight: 800; }
 
     .wallet-actions-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 0 16px;
-      margin-bottom: 20px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 20px;
     }
     .btn-add-funds {
-      background: var(--primary-blue);
-      color: #000000;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
+      background: var(--primary-blue); color: #000; font-weight: 700; font-size: 14px;
+      padding: 14px; border-radius: 30px; border: none; cursor: pointer;
     }
     .btn-withdraw {
-      background: transparent;
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      cursor: pointer;
+      background: transparent; color: #fff; font-weight: 700; font-size: 14px;
+      padding: 14px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.25); cursor: pointer;
     }
 
     .transactions-card {
-      margin: 0 16px 20px 16px;
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 18px;
-      border: 1px solid var(--card-border);
+      margin: 0 16px 20px 16px; background: var(--card-bg); border-radius: 16px;
+      padding: 18px; border: 1px solid var(--card-border);
     }
-    .trans-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .trans-head h3 {
-      margin: 0;
-      font-size: 16px;
-    }
+    .trans-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .trans-head h3 { margin: 0; font-size: 16px; }
     .view-all-pill {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+      background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 14px; border-radius: 20px; font-size: 12px;
     }
 
-    /* ========== Profile Tab (18 Options) ========== */
     .profile-top-box {
-      margin: 16px;
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border: 1px solid var(--card-border);
+      margin: 16px; background: var(--card-bg); border-radius: 14px; padding: 16px;
+      display: flex; align-items: center; gap: 14px; border: 1px solid var(--card-border);
     }
     .profile-letter-circle {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: #5a66f1;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      font-weight: 700;
-      flex-shrink: 0;
+      width: 56px; height: 56px; border-radius: 50%; background: #5a66f1; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; flex-shrink: 0;
     }
-    .profile-meta-info h2 {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-    .profile-meta-info p {
-      margin: 3px 0;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-    .profile-meta-info small {
-      font-size: 12px;
-      color: #c9cdd8;
-    }
+    .profile-meta-info h2 { margin: 0; font-size: 15px; font-weight: 800; text-transform: uppercase; }
+    .profile-meta-info p { margin: 3px 0; font-size: 12px; color: var(--text-sub); }
+    .profile-meta-info small { font-size: 12px; color: #c9cdd8; }
 
     .profile-options-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 0 16px;
-      margin-bottom: 24px;
+      display: flex; flex-direction: column; gap: 8px; padding: 0 16px; margin-bottom: 24px;
     }
     .profile-option-item {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+      padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
     }
-    .opt-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .opt-icon {
-      color: var(--primary-blue);
-      font-size: 18px;
-      width: 22px;
-      text-align: center;
-    }
-    .opt-text h4 {
-      margin: 0;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .opt-text p {
-      margin: 2px 0 0 0;
-      font-size: 11px;
-      color: var(--text-sub);
-    }
-    .opt-arrow {
-      color: var(--primary-blue);
-      font-size: 13px;
-      font-weight: 700;
-    }
+    .opt-left { display: flex; align-items: center; gap: 14px; }
+    .opt-icon { color: var(--primary-blue); font-size: 18px; width: 22px; text-align: center; }
+    .opt-text h4 { margin: 0; font-size: 13.5px; font-weight: 700; color: #fff; }
+    .opt-text p { margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub); }
+    .opt-arrow { color: var(--primary-blue); font-size: 13px; font-weight: 700; }
 
-    /* ========== Bottom Navigation Bar ========== */
     .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      background: #12131a;
-      border-top: 1px solid var(--card-border);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 1000;
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 64px;
+      background: #12131a; border-top: 1px solid var(--card-border);
+      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
     }
     .nav-btn {
-      background: transparent;
-      border: none;
-      color: #8a90a2;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
+      background: transparent; border: none; color: #8a90a2; font-size: 11px; font-weight: 500;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 8px;
     }
     .nav-pill {
-      width: 48px;
-      height: 28px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
+      width: 48px; height: 28px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 16px;
     }
-    .nav-btn.active {
-      color: var(--primary-blue);
-      font-weight: 700;
-    }
-    .nav-btn.active .nav-pill {
-      background: rgba(26, 144, 255, 0.2);
-      color: var(--primary-blue);
-    }
+    .nav-btn.active { color: var(--primary-blue); font-weight: 700; }
+    .nav-btn.active .nav-pill { background: rgba(26, 144, 255, 0.2); color: var(--primary-blue); }
 
-    /* ========== Form & Modal Inputs ========== */
     .input-field {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      background: #0b0c10;
-      border: 1px solid var(--card-border);
-      color: #fff;
-      font-size: 13px;
-      margin-bottom: 10px;
+      width: 100%; padding: 12px; border-radius: 10px; background: #0b0c10;
+      border: 1px solid var(--card-border); color: #fff; font-size: 13px; margin-bottom: 10px;
     }
     .primary-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      background: var(--primary-blue);
-      color: #fff;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
+      width: 100%; padding: 12px; border-radius: 10px; background: var(--primary-blue);
+      color: #fff; font-weight: 700; border: none; cursor: pointer;
     }
     .auth-wrap {
-      max-width: 360px;
-      width: 90%;
-      margin: 60px auto;
-      background: var(--card-bg);
-      padding: 24px;
-      border-radius: 16px;
-      border: 1px solid var(--card-border);
+      max-width: 360px; width: 90%; margin: 60px auto; background: var(--card-bg);
+      padding: 24px; border-radius: 16px; border: 1px solid var(--card-border);
     }
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10005;
-      padding: 16px;
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.82);
+      display: flex; align-items: center; justify-content: center; z-index: 10005; padding: 16px;
     }
     .modal-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 350px;
-      padding: 20px;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; width: 100%; max-width: 350px; padding: 20px;
     }
 
     #toast {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.92);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 25px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 13px;
-      display: none;
-      z-index: 100000;
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.92); color: #fff; padding: 10px 18px;
+      border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 13px; display: none; z-index: 100000;
     }
   </style>
 </head>
@@ -680,7 +265,7 @@
   <!-- Auth Login / Register Screen -->
   <section id="authScreen">
     <div class="auth-wrap">
-      <div id="authBrandTitle" style="text-align:center; font-size:24px; font-weight:800; margin-bottom:4px;">FF <span style="color:var(--primary-blue)">PANEL</span></div>
+      <div id="authBrandTitle" style="text-align:center; font-size:24px; font-weight:800; margin-bottom:4px; color:var(--primary-blue);">FF PANEL</div>
       <p style="text-align:center; font-size:12px; color:var(--text-sub); margin-bottom:20px;">Player Account Login</p>
 
       <form id="loginForm">
@@ -702,7 +287,6 @@
 
   <!-- Main User App Container -->
   <section id="appScreen" class="hidden">
-    <!-- Top Blue Bar -->
     <header class="app-topbar">
       <div class="topbar-left">
         <div class="app-logo-circle">
@@ -749,7 +333,7 @@
         </button>
       </div>
 
-      <div class="support-banner-card" id="promoSupportCard">
+      <div class="support-banner-card">
         <div class="support-banner-left">
           <h3>GET SUPPORT</h3>
           <p>CONTACT US VIA</p>
@@ -816,7 +400,7 @@
       <div class="video-search-wrap">
         <input class="video-search-input" type="text" placeholder="Search by topic or title...">
       </div>
-      <div class="section-heading">Tutorial Videos (1)</div>
+      <div class="section-heading">Tutorial Videos</div>
       <div class="tutorial-item-card" id="videoTutorialCard">
         <div class="tutorial-thumb">▶️</div>
         <div class="tutorial-meta">
@@ -875,22 +459,10 @@
       </div>
 
       <div class="wallet-sub-grid">
-        <div class="wallet-sub-card">
-          <span>Deposit</span>
-          <b id="walletDeposit">0.00</b>
-        </div>
-        <div class="wallet-sub-card">
-          <span>Winnings</span>
-          <b id="walletWinnings">0.00</b>
-        </div>
-        <div class="wallet-sub-card">
-          <span>Bonus</span>
-          <b id="walletBonus">0.00</b>
-        </div>
-        <div class="wallet-sub-card">
-          <span>Referral</span>
-          <b id="walletReferral">0.00</b>
-        </div>
+        <div class="wallet-sub-card"><span>Deposit</span><b id="walletDeposit">0.00</b></div>
+        <div class="wallet-sub-card"><span>Winnings</span><b id="walletWinnings">0.00</b></div>
+        <div class="wallet-sub-card"><span>Bonus</span><b id="walletBonus">0.00</b></div>
+        <div class="wallet-sub-card"><span>Referral</span><b id="walletReferral">0.00</b></div>
       </div>
 
       <div class="wallet-actions-row">
@@ -978,30 +550,15 @@
 
     <!-- Bottom 5-Tab Bar -->
     <nav class="bottom-nav">
-      <button class="nav-btn active" id="navHome" type="button">
-        <div class="nav-pill">🏠</div>
-        <span>Home</span>
-      </button>
-      <button class="nav-btn" id="navVideo" type="button">
-        <div class="nav-pill">▶️</div>
-        <span>Video</span>
-      </button>
-      <button class="nav-btn" id="navEarn" type="button">
-        <div class="nav-pill">🎁</div>
-        <span>Earn</span>
-      </button>
-      <button class="nav-btn" id="navWallet" type="button">
-        <div class="nav-pill">💳</div>
-        <span>Wallet</span>
-      </button>
-      <button class="nav-btn" id="navProfile" type="button">
-        <div class="nav-pill">👤</div>
-        <span>Profile</span>
-      </button>
+      <button class="nav-btn active" id="navHome" type="button"><div class="nav-pill">🏠</div><span>Home</span></button>
+      <button class="nav-btn" id="navVideo" type="button"><div class="nav-pill">▶️</div><span>Video</span></button>
+      <button class="nav-btn" id="navEarn" type="button"><div class="nav-pill">🎁</div><span>Earn</span></button>
+      <button class="nav-btn" id="navWallet" type="button"><div class="nav-pill">💳</div><span>Wallet</span></button>
+      <button class="nav-btn" id="navProfile" type="button"><div class="nav-pill">👤</div><span>Profile</span></button>
     </nav>
   </section>
 
-  <!-- Withdraw Popup Modal -->
+  <!-- Withdraw Modal -->
   <div id="withdrawModal" class="modal-overlay hidden">
     <div class="modal-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
@@ -1034,7 +591,6 @@
     </div>
   </div>
 
-  <!-- ALL-IN-ONE FIREBASE & NO-CODE ADMIN SYNC SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import {
@@ -1066,6 +622,7 @@
     let currentProfile = null;
     let allMatches = [];
 
+    // Dynamic Config Variables (Controlled by Admin)
     let appConfig = {
       whatsapp: "https://t.me/nkwithprifut101",
       telegram: "https://t.me/nkwithprifut101",
@@ -1079,7 +636,6 @@
 
     function toast(msg) {
       const t = $("toast");
-      if (!t) return;
       t.textContent = msg;
       t.style.display = "block";
       clearTimeout(window._toastTimer);
@@ -1094,7 +650,7 @@
     $("closeInfoBtn").onclick = () => $("infoModal").classList.add("hidden");
     $("infoModalActionBtn").onclick = () => $("infoModal").classList.add("hidden");
 
-    // Live Sync with Admin Panel (settings/global)
+    // REAL-TIME ADMIN SETTINGS LISTENER
     onSnapshot(doc(db, "settings", "global"), snap => {
       if (!snap.exists()) return;
       const d = snap.data();
@@ -1125,7 +681,7 @@
       }
     });
 
-    // Login & Register Toggle
+    // Login / Register Toggle
     $("showRegister").onclick = () => {
       $("loginForm").classList.add("hidden");
       $("registerForm").classList.remove("hidden");
@@ -1145,7 +701,7 @@
         await setDoc(doc(db, "users", cred.user.uid), {
           name, email, role: "user", coins: 0, deposit: 0, winnings: 0, bonus: 0, referral: 0, createdAt: serverTimestamp()
         });
-        toast("Welcome to FF PANEL!");
+        toast("Account Created!");
       } catch (err) { toast(err.message); }
     };
 
@@ -1168,6 +724,7 @@
       $("authScreen").classList.add("hidden");
       $("appScreen").classList.remove("hidden");
 
+      // Real-time User Wallet Sync
       unsubUser = onSnapshot(doc(db, "users", user.uid), snap => {
         currentProfile = snap.exists() ? snap.data() : {};
         const name = currentProfile.name || "Player";
@@ -1190,12 +747,13 @@
         $("kycUsername").textContent = username;
       });
 
-      loadTournaments("ALL");
+      loadTournaments();
     });
 
     $("rowLogout").onclick = () => signOut(auth);
 
     async function loadTournaments(filterMode = "ALL") {
+      const list = $("tournamentList");
       try {
         const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
@@ -1213,7 +771,7 @@
         : allMatches.filter(m => !m.category || m.category === "ALL" || m.category === filterMode);
 
       if (filtered.length === 0) {
-        list.innerHTML = '<div style="text-align:center; color:#8a90a2; font-size:12px;">No matches scheduled right now.</div>';
+        list.innerHTML = '<div style="text-align:center; color:#8a90a2; font-size:12px;">No matches available in this mode right now.</div>';
         return;
       }
       list.innerHTML = "";
@@ -1241,7 +799,7 @@
 
     $("refreshTournaments").onclick = () => loadTournaments("ALL");
 
-    // 5-Tab Navigation System
+    // 5-Tab Navigation
     const tabViews = {
       navHome: $("homeView"),
       navVideo: $("videoView"),
@@ -1283,11 +841,10 @@
       };
     });
 
-    // Support & Social Links
-    $("btnWhatsapp").onclick = e => { e.stopPropagation(); window.open(appConfig.whatsapp, "_blank"); };
-    $("btnTelegram").onclick = e => { e.stopPropagation(); window.open(appConfig.telegram, "_blank"); };
-    $("btnInsta").onclick = e => { e.stopPropagation(); window.open(appConfig.insta, "_blank"); };
-    $("promoSupportCard").onclick = () => window.open(appConfig.telegram, "_blank");
+    // Dynamic Support & Social Buttons
+    $("btnWhatsapp").onclick = () => window.open(appConfig.whatsapp, "_blank");
+    $("btnTelegram").onclick = () => window.open(appConfig.telegram, "_blank");
+    $("btnInsta").onclick = () => window.open(appConfig.insta, "_blank");
     $("actionContact").onclick = () => window.open(appConfig.telegram, "_blank");
     $("rowContact").onclick = () => window.open(appConfig.telegram, "_blank");
     $("rowOfficialSite").onclick = () => window.open(appConfig.website, "_blank");
