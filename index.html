@@ -1018,7 +1018,7 @@
     </div>
   </div>
 
-  <!-- ALL-IN-ONE EMBEDDED JAVASCRIPT (NO EXTERNAL APP.JS NEEDED) -->
+  <!-- EMBEDDED JAVASCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import {
@@ -1060,7 +1060,7 @@
       window._toastTimer = setTimeout(() => t.style.display = "none", 2500);
     }
 
-    // Toggle Login & Register
+    // Login & Register Toggle
     $("showRegister").onclick = () => {
       $("loginForm").classList.add("hidden");
       $("registerForm").classList.remove("hidden");
@@ -1202,6 +1202,20 @@
 
     Object.keys(tabViews).forEach(btnId => {
       $(btnId).onclick = () => switchTab(btnId);
+    });
+
+    // Mobile Back Button Handling
+    window.history.pushState({ tab: "home" }, "");
+    window.addEventListener("popstate", () => {
+      if (!$("withdrawModal").classList.contains("hidden")) {
+        $("withdrawModal").classList.add("hidden");
+        window.history.pushState({ tab: "home" }, "");
+        return;
+      }
+      if ($("homeView").classList.contains("hidden")) {
+        switchTab("navHome");
+        window.history.pushState({ tab: "home" }, "");
+      }
     });
 
     // Shortcuts & Actions
