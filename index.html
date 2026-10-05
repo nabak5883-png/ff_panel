@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#0d0e15">
   <title>FF PANEL - Gaming Platform</title>
 
-  <!-- PWA Manifest Linking -->
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,7 +37,6 @@
       padding-bottom: 75px;
     }
 
-    /* ========== Splash / Intro Animation ========== */
     #splashScreen {
       position: fixed;
       inset: 0;
@@ -108,7 +106,7 @@
       100% { left: 0%; }
     }
 
-    /* ========== Auth Box Styles ========== */
+    /* Auth Page Styles */
     .auth-card {
       background: #141520;
       border: 1px solid var(--card-border);
@@ -174,7 +172,6 @@
       color: var(--text-sub);
     }
 
-    /* ========== Modern Header ========== */
     .app-topbar {
       position: sticky;
       top: 0;
@@ -208,23 +205,16 @@
       cursor: pointer;
       padding: 5px;
       box-sizing: border-box;
-      transition: transform 0.15s, border-color 0.15s;
-    }
-    .app-icon-btn:active {
-      transform: scale(0.92);
-      border-color: var(--accent-cyan);
     }
     .header-logo-img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 0 4px rgba(0, 210, 255, 0.4));
     }
     .brand-meta h1 {
       margin: 0;
       font-size: 18px;
       font-weight: 800;
-      letter-spacing: 0.5px;
       background: linear-gradient(90deg, #fff, var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -249,29 +239,11 @@
       gap: 6px;
       cursor: pointer;
     }
-    .coin-badge span {
-      font-size: 15px;
-    }
     .coin-badge b {
       color: var(--accent-gold);
       font-size: 14px;
-      font-weight: 700;
-    }
-    .notif-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      color: #fff;
-      font-size: 16px;
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
     }
 
-    /* ========== Dropdown Menu ========== */
     .dropdown-menu {
       position: absolute;
       top: 115%;
@@ -303,17 +275,8 @@
       text-align: left;
       cursor: pointer;
       box-sizing: border-box;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .dropdown-item:last-child {
-      border-bottom: none;
-    }
-    .dropdown-item:active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--accent-cyan);
     }
 
-    /* ========== Marquee Banner ========== */
     .notice-marquee {
       display: flex;
       align-items: center;
@@ -324,30 +287,10 @@
       padding: 10px 14px;
       gap: 12px;
     }
-    .notice-icon {
-      font-size: 18px;
-      color: var(--accent-cyan);
-    }
-    .notice-text {
-      flex: 1;
-      font-size: 13px;
-      color: #e0e5ff;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .notice-icon { font-size: 18px; color: var(--accent-cyan); }
+    .notice-text { flex: 1; font-size: 13px; color: #e0e5ff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-    /* ========== Account Details Actions (4 Circles) ========== */
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin: 16px 16px 12px 16px;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .section-title { font-size: 16px; font-weight: 700; margin: 16px; }
     .actions-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -355,330 +298,52 @@
       padding: 0 16px;
       text-align: center;
     }
-    .action-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #fff;
-      padding: 0;
-    }
+    .action-btn { background: transparent; border: none; color: #fff; cursor: pointer; padding: 0; }
     .action-circle {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #1c1e2b;
-      border: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: transform 0.15s;
+      width: 52px; height: 52px; border-radius: 50%; background: #1c1e2b;
+      border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin: 0 auto 8px auto;
     }
-    .action-btn:active .action-circle {
-      transform: scale(0.92);
-      border-color: var(--accent-cyan);
-    }
-    .action-btn span {
-      font-size: 12px;
-      color: var(--text-sub);
-      font-weight: 500;
-    }
+    .action-btn span { font-size: 12px; color: var(--text-sub); }
 
-    /* ========== Feature Promo Card ========== */
     .promo-card {
-      margin: 18px 16px;
-      background: linear-gradient(135deg, #181a28, #10121d);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      margin: 18px 16px; background: #14151f; border: 1px solid var(--card-border);
+      border-radius: 16px; overflow: hidden;
     }
-    .promo-img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      display: block;
-    }
-    .promo-overlay {
-      padding: 12px 16px;
-      background: rgba(16, 18, 29, 0.85);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .promo-info h4 {
-      margin: 0;
-      font-size: 14px;
-      color: #fff;
-    }
-    .promo-info p {
-      margin: 4px 0 0 0;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-    .promo-btn {
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    .promo-img { width: 100%; height: 140px; object-fit: cover; }
+    .promo-overlay { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
 
-    /* ========== Esports Games Grid (3x3 Cards) ========== */
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      padding: 0 16px;
-      margin-bottom: 24px;
-    }
-    .game-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.15s, border-color 0.15s;
-    }
-    .game-card:active {
-      transform: scale(0.96);
-      border-color: var(--accent-cyan);
-    }
-    .game-img {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      background: #252837;
-    }
-    .game-label {
-      padding: 8px 4px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #e2e6f3;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      width: 100%;
-      box-sizing: border-box;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 24px; }
+    .game-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; text-align: center; }
+    .game-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+    .game-label { padding: 8px 4px; font-size: 11px; font-weight: 700; color: #e2e6f3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ========== Dedicated Profile Section ========== */
-    #profileSection {
-      padding: 16px;
-    }
-    .profile-header-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--card-bg);
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid var(--card-border);
-      margin-bottom: 20px;
-    }
-    .profile-avatar-large {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 800;
-      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-    }
-    .profile-user-info h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .profile-user-info p {
-      margin: 3px 0 0 0;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-    .profile-user-info small {
-      font-size: 11px;
-      color: var(--accent-cyan);
-    }
+    #profileSection { padding: 16px; }
+    .profile-header-card { display: flex; align-items: center; gap: 14px; background: var(--card-bg); padding: 16px; border-radius: 16px; border: 1px solid var(--card-border); margin-bottom: 20px; }
+    .profile-avatar-large { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #06b6d4); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; }
+    .profile-user-info h2 { margin: 0; font-size: 18px; }
+    .profile-user-info p { margin: 3px 0 0 0; font-size: 12px; color: var(--text-sub); }
 
-    .profile-menu-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .profile-menu-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .profile-menu-row:active {
-      background: #1c1e2d;
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-    .row-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .row-icon {
-      font-size: 18px;
-      color: var(--accent-cyan);
-      width: 24px;
-      text-align: center;
-    }
-    .row-text h4 {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-    }
-    .row-text p {
-      margin: 2px 0 0 0;
-      font-size: 11px;
-      color: var(--text-sub);
-    }
-    .row-arrow {
-      color: #4b5166;
-      font-size: 14px;
-      font-weight: bold;
-    }
+    .profile-menu-list { display: flex; flex-direction: column; gap: 10px; }
+    .profile-menu-row { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 16px; cursor: pointer; }
+    .row-left { display: flex; align-items: center; gap: 14px; }
+    .row-icon { font-size: 18px; color: var(--accent-cyan); width: 24px; }
+    .row-text h4 { margin: 0; font-size: 14px; }
+    .row-text p { margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub); }
+    .row-arrow { color: #4b5166; font-size: 14px; }
 
-    /* ========== Bottom Navigation Bar ========== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 62px;
-      background: rgba(14, 15, 23, 0.98);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      z-index: 1000;
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      gap: 4px;
-      padding: 6px 12px;
-      border-radius: 12px;
-      transition: color 0.15s;
-    }
-    .nav-icon {
-      font-size: 20px;
-    }
-    .nav-item.active {
-      color: var(--accent-cyan);
-    }
-    .nav-item.active .nav-icon {
-      filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
-    }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 62px; background: rgba(14, 15, 23, 0.98); border-top: 1px solid var(--card-border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
+    .nav-item { background: transparent; border: none; color: var(--text-sub); font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .nav-item.active { color: var(--accent-cyan); }
+    .nav-icon { font-size: 20px; }
 
-    /* ========== Modals ========== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(6px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10002;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-    .modal-overlay.hidden {
-      display: none !important;
-    }
-    .settings-modal {
-      background: #141520;
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      width: 100%;
-      max-width: 360px;
-      padding: 20px;
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .modal-header h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-    .close-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 22px;
-      cursor: pointer;
-    }
-    .settings-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 14px;
-    }
-    .settings-item:last-child {
-      border-bottom: none;
-    }
-    .update-btn {
-      display: block;
-      background: linear-gradient(135deg, #00c853, #64dd17);
-      color: #000;
-      font-weight: 700;
-      padding: 12px;
-      border-radius: 10px;
-      text-decoration: none;
-      margin-top: 16px;
-      text-align: center;
-    }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 10002; padding: 16px; }
+    .modal-overlay.hidden { display: none !important; }
+    .settings-modal { background: #141520; border: 1px solid var(--card-border); border-radius: 18px; width: 100%; max-width: 360px; padding: 20px; color: #fff; }
   </style>
 </head>
 <body>
-  <!-- Opening Splash Screen -->
+  <!-- Splash Screen -->
   <div id="splashScreen">
     <div class="splash-logo-box">
       <div class="splash-icon">🎮</div>
@@ -691,20 +356,6 @@
   </div>
 
   <div id="toast"></div>
-
-  <!-- App Update Modal -->
-  <div id="updateModal" class="modal-overlay hidden" style="z-index: 100000;">
-    <div class="settings-modal" style="text-align: center;">
-      <div style="font-size: 44px; margin-bottom: 8px;">🚀</div>
-      <h3 style="margin: 0 0 8px 0; font-size: 20px;">Update Available!</h3>
-      <p style="color: #8d92a3; font-size: 14px; margin: 0 0 16px 0;">
-        A new version of FF PANEL is ready. Update now to enjoy all new features.
-      </p>
-      <a id="updateNowBtn" href="https://t.me/nkwithprifut101" target="_blank" class="update-btn">
-        📥 UPDATE NOW
-      </a>
-    </div>
-  </div>
 
   <!-- Auth Screen (OTP, Phone, Email & Google) -->
   <section id="authScreen" class="screen">
@@ -739,7 +390,7 @@
         </form>
       </div>
 
-      <!-- Remember Me Toggle -->
+      <!-- Remember Me -->
       <div class="remember-box" style="margin-top: 15px;">
         <input type="checkbox" id="rememberMe" checked style="width: auto; margin: 0;">
         <label for="rememberMe">Remember Me (Stay Logged In)</label>
@@ -747,7 +398,7 @@
 
       <div style="text-align: center; color: var(--text-sub); font-size: 12px; margin: 12px 0;">── OR ──</div>
 
-      <!-- Google Sign In Button -->
+      <!-- Google Sign In -->
       <button id="googleSignInBtn" class="google-btn">
         <img width="18" height="18" src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9zqoA7INrfqMIeqfh40nrtnQ27vAssXBu" alt="Google">
         Continue with Google
@@ -755,9 +406,8 @@
     </div>
   </section>
 
-  <!-- Main App Screen -->
+  <!-- App Main Screen -->
   <section id="appScreen" class="hidden">
-    <!-- Top Header -->
     <header class="app-topbar">
       <div class="topbar-left">
         <div class="menu-container">
@@ -779,7 +429,7 @@
         </div>
       </div>
       <div class="topbar-right">
-        <button id="notifBtn" class="notif-btn">🔔</button>
+        <button id="notifBtn" class="notif-btn" style="background: transparent; border:none; font-size: 18px; color: #fff;">🔔</button>
         <div class="coin-badge" id="walletQuickBtn">
           <span>🪙</span>
           <b id="coins">0</b>
@@ -796,36 +446,23 @@
 
       <div class="section-title">Account Details</div>
       <div class="actions-grid">
-        <button class="action-btn" id="actionProfile">
-          <div class="action-circle">👤</div>
-          <span>My Profile</span>
-        </button>
-        <button class="action-btn" id="actionMatches">
-          <div class="action-circle">🎮</div>
-          <span>My Matches</span>
-        </button>
-        <button class="action-btn" id="actionTopPlayers">
-          <div class="action-circle">📊</div>
-          <span>Top Players</span>
-        </button>
-        <button class="action-btn" id="actionContact">
-          <div class="action-circle">🎧</div>
-          <span>Contact Us</span>
-        </button>
+        <button class="action-btn" id="actionProfile"><div class="action-circle">👤</div><span>My Profile</span></button>
+        <button class="action-btn" id="actionMatches"><div class="action-circle">🎮</div><span>My Matches</span></button>
+        <button class="action-btn" id="actionTopPlayers"><div class="action-circle">📊</div><span>Top Players</span></button>
+        <button class="action-btn" id="actionContact"><div class="action-circle">🎧</div><span>Contact Us</span></button>
       </div>
 
       <div class="promo-card">
         <img class="promo-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop" alt="Tutorial">
         <div class="promo-overlay">
-          <div class="promo-info">
-            <h4>Official Guide & Rules</h4>
-            <p>How to join rooms & submit ID</p>
+          <div>
+            <h4 style="margin: 0; font-size: 14px;">Official Guide & Rules</h4>
+            <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-sub);">How to join rooms & submit ID</p>
           </div>
-          <button class="promo-btn" id="watchGuideBtn">Watch</button>
+          <button class="promo-btn" style="background: var(--accent-cyan); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700;">Watch</button>
         </div>
       </div>
 
-      <!-- Esports Games Grid (3x3) -->
       <div class="section-title">Esports Games</div>
       <div class="games-grid">
         <div class="game-card" data-mode="BATTLE ROYALE">
@@ -837,42 +474,27 @@
           <div class="game-label">Clash Squad</div>
         </div>
         <div class="game-card" data-mode="LONE WOLF">
-          <img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="Lone Wolf">
+          <img class="game-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="LW">
           <div class="game-label">Lone Wolf</div>
         </div>
-
         <div class="game-card" data-mode="BR SURVIVAL">
-          <img class="game-img" src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="Survival">
+          <img class="game-img" src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="BRS">
           <div class="game-label">BR Survival</div>
         </div>
         <div class="game-card" data-mode="CS HARDCORE">
-          <img class="game-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CS Squad">
+          <img class="game-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CSH">
           <div class="game-label">CS Hardcore</div>
         </div>
         <div class="game-card" data-mode="LONE WOLF 2V2">
-          <img class="game-img" src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="Lone Wolf 2v2">
+          <img class="game-img" src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="LW2">
           <div class="game-label">Lone Wolf 2v2</div>
-        </div>
-
-        <div class="game-card" data-mode="GUN CHALLENGE">
-          <img class="game-img" src="https://images.unsplash.com/photo-1552824722-ddab137b0169?w=300&auto=format&fit=crop" alt="Gun Challenge">
-          <div class="game-label">Gun Challenge</div>
-        </div>
-        <div class="game-card" data-mode="BR 4V4">
-          <img class="game-img" src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=300&auto=format&fit=crop" alt="BR 4v4">
-          <div class="game-label">BR 4v4</div>
-        </div>
-        <div class="game-card" data-mode="CS 4V4">
-          <img class="game-img" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop" alt="CS 4v4">
-          <div class="game-label">CS 4v4</div>
         </div>
       </div>
 
-      <!-- Tournament List Section -->
       <section class="panel" style="margin: 16px;">
-        <div class="section-head" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <h2 style="font-size: 16px; margin: 0;">Live Tournaments</h2>
-          <button id="manualRefreshTournaments" class="ghost" style="padding: 6px 12px; border-radius: 8px;">Refresh</button>
+          <button id="refreshTournaments" class="ghost" style="padding: 6px 12px; border-radius: 8px;">Refresh</button>
         </div>
         <div id="tournamentList" class="list">
           <div class="loading">Loading tournaments...</div>
@@ -881,11 +503,10 @@
 
       <!-- Admin Panel Section -->
       <section id="adminPanel" class="panel hidden" style="margin: 16px; background: #161825; padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 183, 3, 0.3);">
-        <div class="section-head" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
           <h2 style="font-size: 16px; margin: 0;">Admin Management</h2>
           <span class="badge" style="background: var(--accent-gold); color: #000; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">ADMIN</span>
         </div>
-
         <form id="tournamentForm" class="admin-form" style="margin-top: 14px;">
           <input type="hidden" id="editTournamentId">
           <input id="tournamentName" type="text" placeholder="Tournament name" maxlength="60" required style="width: 100%; box-sizing: border-box; margin-bottom: 8px; padding: 10px; border-radius: 8px; background: #0f1017; border: 1px solid var(--card-border); color: #fff;">
@@ -909,7 +530,7 @@
       </section>
     </main>
 
-    <!-- TAB 2: Full Profile Section -->
+    <!-- TAB 2: Full Profile View -->
     <main id="profileView" class="hidden">
       <div id="profileSection">
         <div class="profile-header-card">
@@ -923,201 +544,19 @@
 
         <div class="profile-menu-list">
           <div class="profile-menu-row" id="rowMyProfile">
-            <div class="row-left">
-              <span class="row-icon">👤</span>
-              <div class="row-text">
-                <h4>My Profile</h4>
-                <p>Username: <span id="kycUsername">Player</span> • KYC: NONE</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
+            <div class="row-left"><span class="row-icon">👤</span><div class="row-text"><h4>My Profile</h4><p>Username: <span id="kycUsername">Player</span> • KYC: NONE</p></div></div><span class="row-arrow">❯</span>
           </div>
-
-          <div class="profile-menu-row" id="rowNotification">
-            <div class="row-left">
-              <span class="row-icon">🔔</span>
-              <div class="row-text">
-                <h4>Notification Settings</h4>
-                <p>Enable alerts and manage subscriptions</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
           <div class="profile-menu-row" id="rowWallet">
-            <div class="row-left">
-              <span class="row-icon">💳</span>
-              <div class="row-text">
-                <h4>My Wallet</h4>
-                <p>Total Balance Coin: <span id="walletRowBalance">0</span></p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
+            <div class="row-left"><span class="row-icon">💳</span><div class="row-text"><h4>My Wallet</h4><p>Total Balance Coin: <span id="walletRowBalance">0</span></p></div></div><span class="row-arrow">❯</span>
           </div>
-
-          <div class="profile-menu-row" id="rowRewards">
-            <div class="row-left">
-              <span class="row-icon">🎁</span>
-              <div class="row-text">
-                <h4>My Rewards</h4>
-                <p>View Your Rewards History</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowTransactions">
-            <div class="row-left">
-              <span class="row-icon">⏱️</span>
-              <div class="row-text">
-                <h4>Transaction History</h4>
-                <p>View your deposits and withdrawals</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
           <div class="profile-menu-row" id="rowMyMatches">
-            <div class="row-left">
-              <span class="row-icon">🎮</span>
-              <div class="row-text">
-                <h4>My Matches</h4>
-                <p>View your Matches</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
+            <div class="row-left"><span class="row-icon">🎮</span><div class="row-text"><h4>My Matches</h4><p>View your Matches</p></div></div><span class="row-arrow">❯</span>
           </div>
-
-          <div class="profile-menu-row" id="rowGameRules">
-            <div class="row-left">
-              <span class="row-icon">📖</span>
-              <div class="row-text">
-                <h4>Game Rules</h4>
-                <p>Know how to play and win</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
           <div class="profile-menu-row" id="rowContact">
-            <div class="row-left">
-              <span class="row-icon">🎧</span>
-              <div class="row-text">
-                <h4>Contact Us</h4>
-                <p>Get help or report an issue</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
+            <div class="row-left"><span class="row-icon">🎧</span><div class="row-text"><h4>Contact Us</h4><p>Get help or report an issue</p></div></div><span class="row-arrow">❯</span>
           </div>
-
-          <div class="profile-menu-row" id="rowTopPlayers">
-            <div class="row-left">
-              <span class="row-icon">📊</span>
-              <div class="row-text">
-                <h4>Top Players</h4>
-                <p>See the leaderboard</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowFaq">
-            <div class="row-left">
-              <span class="row-icon">❓</span>
-              <div class="row-text">
-                <h4>FAQ</h4>
-                <p>Frequently asked questions</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowAbout">
-            <div class="row-left">
-              <span class="row-icon">ℹ️</span>
-              <div class="row-text">
-                <h4>About Us</h4>
-                <p>Learn more about our app</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowOfficialSite">
-            <div class="row-left">
-              <span class="row-icon">🌐</span>
-              <div class="row-text">
-                <h4>Official Site</h4>
-                <p>Visit our website</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowPrivacy">
-            <div class="row-left">
-              <span class="row-icon">🛡️</span>
-              <div class="row-text">
-                <h4>Privacy Policy</h4>
-                <p>How we protect your data</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowTerms">
-            <div class="row-left">
-              <span class="row-icon">📄</span>
-              <div class="row-text">
-                <h4>Terms & Conditions</h4>
-                <p>Read our policies</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowRate">
-            <div class="row-left">
-              <span class="row-icon">⭐</span>
-              <div class="row-text">
-                <h4>Rate App</h4>
-                <p>Share your experience</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowShare">
-            <div class="row-left">
-              <span class="row-icon">🔗</span>
-              <div class="row-text">
-                <h4>Share App</h4>
-                <p>Invite friends to join</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
-          <div class="profile-menu-row" id="rowMoreApps">
-            <div class="row-left">
-              <span class="row-icon">📱</span>
-              <div class="row-text">
-                <h4>More Apps</h4>
-                <p>Explore our other creations</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
-          </div>
-
           <div class="profile-menu-row" id="rowLogout">
-            <div class="row-left">
-              <span class="row-icon" style="color: #ff5555;">🚪</span>
-              <div class="row-text">
-                <h4 style="color: #ff5555;">Logout</h4>
-                <p>Sign out of your account</p>
-              </div>
-            </div>
-            <span class="row-arrow">❯</span>
+            <div class="row-left"><span class="row-icon" style="color: #ff5555;">🚪</span><div class="row-text"><h4 style="color: #ff5555;">Logout</h4><p>Sign out of your account</p></div></div><span class="row-arrow">❯</span>
           </div>
         </div>
       </div>
@@ -1136,68 +575,23 @@
       <span id="matches">0</span>
       <span id="wins">0</span>
       <button id="refreshBtn"></button>
-      <button id="refreshTournaments"></button>
     </div>
 
-    <!-- Bottom Navigation Bar (5 Items) -->
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <button class="nav-item active" id="navHome">
-        <div class="nav-icon">🏠</div>
-        <span>Home</span>
-      </button>
-      <button class="nav-item" id="navVideo">
-        <div class="nav-icon">▶️</div>
-        <span>Video</span>
-      </button>
-      <button class="nav-item" id="navEarn">
-        <div class="nav-icon">🎁</div>
-        <span>Earn</span>
-      </button>
-      <button class="nav-item" id="navWallet">
-        <div class="nav-icon">💳</div>
-        <span>Wallet</span>
-      </button>
-      <button class="nav-item" id="navProfile">
-        <div class="nav-icon">👤</div>
-        <span>Profile</span>
-      </button>
+      <button class="nav-item active" id="navHome"><div class="nav-icon">🏠</div><span>Home</span></button>
+      <button class="nav-item" id="navEarn"><div class="nav-icon">🎁</div><span>Earn</span></button>
+      <button class="nav-item" id="navWallet"><div class="nav-icon">💳</div><span>Wallet</span></button>
+      <button class="nav-item" id="navProfile"><div class="nav-icon">👤</div><span>Profile</span></button>
     </nav>
   </section>
 
-  <!-- Settings Modal Box -->
-  <div id="settingsModal" class="modal-overlay hidden">
-    <div class="settings-modal">
-      <div class="modal-header">
-        <h3>⚙️ App Settings</h3>
-        <button id="closeSettingsBtn" class="close-btn">&times;</button>
-      </div>
-      <div class="settings-content">
-        <div class="settings-item">
-          <span>Haptic Vibration</span>
-          <input id="vibrationToggle" type="checkbox" checked>
-        </div>
-        <div class="settings-item">
-          <span>Push Notifications</span>
-          <input type="checkbox" checked>
-        </div>
-        <div class="settings-item">
-          <span>Support Contact</span>
-          <a href="https://t.me/nkwithprifut101" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: bold;">Telegram</a>
-        </div>
-        <div class="settings-item">
-          <span>App Version</span>
-          <span style="color: #888;">v1.0.2</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Withdrawal Modal Box -->
+  <!-- Withdraw Modal -->
   <div id="withdrawModal" class="modal-overlay hidden">
     <div class="settings-modal">
-      <div class="modal-header">
-        <h3>💳 Withdraw Coins</h3>
-        <button id="closeWithdrawBtn" class="close-btn">&times;</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0;">💳 Withdraw Coins</h3>
+        <button id="closeWithdrawBtn" style="background: transparent; border: none; color: #888; font-size: 20px;">&times;</button>
       </div>
       <form id="withdrawForm" style="display: flex; flex-direction: column; gap: 12px;">
         <select id="withdrawMethod" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
@@ -1208,297 +602,10 @@
         </select>
         <input id="withdrawNumber" type="text" placeholder="Enter UPI ID or Number" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
         <input id="withdrawCoins" type="number" min="50" placeholder="Coins to withdraw (Min 50)" style="padding: 10px; border-radius: 8px; background: #0f1017; color: #fff; border: 1px solid var(--card-border);" required>
-        <button class="primary" type="submit" style="margin-top: 6px; padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Submit Request</button>
+        <button class="primary" type="submit" style="padding: 12px; border-radius: 8px; background: var(--accent-cyan); border: none; font-weight: 700;">Submit Request</button>
       </form>
     </div>
   </div>
-
-  <!-- JavaScript Logic with Tabs, Profile Sync & Local Auth Memory -->
-  <script>
-    if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock('portrait-primary').catch(() => {});
-    }
-
-    const CURRENT_VERSION = "1.0.2";
-    const LATEST_VERSION = "1.0.2";
-    const UPDATE_DOWNLOAD_URL = "https://t.me/nkwithprifut101";
-
-    function checkAppUpdate() {
-      if (LATEST_VERSION > CURRENT_VERSION) {
-        const updateModal = document.getElementById('updateModal');
-        const updateNowBtn = document.getElementById('updateNowBtn');
-        if (updateModal) {
-          if (updateNowBtn) updateNowBtn.href = UPDATE_DOWNLOAD_URL;
-          updateModal.classList.remove('hidden');
-        }
-      }
-    }
-
-    function triggerVibration(duration = 40) {
-      const isVibrationOn = localStorage.getItem('app_vibration') !== 'false';
-      if (isVibrationOn && navigator.vibrate) {
-        navigator.vibrate(duration);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // ========== TAB SWITCHING (Home <-> Profile) ==========
-      const homeView = document.getElementById('homeView');
-      const profileView = document.getElementById('profileView');
-      const navHome = document.getElementById('navHome');
-      const navProfile = document.getElementById('navProfile');
-      const actionProfile = document.getElementById('actionProfile');
-      const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-
-      function showTab(tabName) {
-        navItems.forEach(i => i.classList.remove('active'));
-        if (tabName === 'profile') {
-          homeView.classList.add('hidden');
-          profileView.classList.remove('hidden');
-          navProfile.classList.add('active');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          syncProfileData();
-        } else {
-          profileView.classList.add('hidden');
-          homeView.classList.remove('hidden');
-          navHome.classList.add('active');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }
-
-      function syncProfileData() {
-        const pName = document.getElementById('playerName')?.textContent || "Player";
-        const pEmail = document.getElementById('playerEmail')?.textContent || "Registered User";
-        const pCoins = document.getElementById('coins')?.textContent || "0";
-
-        document.getElementById('profileDisplayName').textContent = pName;
-        document.getElementById('profileDisplayEmail').textContent = pEmail;
-        document.getElementById('profileAvatarLetter').textContent = pName.charAt(0).toUpperCase() || "P";
-        document.getElementById('profileDisplayUsername').textContent = "@" + pName.toLowerCase().replace(/\s+/g, '_');
-        document.getElementById('kycUsername').textContent = pName;
-        document.getElementById('walletRowBalance').textContent = pCoins;
-      }
-
-      navHome.addEventListener('click', () => showTab('home'));
-      navProfile.addEventListener('click', () => showTab('profile'));
-      if (actionProfile) actionProfile.addEventListener('click', () => showTab('profile'));
-
-      // Back Button Management
-      window.history.pushState({ page: 'home' }, '');
-      window.addEventListener('popstate', () => {
-        let actionHandled = false;
-
-        const modals = ['updateModal', 'withdrawModal', 'settingsModal'];
-        modals.forEach(id => {
-          const m = document.getElementById(id);
-          if (m && !m.classList.contains('hidden')) {
-            m.classList.add('hidden');
-            actionHandled = true;
-          }
-        });
-
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
-          dropdownMenu.classList.add('hidden');
-          actionHandled = true;
-        }
-
-        if (!profileView.classList.contains('hidden')) {
-          showTab('home');
-          actionHandled = true;
-        }
-
-        if (actionHandled) {
-          window.history.pushState({ page: 'home' }, '');
-        } else {
-          window.history.back();
-        }
-      });
-
-      // Global Vibration
-      document.body.addEventListener('click', (e) => {
-        if (e.target.closest('button, a, .game-card, .coin-badge, .profile-menu-row')) {
-          triggerVibration(35);
-        }
-      });
-
-      // Vibration Toggle
-      const vibrationToggle = document.getElementById('vibrationToggle');
-      if (vibrationToggle) {
-        const saved = localStorage.getItem('app_vibration');
-        vibrationToggle.checked = saved !== 'false';
-        vibrationToggle.addEventListener('change', () => {
-          localStorage.setItem('app_vibration', vibrationToggle.checked);
-          if (vibrationToggle.checked) triggerVibration(50);
-        });
-      }
-
-      // App Icon / Dropdown Click Trigger
-      const threeDotsBtn = document.getElementById('threeDotsBtn');
-      const dropdownMenu = document.getElementById('dropdownMenu');
-      if (threeDotsBtn && dropdownMenu) {
-        threeDotsBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          dropdownMenu.classList.toggle('hidden');
-        });
-        document.addEventListener('click', () => dropdownMenu.classList.add('hidden'));
-      }
-
-      // Modals
-      const menuWithdrawBtn = document.getElementById('menuWithdrawBtn');
-      const walletQuickBtn = document.getElementById('walletQuickBtn');
-      const navWallet = document.getElementById('navWallet');
-      const rowWallet = document.getElementById('rowWallet');
-      const withdrawModal = document.getElementById('withdrawModal');
-      const closeWithdrawBtn = document.getElementById('closeWithdrawBtn');
-      const withdrawForm = document.getElementById('withdrawForm');
-
-      const openWithdraw = () => {
-        if (dropdownMenu) dropdownMenu.classList.add('hidden');
-        if (withdrawModal) withdrawModal.classList.remove('hidden');
-      };
-
-      if (menuWithdrawBtn) menuWithdrawBtn.addEventListener('click', openWithdraw);
-      if (walletQuickBtn) walletQuickBtn.addEventListener('click', openWithdraw);
-      if (navWallet) navWallet.addEventListener('click', openWithdraw);
-      if (rowWallet) rowWallet.addEventListener('click', openWithdraw);
-
-      if (closeWithdrawBtn && withdrawModal) {
-        closeWithdrawBtn.addEventListener('click', () => withdrawModal.classList.add('hidden'));
-      }
-
-      if (withdrawForm) {
-        withdrawForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          triggerVibration(60);
-          alert("✅ Withdrawal request submitted! It will be reviewed shortly.");
-          withdrawModal.classList.add('hidden');
-          withdrawForm.reset();
-        });
-      }
-
-      const menuSettingsBtn = document.getElementById('menuSettingsBtn');
-      const rowNotification = document.getElementById('rowNotification');
-      const settingsModal = document.getElementById('settingsModal');
-      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-
-      const openSettings = () => {
-        if (dropdownMenu) dropdownMenu.classList.add('hidden');
-        if (settingsModal) settingsModal.classList.remove('hidden');
-      };
-
-      if (menuSettingsBtn) menuSettingsBtn.addEventListener('click', openSettings);
-      if (rowNotification) rowNotification.addEventListener('click', openSettings);
-      if (closeSettingsBtn && settingsModal) {
-        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
-      }
-
-      // Profile Row Handlers
-      const rowMyProfile = document.getElementById('rowMyProfile');
-      if (rowMyProfile) rowMyProfile.addEventListener('click', () => alert("👤 KYC verification will be available in the upcoming update."));
-
-      const rowRewards = document.getElementById('rowRewards');
-      if (rowRewards) rowRewards.addEventListener('click', () => alert("🎁 No new reward history available yet."));
-
-      const rowTransactions = document.getElementById('rowTransactions');
-      if (rowTransactions) rowTransactions.addEventListener('click', () => alert("⏱️ No recent transactions found."));
-
-      const rowMyMatches = document.getElementById('rowMyMatches');
-      if (rowMyMatches) rowMyMatches.addEventListener('click', () => {
-        showTab('home');
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      });
-
-      const rowGameRules = document.getElementById('rowGameRules');
-      if (rowGameRules) rowGameRules.addEventListener('click', () => alert("📖 Rules:\n1. No hacks/cheats allowed.\n2. Submit match screenshots after win.\n3. Room details will be shown 15 mins before match."));
-
-      const rowContact = document.getElementById('rowContact');
-      if (rowContact) rowContact.addEventListener('click', () => window.open('https://t.me/nkwithprifut101', '_blank'));
-
-      const rowTopPlayers = document.getElementById('rowTopPlayers');
-      if (rowTopPlayers) rowTopPlayers.addEventListener('click', () => alert("🏆 Leaderboard is updated weekly based on match points."));
-
-      const rowFaq = document.getElementById('rowFaq');
-      if (rowFaq) rowFaq.addEventListener('click', () => alert("❓ FAQ:\nQ: When will I get withdrawal?\nA: Within 24-48 hours via UPI/Bkash."));
-
-      const rowAbout = document.getElementById('rowAbout');
-      if (rowAbout) rowAbout.addEventListener('click', () => alert("ℹ️ FF PANEL - Professional eSports & Tournament Management Platform."));
-
-      const rowOfficialSite = document.getElementById('rowOfficialSite');
-      if (rowOfficialSite) rowOfficialSite.addEventListener('click', () => window.open('https://nabak5883-png.github.io/ff_panel/', '_blank'));
-
-      const rowPrivacy = document.getElementById('rowPrivacy');
-      if (rowPrivacy) rowPrivacy.addEventListener('click', () => alert("🛡️ Your data is stored safely with Firebase Encrypted authentication."));
-
-      const rowTerms = document.getElementById('rowTerms');
-      if (rowTerms) rowTerms.addEventListener('click', () => alert("📄 Terms: Fair play is mandatory. Accounts using unauthorized scripts will be banned immediately."));
-
-      const rowRate = document.getElementById('rowRate');
-      if (rowRate) rowRate.addEventListener('click', () => alert("⭐ Thank you for rating FF PANEL 5 stars!"));
-
-      const rowShare = document.getElementById('rowShare');
-      if (rowShare) rowShare.addEventListener('click', () => {
-        if (navigator.share) {
-          navigator.share({ title: 'FF PANEL', text: 'Download FF PANEL and join daily gaming tournaments!', url: window.location.href });
-        } else {
-          alert("🔗 Share Link: " + window.location.href);
-        }
-      });
-
-      const rowMoreApps = document.getElementById('rowMoreApps');
-      if (rowMoreApps) rowMoreApps.addEventListener('click', () => alert("📱 More gaming utilities coming soon!"));
-
-      const rowLogout = document.getElementById('rowLogout');
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (rowLogout) {
-        rowLogout.addEventListener('click', () => {
-          if (logoutBtn) logoutBtn.click();
-        });
-      }
-
-      // Home Quick Buttons
-      const actionMatches = document.getElementById('actionMatches');
-      if (actionMatches) actionMatches.addEventListener('click', () => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      });
-
-      const actionTopPlayers = document.getElementById('actionTopPlayers');
-      if (actionTopPlayers) actionTopPlayers.addEventListener('click', () => alert("📊 Leaderboard rankings are live!"));
-
-      const actionContact = document.getElementById('actionContact');
-      if (actionContact) actionContact.addEventListener('click', () => window.open('https://t.me/nkwithprifut101', '_blank'));
-
-      const manualRefresh = document.getElementById('manualRefreshTournaments');
-      if (manualRefresh) {
-        manualRefresh.addEventListener('click', () => {
-          document.getElementById('refreshTournaments')?.click();
-        });
-      }
-
-      // Game Cards Interaction
-      document.querySelectorAll('.game-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const mode = card.getAttribute('data-mode');
-          alert(`🎮 Selected Mode: ${mode}\nChecking available match rooms...`);
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        });
-      });
-    });
-
-    // Splash Screen Auto Hide
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('splashScreen');
-        if (splash) {
-          splash.classList.add('fade-out');
-          setTimeout(() => {
-            splash.style.display = 'none';
-            checkAppUpdate();
-          }, 600);
-        }
-      }, 1800);
-    });
-  </script>
 
   <script type="module" src="app.js"></script>
 </body>
