@@ -259,18 +259,26 @@
       if(d.notice) $("appNoticeText").textContent=d.notice;
       if(d.videoTitle) $("videoDynamicTitle").textContent=d.videoTitle;
       
-            if (Array.isArray(d.gameModes) && d.gameModes.length === 9) {
-        const cards = document.querySelectorAll(".game-card, .esport-card");
-        d.gameModes.forEach((m, i) => {
-          if (cards[i]) {
-            cards[i].setAttribute("data-mode", m.title);
-            const img = cards[i].querySelector("img");
-            const txt = cards[i].querySelector("div");
-            if (img) img.src = m.img;
-            if (txt) txt.textContent = m.title;
-          }
-        });
-            }
+            if (Array.isArray(d.gameModes) && d.gameModes.length > 0) {
+        const grid = document.querySelector(".grid-3, .esports-grid");
+        if (grid) {
+          grid.innerHTML = "";
+          d.gameModes.forEach(m => {
+            const card = document.createElement("div");
+            card.className = grid.classList.contains("esports-grid") ? "esport-card" : "game-card";
+            card.setAttribute("data-mode", m.title);
+            card.innerHTML = `<img src="${m.img}" alt=""><div class="esport-title">${m.title}</div>`;
+            card.onclick = () => {
+              renderMatches(m.title);
+              if (typeof goTab === "function") goTab("navHome");
+              else if (typeof switchTab === "function") switchTab("navHome");
+              setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }), 120);
+            };
+            grid.appendChild(card);
+          });
+        }
+      }
+
       
       Object.assign(cfg, d);
     });
