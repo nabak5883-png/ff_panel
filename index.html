@@ -298,6 +298,42 @@
         }
       }
       
+      // Sync Dynamic Profile Menu Options Live
+      if (Array.isArray(d.profileMenu) && d.profileMenu.length > 0) {
+        const profView = document.getElementById("profileView");
+        const logoutRow = document.getElementById("rowLogout");
+        if (profView && logoutRow) {
+          profView.querySelectorAll(".opt-item:not(#rowLogout)").forEach(el => el.remove());
+          d.profileMenu.forEach(item => {
+            const row = document.createElement("div");
+            row.className = "opt-item";
+            if (item.type === "WALLET") {
+              const bal = document.getElementById("coins")?.textContent || "0.00";
+              row.innerHTML = `<span>${item.title}</span><span id="walletRowBalance" style="color:var(--gold);font-weight:700;">${bal}</span>`;
+            } else {
+              row.innerHTML = `<span>${item.title}</span><span>❯</span>`;
+            }
+            row.onclick = () => {
+              if (item.type === "WALLET") goTab("navWallet");
+              else if (item.type === "MATCHES") toMatch();
+              else if (item.type === "RULES") pop("📋 " + item.title, cfg.rules);
+              else if (item.type === "SUPPORT") window.open(cfg.telegram, "_blank");
+              else if (item.type === "WEBSITE") window.open(cfg.website, "_blank");
+              else if (item.type === "SHARE") {
+                const link = item.value || window.location.origin + "/ff_panel/download.html";
+                if (navigator.share) navigator.share({ title: "Download App", url: link });
+                else { navigator.clipboard.writeText(link); toast("App Link Copied!"); }
+              } else if (item.type === "POPUP") {
+                pop(item.title, item.value || "Information");
+              } else if (item.type === "LINK" && item.value) {
+                window.open(item.value, "_blank");
+              }
+            };
+            profView.insertBefore(row, logoutRow);
+          });
+        }
+      }
+
       Object.assign(cfg, d);
     });
 
