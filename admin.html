@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="theme-color" content="#e63946">
-  <title>FF PANEL - Admin Control</title>
+  <meta name="theme-color" content="#1a90ff">
+  <title>FF PANEL - Master Admin</title>
 
   <style>
     :root {
@@ -23,7 +23,7 @@
 
     body {
       margin: 0;
-      padding: 0 0 40px 0;
+      padding: 0 0 50px 0;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -42,47 +42,40 @@
       top: 0;
       z-index: 100;
     }
-    .topbar h1 {
-      margin: 0;
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--gold);
-    }
+    .topbar h1 { margin: 0; font-size: 16px; font-weight: 800; color: var(--gold); }
     .logout-btn {
-      background: var(--danger);
-      color: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
+      background: var(--danger); color: #fff; border: none;
+      padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;
     }
 
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+    .container { max-width: 520px; margin: 0 auto; padding: 14px; }
 
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
     .card h2 {
-      margin: 0 0 14px 0;
+      margin: 0 0 12px 0;
       font-size: 15px;
       color: var(--primary);
       border-bottom: 1px solid var(--border);
       padding-bottom: 8px;
     }
 
+    label {
+      display: block;
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
     .input-field {
       width: 100%;
-      padding: 12px;
+      padding: 11px 12px;
       border-radius: 10px;
       background: #0b0c10;
       border: 1px solid var(--border);
@@ -91,6 +84,9 @@
       margin-bottom: 10px;
       outline: none;
     }
+    textarea.input-field { resize: vertical; min-height: 70px; font-family: inherit; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .btn {
       width: 100%;
@@ -103,13 +99,7 @@
       cursor: pointer;
       font-size: 13px;
     }
-    .btn-danger {
-      background: var(--danger);
-      padding: 6px 12px;
-      width: auto;
-      font-size: 11px;
-      border-radius: 6px;
-    }
+    .btn-sm { padding: 6px 12px; width: auto; font-size: 11px; border-radius: 6px; }
 
     .item-row {
       background: #0b0c10;
@@ -121,21 +111,14 @@
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
+      gap: 10px;
     }
 
     #toast {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #000;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 25px;
-      border: 1px solid var(--primary);
-      font-size: 13px;
-      display: none;
-      z-index: 9999;
+      position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+      background: #000; color: #fff; padding: 10px 20px; border-radius: 25px;
+      border: 1px solid var(--primary); font-size: 13px; display: none; z-index: 9999;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -143,15 +126,15 @@
 
   <div id="toast"></div>
 
-  <!-- Admin Login Screen -->
+  <!-- Admin Login -->
   <section id="adminAuth" class="container" style="margin-top: 60px;">
     <div class="card">
-      <h2 style="text-align:center; font-size:18px; color:var(--gold);">🛡️ FF PANEL ADMIN</h2>
-      <p style="text-align:center; font-size:12px; color:var(--sub); margin-bottom:16px;">Authorized Access Only</p>
+      <h2 style="text-align:center; font-size:18px; color:var(--gold);">🛡️ MASTER ADMIN PANEL</h2>
+      <p style="text-align:center; font-size:12px; color:var(--sub); margin-bottom:16px;">No-Code App Control Center</p>
       <form id="adminLoginForm">
         <input id="adminEmail" class="input-field" type="email" placeholder="Admin Email" required>
         <input id="adminPass" class="input-field" type="password" placeholder="Admin Password" required>
-        <button type="submit" class="btn">LOGIN TO DASHBOARD</button>
+        <button type="submit" class="btn">LOGIN TO ADMIN</button>
       </form>
     </div>
   </section>
@@ -159,37 +142,138 @@
   <!-- Admin Dashboard -->
   <section id="adminDashboard" class="hidden">
     <header class="topbar">
-      <h1>🛡️ ADMIN PANEL</h1>
+      <h1>⚙️ NO-CODE APP CONTROLLER</h1>
       <button id="adminLogout" class="logout-btn">Logout</button>
     </header>
 
     <div class="container">
 
-      <!-- 1. App Notice & Support Link -->
+      <!-- 1. Full App Design, Links & Texts -->
       <div class="card">
-        <h2>📢 App Notice & Support Link</h2>
-        <form id="settingsForm">
-          <input id="noticeInput" class="input-field" type="text" placeholder="Welcome Banner Notice Text" required>
-          <input id="telegramInput" class="input-field" type="url" placeholder="Telegram / Support Link (https://...)" required>
-          <button type="submit" class="btn">Save Settings</button>
+        <h2>🎨 1. App Design, Links & Rules (No-Code)</h2>
+        <form id="masterSettingsForm">
+          <div class="grid-2">
+            <div>
+              <label>App Name</label>
+              <input id="setAppName" class="input-field" type="text" placeholder="FF PANEL" required>
+            </div>
+            <div>
+              <label>App Subtitle</label>
+              <input id="setAppSub" class="input-field" type="text" placeholder="Tournament Platform">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label>Theme Color (Click to Pick)</label>
+              <input id="setThemeColor" class="input-field" type="color" value="#1a90ff" style="height:41px; padding:4px;">
+            </div>
+            <div>
+              <label>Min Withdraw (Coins)</label>
+              <input id="setMinWithdraw" class="input-field" type="number" value="50">
+            </div>
+          </div>
+
+          <label>App Logo Image URL</label>
+          <input id="setLogoUrl" class="input-field" type="url" placeholder="https://...">
+
+          <label>Home Notice Text (Scrolling/Banner)</label>
+          <input id="setNotice" class="input-field" type="text" placeholder="Welcome to FF PANEL!">
+
+          <div class="grid-2">
+            <div>
+              <label>WhatsApp Support Link</label>
+              <input id="setWhatsapp" class="input-field" type="url" placeholder="https://wa.me/...">
+            </div>
+            <div>
+              <label>Telegram Link</label>
+              <input id="setTelegram" class="input-field" type="url" placeholder="https://t.me/...">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label>Instagram Link</label>
+              <input id="setInsta" class="input-field" type="url" placeholder="https://instagram.com/...">
+            </div>
+            <div>
+              <label>Official Website Link</label>
+              <input id="setWebsite" class="input-field" type="url" placeholder="https://...">
+            </div>
+          </div>
+
+          <label>Video Tab Tutorial Title</label>
+          <input id="setVideoTitle" class="input-field" type="text" placeholder="How To Join Match">
+
+          <label>YouTube Video Link</label>
+          <input id="setVideoUrl" class="input-field" type="url" placeholder="https://youtube.com/...">
+
+          <label>Add Funds / UPI Payment Instructions</label>
+          <textarea id="setAddFundsMsg" class="input-field" placeholder="Send money to UPI: example@upi and send screenshot on WhatsApp to add coins."></textarea>
+
+          <label>Game Rules Text</label>
+          <textarea id="setRules" class="input-field" placeholder="1. No hacks allowed..."></textarea>
+
+          <button type="submit" class="btn">💾 Save All App Changes</button>
         </form>
       </div>
 
       <!-- 2. Create New Tournament -->
       <div class="card">
-        <h2>🎮 Create New Match / Tournament</h2>
+        <h2>🎮 2. Create & Manage Tournaments</h2>
         <form id="createMatchForm">
-          <input id="matchName" class="input-field" type="text" placeholder="Match Title (e.g. BR Solo #12)" required>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <input id="matchEntry" class="input-field" type="number" placeholder="Entry Fee (Coins)" required>
-            <input id="matchPrize" class="input-field" type="number" placeholder="Winning Prize" required>
+          <label>Match Title</label>
+          <input id="matchName" class="input-field" type="text" placeholder="e.g. BR Solo Match #1" required>
+
+          <div class="grid-2">
+            <div>
+              <label>Category</label>
+              <select id="matchCategory" class="input-field">
+                <option value="ALL">ALL MODES</option>
+                <option value="BATTLE ROYALE">BATTLE ROYALE</option>
+                <option value="CLASH SQUAD">CLASH SQUAD</option>
+                <option value="LONE WOLF">LONE WOLF</option>
+                <option value="BR SURVIVAL">BR SURVIVAL</option>
+                <option value="GUN CHALLENGE">GUN CHALLENGE</option>
+                <option value="BR 4V4">BR 4V4</option>
+                <option value="CS 4V4">CS 4V4</option>
+              </select>
+            </div>
+            <div>
+              <label>Match Status</label>
+              <select id="matchStatus" class="input-field">
+                <option value="OPEN">OPEN</option>
+                <option value="LIVE">LIVE</option>
+                <option value="FULL">FULL</option>
+              </select>
+            </div>
           </div>
-          <input id="matchDate" class="input-field" type="text" placeholder="Time (e.g. Today 8:00 PM)" required>
-          <select id="matchStatus" class="input-field">
-            <option value="OPEN">OPEN</option>
-            <option value="LIVE">LIVE</option>
-            <option value="FULL">FULL</option>
-          </select>
+
+          <div class="grid-2">
+            <div>
+              <label>Entry Fee (Coins)</label>
+              <input id="matchEntry" class="input-field" type="number" placeholder="20" required>
+            </div>
+            <div>
+              <label>Winning Prize (Coins)</label>
+              <input id="matchPrize" class="input-field" type="number" placeholder="100" required>
+            </div>
+          </div>
+
+          <label>Match Time / Schedule</label>
+          <input id="matchDate" class="input-field" type="text" placeholder="Today 8:00 PM" required>
+
+          <div class="grid-2">
+            <div>
+              <label>Room ID (Optional)</label>
+              <input id="matchRoomId" class="input-field" type="text" placeholder="Wait for ID">
+            </div>
+            <div>
+              <label>Room Password (Optional)</label>
+              <input id="matchRoomPass" class="input-field" type="text" placeholder="****">
+            </div>
+          </div>
+
           <button type="submit" class="btn" style="background:var(--success);">+ Publish Match</button>
         </form>
 
@@ -199,19 +283,29 @@
 
       <!-- 3. Manage User Coins -->
       <div class="card">
-        <h2>🪙 Add / Update User Coins</h2>
+        <h2>🪙 3. Control Player Wallet</h2>
         <form id="coinForm">
-          <input id="targetEmail" class="input-field" type="email" placeholder="Player Email Address" required>
-          <input id="newCoinAmount" class="input-field" type="number" step="0.01" placeholder="New Total Coins (e.g. 500)" required>
-          <button type="submit" class="btn" style="background:var(--gold); color:#000;">Update Player Balance</button>
+          <label>Player Email Address</label>
+          <input id="targetEmail" class="input-field" type="email" placeholder="player@gmail.com" required>
+          <div class="grid-2">
+            <div>
+              <label>Total Coins Balance</label>
+              <input id="newCoinAmount" class="input-field" type="number" step="0.01" placeholder="500" required>
+            </div>
+            <div>
+              <label>Winnings Coins</label>
+              <input id="newWinAmount" class="input-field" type="number" step="0.01" placeholder="0">
+            </div>
+          </div>
+          <button type="submit" class="btn" style="background:var(--gold); color:#000;">Update Player Wallet</button>
         </form>
       </div>
 
       <!-- 4. Withdrawal Requests -->
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <h2 style="margin:0; border:none; padding:0;">💳 Withdrawal Requests</h2>
-          <button id="refreshWithdrawals" style="background:none; border:1px solid var(--border); color:#fff; padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Refresh</button>
+          <h2 style="margin:0; border:none; padding:0;">💳 4. Withdrawal Requests</h2>
+          <button id="refreshWithdrawals" class="btn btn-sm" style="background:#252834;">Refresh</button>
         </div>
         <div id="withdrawList">Loading requests...</div>
       </div>
@@ -219,7 +313,6 @@
     </div>
   </section>
 
-  <!-- Embedded Admin Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import {
@@ -241,7 +334,6 @@
     };
 
     const ADMIN_EMAIL = "nabak5883@gmail.com";
-
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -255,23 +347,18 @@
       window._t = setTimeout(() => t.style.display = "none", 2600);
     }
 
-    // Login Handler
     $("adminLoginForm").onsubmit = async e => {
       e.preventDefault();
       const email = $("adminEmail").value.trim().toLowerCase();
       const pass = $("adminPass").value;
       if (email !== ADMIN_EMAIL) {
-        toast("Access Denied! Only Admin Email Allowed.");
+        toast("Access Denied! Admin Only.");
         return;
       }
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (err) {
-        toast(err.message);
-      }
+      try { await signInWithEmailAndPassword(auth, email, pass); }
+      catch (err) { toast(err.message); }
     };
 
-    // Auth Check
     onAuthStateChanged(auth, async user => {
       if (!user || user.email.toLowerCase() !== ADMIN_EMAIL) {
         if (user) await signOut(auth);
@@ -288,42 +375,70 @@
 
     $("adminLogout").onclick = () => signOut(auth);
 
-    // 1. Save & Load Settings
+    // Load & Save All App Customizations
     async function loadSettings() {
       try {
         const snap = await getDoc(doc(db, "settings", "global"));
         if (snap.exists()) {
           const d = snap.data();
-          if (d.notice) $("noticeInput").value = d.notice;
-          if (d.telegram) $("telegramInput").value = d.telegram;
+          if (d.appName) $("setAppName").value = d.appName;
+          if (d.appSub) $("setAppSub").value = d.appSub;
+          if (d.themeColor) $("setThemeColor").value = d.themeColor;
+          if (d.minWithdraw) $("setMinWithdraw").value = d.minWithdraw;
+          if (d.logoUrl) $("setLogoUrl").value = d.logoUrl;
+          if (d.notice) $("setNotice").value = d.notice;
+          if (d.whatsapp) $("setWhatsapp").value = d.whatsapp;
+          if (d.telegram) $("setTelegram").value = d.telegram;
+          if (d.insta) $("setInsta").value = d.insta;
+          if (d.website) $("setWebsite").value = d.website;
+          if (d.videoTitle) $("setVideoTitle").value = d.videoTitle;
+          if (d.videoUrl) $("setVideoUrl").value = d.videoUrl;
+          if (d.addFundsMsg) $("setAddFundsMsg").value = d.addFundsMsg;
+          if (d.rules) $("setRules").value = d.rules;
         }
       } catch (e) {}
     }
 
-    $("settingsForm").onsubmit = async e => {
+    $("masterSettingsForm").onsubmit = async e => {
       e.preventDefault();
       try {
         await setDoc(doc(db, "settings", "global"), {
-          notice: $("noticeInput").value.trim(),
-          telegram: $("telegramInput").value.trim()
+          appName: $("setAppName").value.trim() || "FF PANEL",
+          appSub: $("setAppSub").value.trim() || "Tournament Platform",
+          themeColor: $("setThemeColor").value || "#1a90ff",
+          minWithdraw: Number($("setMinWithdraw").value || 50),
+          logoUrl: $("setLogoUrl").value.trim(),
+          notice: $("setNotice").value.trim(),
+          whatsapp: $("setWhatsapp").value.trim(),
+          telegram: $("setTelegram").value.trim(),
+          insta: $("setInsta").value.trim(),
+          website: $("setWebsite").value.trim(),
+          videoTitle: $("setVideoTitle").value.trim(),
+          videoUrl: $("setVideoUrl").value.trim(),
+          addFundsMsg: $("setAddFundsMsg").value.trim(),
+          rules: $("setRules").value.trim(),
+          updatedAt: serverTimestamp()
         }, { merge: true });
-        toast("Settings Updated!");
+        toast("✅ App Updated Live!");
       } catch (err) { toast(err.message); }
     };
 
-    // 2. Create & Delete Matches
+    // Create & Manage Matches
     $("createMatchForm").onsubmit = async e => {
       e.preventDefault();
       try {
         await addDoc(collection(db, "tournaments"), {
           name: $("matchName").value.trim(),
+          category: $("matchCategory").value,
+          status: $("matchStatus").value,
           entry: Number($("matchEntry").value),
           prize: Number($("matchPrize").value),
           dateText: $("matchDate").value.trim(),
-          status: $("matchStatus").value,
+          roomId: $("matchRoomId").value.trim(),
+          roomPass: $("matchRoomPass").value.trim(),
           createdAt: serverTimestamp()
         });
-        toast("Match Published!");
+        toast("✅ Match Published!");
         $("createMatchForm").reset();
         loadMatches();
       } catch (err) { toast(err.message); }
@@ -345,10 +460,11 @@
           row.className = "item-row";
           row.innerHTML = `
             <div>
-              <b style="color:#fff;">${m.name}</b> (${m.status})<br>
-              <span style="color:#8a90a2;">Entry: ${m.entry} | Prize: ${m.prize} | ${m.dateText}</span>
+              <b style="color:#fff;">${m.name}</b> <span style="color:var(--primary);">[${m.status}]</span><br>
+              <span style="color:#8a90a2;">${m.category || "ALL"} | Entry: ${m.entry} | Prize: ${m.prize}</span><br>
+              <span style="color:var(--gold); font-size:11px;">Room ID: ${m.roomId || "Not Set"} | Pass: ${m.roomPass || "Not Set"}</span>
             </div>
-            <button class="btn btn-danger" data-del="${d.id}">Delete</button>
+            <button class="btn btn-sm" style="background:var(--danger);" data-del="${d.id}">Delete</button>
           `;
           row.querySelector("[data-del]").onclick = async () => {
             await deleteDoc(doc(db, "tournaments", d.id));
@@ -360,11 +476,12 @@
       } catch (e) {}
     }
 
-    // 3. Update User Coins by Email
+    // Update Player Coins
     $("coinForm").onsubmit = async e => {
       e.preventDefault();
       const email = $("targetEmail").value.trim();
       const newCoins = Number($("newCoinAmount").value);
+      const newWins = Number($("newWinAmount").value || 0);
       try {
         const q = query(collection(db, "users"), where("email", "==", email));
         const snap = await getDocs(q);
@@ -372,18 +489,19 @@
           toast("No player found with this email!");
           return;
         }
-        for (const userDoc of snap.docs) {
-          await updateDoc(doc(db, "users", userDoc.id), {
+        for (const uDoc of snap.docs) {
+          await updateDoc(doc(db, "users", uDoc.id), {
             coins: newCoins,
-            deposit: newCoins
+            deposit: newCoins,
+            winnings: newWins
           });
         }
-        toast(`Updated ${email} to ${newCoins} Coins!`);
+        toast(`✅ Updated ${email} Balance!`);
         $("coinForm").reset();
       } catch (err) { toast(err.message); }
     };
 
-    // 4. Load & Complete Withdrawals
+    // Load Withdrawals
     async function loadWithdrawals() {
       const box = $("withdrawList");
       try {
@@ -404,11 +522,11 @@
               <span style="color:#fff;">Number/ID: ${w.number}</span><br>
               <span style="color:#8a90a2;">Player: ${w.userEmail}</span>
             </div>
-            <button class="btn btn-danger" style="background:var(--success);" data-done="${d.id}">Paid / Clear</button>
+            <button class="btn btn-sm" style="background:var(--success);" data-done="${d.id}">Mark Paid</button>
           `;
           row.querySelector("[data-done]").onclick = async () => {
             await deleteDoc(doc(db, "withdrawals", d.id));
-            toast("Request Marked as Paid!");
+            toast("Marked as Paid!");
             loadWithdrawals();
           };
           box.appendChild(row);
