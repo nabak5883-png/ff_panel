@@ -1,606 +1,227 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background:#0b0c10;color:#fff;">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="theme-color" content="#1a90ff" id="metaThemeColor">
-  <title>FF PANEL - Tournament Platform</title>
-
+  <title>FF PANEL</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/686/686589.png">
-
   <style>
-    :root {
-      --bg-dark: #0b0c10;
-      --card-bg: #15171e;
-      --card-border: rgba(255, 255, 255, 0.06);
-      --primary-blue: #1a90ff;
-      --wallet-blue: #0e4a9e;
-      --accent-gold: #ffb703;
-      --text-main: #ffffff;
-      --text-sub: #8a90a2;
-    }
-
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    body {
-      margin: 0; padding: 0;
-      background-color: var(--bg-dark); color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      user-select: none; padding-bottom: 74px; overflow-x: hidden;
-    }
-
-    .hidden { display: none !important; }
-
-    .app-topbar {
-      position: sticky; top: 0; background: var(--primary-blue);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 16px; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-    .topbar-left { display: flex; align-items: center; gap: 10px; }
-    .app-logo-circle {
-      width: 38px; height: 38px; border-radius: 50%; background: #000;
-      display: flex; align-items: center; justify-content: center; padding: 6px; overflow: hidden;
-    }
-    .app-logo-circle img { width: 100%; height: 100%; object-fit: contain; }
-    .brand-meta h1 { margin: 0; font-size: 17px; font-weight: 800; color: #fff; }
-    .brand-meta p { margin: 1px 0 0 0; font-size: 11px; color: rgba(255, 255, 255, 0.85); }
-    .topbar-right { display: flex; align-items: center; gap: 12px; }
-    .bell-btn { background: transparent; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 0; }
-    .coin-pill {
-      display: flex; align-items: center; background: #0b0c10;
-      padding: 6px 12px; border-radius: 25px; gap: 6px; cursor: pointer;
-    }
-    .coin-pill-icon {
-      width: 18px; height: 18px; background: var(--accent-gold); color: #000;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 900;
-    }
-    .coin-pill b { color: #fff; font-size: 13px; font-weight: 700; }
-
-    .welcome-banner {
-      display: flex; align-items: center; background: var(--card-bg);
-      border-radius: 10px; margin: 14px 16px; overflow: hidden;
-      border: 1px solid var(--card-border); height: 48px;
-    }
-    .welcome-icon-box {
-      background: var(--primary-blue); width: 52px; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; color: #fff; flex-shrink: 0;
-    }
-    .welcome-text {
-      padding: 0 14px; font-size: 14px; font-weight: 700; color: #fff;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .section-heading { font-size: 16px; font-weight: 700; margin: 18px 16px 12px 16px; color: #fff; }
-
-    .account-circles-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 16px; text-align: center;
-    }
-    .circle-item {
-      background: transparent; border: none; color: #fff; cursor: pointer; padding: 0;
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .circle-icon {
-      width: 54px; height: 54px; border-radius: 50%; background: #23252f;
-      display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 8px; color: #fff;
-    }
-    .circle-item:active .circle-icon { background: var(--primary-blue); }
-    .circle-item span { font-size: 11px; color: #c9cdd8; font-weight: 500; }
-
-    .support-banner-card {
-      margin: 18px 16px; border-radius: 14px;
-      background: linear-gradient(135deg, #2a0808 0%, #10121a 100%);
-      border: 1px solid rgba(255, 80, 80, 0.25); padding: 16px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .support-banner-left h3 { margin: 0; font-size: 16px; font-weight: 800; color: var(--accent-gold); }
-    .support-banner-left p { margin: 4px 0 10px 0; font-size: 11px; color: #fff; font-weight: 600; }
-    .social-badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .social-pill {
-      padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer; border: none;
-    }
-
-    .esports-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px; margin-bottom: 20px;
-    }
-    .esport-card {
-      background: #1c1e26; border-radius: 10px; overflow: hidden;
-      border: 1px solid var(--card-border); cursor: pointer; text-align: center; padding: 6px;
-    }
-    .esport-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; display: block; background: #252834; }
-    .esport-title {
-      font-size: 10px; font-weight: 700; color: #fff; margin-top: 7px; margin-bottom: 2px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase;
-    }
-
-    .video-search-wrap { margin: 16px; }
-    .video-search-input {
-      width: 100%; background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 14px 16px; border-radius: 12px; color: #fff; font-size: 14px; outline: none;
-    }
-    .tutorial-item-card {
-      margin: 0 16px 12px 16px; background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer;
-    }
-    .tutorial-thumb {
-      width: 90px; height: 64px; border-radius: 8px; background: #232634;
-      display: flex; align-items: center; justify-content: center; font-size: 24px; color: #ff3b3b; flex-shrink: 0;
-    }
-    .tutorial-meta h4 { margin: 0 0 5px 0; font-size: 14px; color: #fff; }
-    .tutorial-meta .topic-tag { font-size: 12px; color: var(--primary-blue); font-weight: 600; margin-bottom: 4px; }
-    .tutorial-meta .yt-sub { font-size: 11px; color: var(--text-sub); }
-
-    .earn-banner-card {
-      margin: 0 16px 14px 16px; border-radius: 16px; padding: 20px 18px;
-      display: flex; align-items: center; gap: 16px; cursor: pointer;
-    }
-    .earn-icon-circle {
-      width: 52px; height: 52px; border-radius: 50%; background: rgba(255, 255, 255, 0.18);
-      display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; flex-shrink: 0;
-    }
-    .earn-text-box h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 800; color: #fff; }
-    .earn-text-box p { margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.88); }
-
-    .wallet-hero-card {
-      margin: 16px; background: var(--wallet-blue); border-radius: 16px; padding: 22px 20px; color: #fff;
-    }
-    .wallet-hero-card p { margin: 0 0 10px 0; font-size: 14px; font-weight: 600; }
-    .wallet-balance-row { display: flex; align-items: center; gap: 10px; }
-    .wallet-gold-coin {
-      width: 32px; height: 32px; border-radius: 50%; background: var(--accent-gold); color: #000;
-      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px;
-    }
-    .wallet-balance-row h2 { margin: 0; font-size: 30px; font-weight: 800; }
-
-    .wallet-sub-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 18px;
-    }
-    .wallet-sub-card {
-      background: #1c1e26; border-radius: 12px; padding: 16px; border: 1px solid var(--card-border);
-    }
-    .wallet-sub-card span { font-size: 12px; color: #b0b5c4; display: block; margin-bottom: 6px; }
-    .wallet-sub-card b { font-size: 18px; color: #fff; font-weight: 800; }
-
-    .wallet-actions-row {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 16px; margin-bottom: 20px;
-    }
-    .btn-add-funds {
-      background: var(--primary-blue); color: #000; font-weight: 700; font-size: 14px;
-      padding: 14px; border-radius: 30px; border: none; cursor: pointer;
-    }
-    .btn-withdraw {
-      background: transparent; color: #fff; font-weight: 700; font-size: 14px;
-      padding: 14px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.25); cursor: pointer;
-    }
-
-    .transactions-card {
-      margin: 0 16px 20px 16px; background: var(--card-bg); border-radius: 16px;
-      padding: 18px; border: 1px solid var(--card-border);
-    }
-    .trans-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .trans-head h3 { margin: 0; font-size: 16px; }
-    .view-all-pill {
-      background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 6px 14px; border-radius: 20px; font-size: 12px;
-    }
-
-    .profile-top-box {
-      margin: 16px; background: var(--card-bg); border-radius: 14px; padding: 16px;
-      display: flex; align-items: center; gap: 14px; border: 1px solid var(--card-border);
-    }
-    .profile-letter-circle {
-      width: 56px; height: 56px; border-radius: 50%; background: #5a66f1; color: #fff;
-      display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; flex-shrink: 0;
-    }
-    .profile-meta-info h2 { margin: 0; font-size: 15px; font-weight: 800; text-transform: uppercase; }
-    .profile-meta-info p { margin: 3px 0; font-size: 12px; color: var(--text-sub); }
-    .profile-meta-info small { font-size: 12px; color: #c9cdd8; }
-
-    .profile-options-list {
-      display: flex; flex-direction: column; gap: 8px; padding: 0 16px; margin-bottom: 24px;
-    }
-    .profile-option-item {
-      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
-      padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-    }
-    .opt-left { display: flex; align-items: center; gap: 14px; }
-    .opt-icon { color: var(--primary-blue); font-size: 18px; width: 22px; text-align: center; }
-    .opt-text h4 { margin: 0; font-size: 13.5px; font-weight: 700; color: #fff; }
-    .opt-text p { margin: 2px 0 0 0; font-size: 11px; color: var(--text-sub); }
-    .opt-arrow { color: var(--primary-blue); font-size: 13px; font-weight: 700; }
-
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; width: 100%; height: 64px;
-      background: #12131a; border-top: 1px solid var(--card-border);
-      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
-    }
-    .nav-btn {
-      background: transparent; border: none; color: #8a90a2; font-size: 11px; font-weight: 500;
-      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 8px;
-    }
-    .nav-pill {
-      width: 48px; height: 28px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 16px;
-    }
-    .nav-btn.active { color: var(--primary-blue); font-weight: 700; }
-    .nav-btn.active .nav-pill { background: rgba(26, 144, 255, 0.2); color: var(--primary-blue); }
-
-    .input-field {
-      width: 100%; padding: 12px; border-radius: 10px; background: #0b0c10;
-      border: 1px solid var(--card-border); color: #fff; font-size: 13px; margin-bottom: 10px;
-    }
-    .primary-btn {
-      width: 100%; padding: 12px; border-radius: 10px; background: var(--primary-blue);
-      color: #fff; font-weight: 700; border: none; cursor: pointer;
-    }
-    .auth-wrap {
-      max-width: 360px; width: 90%; margin: 60px auto; background: var(--card-bg);
-      padding: 24px; border-radius: 16px; border: 1px solid var(--card-border);
-    }
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.82);
-      display: flex; align-items: center; justify-content: center; z-index: 10005; padding: 16px;
-    }
-    .modal-card {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 16px; width: 100%; max-width: 350px; padding: 20px;
-    }
-
-    #toast {
-      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.92); color: #fff; padding: 10px 18px;
-      border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 13px; display: none; z-index: 100000;
-    }
+    :root { --bg:#0b0c10; --card:#15171e; --border:rgba(255,255,255,0.07); --blue:#1a90ff; --gold:#ffb703; --sub:#8a90a2; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { margin:0; padding:0 0 75px 0; background:#0b0c10; color:#fff; font-family:sans-serif; user-select:none; overflow-x:hidden; }
+    .hidden { display:none !important; }
+    .topbar { position:sticky; top:0; background:var(--blue); display:flex; align-items:center; justify-content:space-between; padding:10px 16px; z-index:999; }
+    .logo-box { display:flex; align-items:center; gap:10px; }
+    .logo-box img { width:36px; height:36px; border-radius:50%; background:#000; padding:5px; }
+    .coin-pill { background:#0b0c10; padding:6px 12px; border-radius:20px; display:flex; align-items:center; gap:6px; font-weight:700; font-size:13px; cursor:pointer; }
+    .banner { display:flex; align-items:center; background:var(--card); border-radius:10px; margin:14px 16px; border:1px solid var(--border); height:46px; overflow:hidden; }
+    .banner-icon { background:var(--blue); width:48px; height:100%; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .sec-title { font-size:15px; font-weight:700; margin:16px 16px 10px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:0 16px; text-align:center; }
+    .circle-btn { background:none; border:none; color:#fff; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:11px; cursor:pointer; }
+    .circle-ico { width:50px; height:50px; border-radius:50%; background:#23252f; display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .support-card { margin:16px; padding:15px; border-radius:14px; background:linear-gradient(135deg,#2a0808,#10121a); border:1px solid rgba(255,80,80,0.25); display:flex; justify-content:space-between; align-items:center; }
+    .pill-btn { padding:5px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#fff; border:none; cursor:pointer; margin-right:5px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 16px; }
+    .game-card { background:#1c1e26; border-radius:10px; padding:6px; text-align:center; border:1px solid var(--border); cursor:pointer; }
+    .game-card img { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:6px; background:#252834; }
+    .game-card div { font-size:10px; font-weight:700; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .card-box { margin:0 16px 12px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:15px; }
+    .earn-card { margin:0 16px 12px; border-radius:14px; padding:18px; display:flex; align-items:center; gap:14px; cursor:pointer; }
+    .wallet-hero { margin:16px; background:#0e4a9e; border-radius:16px; padding:20px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 16px 16px; }
+    .sub-card { background:#1c1e26; border-radius:12px; padding:14px; border:1px solid var(--border); }
+    .opt-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:13px 16px; margin:0 16px 8px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+    .bottom-nav { position:fixed; bottom:0; left:0; width:100%; height:62px; background:#12131a; border-top:1px solid var(--border); display:flex; justify-content:space-around; align-items:center; z-index:999; }
+    .nav-btn { background:none; border:none; color:var(--sub); font-size:11px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
+    .nav-btn.active { color:var(--blue); font-weight:700; }
+    .inp { width:100%; padding:12px; border-radius:10px; background:#0b0c10; border:1px solid var(--border); color:#fff; margin-bottom:10px; font-size:13px; }
+    .btn-main { width:100%; padding:12px; border-radius:10px; background:var(--blue); color:#fff; font-weight:700; border:none; cursor:pointer; }
+    .modal { position:fixed; inset:0; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px; }
+    #toast { position:fixed; bottom:75px; left:50%; transform:translateX(-50%); background:#000; color:#fff; padding:10px 18px; border-radius:25px; border:1px solid var(--blue); font-size:12px; display:none; z-index:99999; }
   </style>
 </head>
 <body>
 
   <div id="toast"></div>
 
-  <!-- Auth Login / Register Screen -->
-  <section id="authScreen">
-    <div class="auth-wrap">
-      <div id="authBrandTitle" style="text-align:center; font-size:24px; font-weight:800; margin-bottom:4px; color:var(--primary-blue);">FF PANEL</div>
-      <p style="text-align:center; font-size:12px; color:var(--text-sub); margin-bottom:20px;">Player Account Login</p>
+  <!-- Login / Register Screen -->
+  <section id="authScreen" style="max-width:350px;width:90%;margin:60px auto;background:var(--card);padding:22px;border-radius:16px;border:1px solid var(--border);">
+    <h2 id="authBrandTitle" style="text-align:center;margin:0 0 4px;color:var(--blue);">FF PANEL</h2>
+    <p style="text-align:center;font-size:12px;color:var(--sub);margin:0 0 18px;">Player Account Login</p>
 
-      <form id="loginForm">
-        <input id="loginEmail" class="input-field" type="email" placeholder="Enter Email" required>
-        <input id="loginPassword" class="input-field" type="password" placeholder="Enter Password" required>
-        <button type="submit" class="primary-btn" style="margin-top:4px;">LOGIN</button>
-        <p style="text-align:center; font-size:13px; margin-top:14px; color:var(--text-sub);">New player? <button type="button" id="showRegister" style="background:none; border:none; color:var(--primary-blue); font-weight:700; cursor:pointer;">Create Account</button></p>
-      </form>
+    <form id="loginForm">
+      <input id="loginEmail" class="inp" type="email" placeholder="Enter Email" required>
+      <input id="loginPassword" class="inp" type="password" placeholder="Enter Password" required>
+      <button type="submit" class="btn-main">LOGIN</button>
+      <p style="text-align:center;font-size:12px;margin-top:14px;color:var(--sub);">New player? <button type="button" id="showRegister" style="background:none;border:none;color:var(--blue);font-weight:700;">Create Account</button></p>
+    </form>
 
-      <form id="registerForm" class="hidden">
-        <input id="regName" class="input-field" type="text" placeholder="Player Name" maxlength="25" required>
-        <input id="regEmail" class="input-field" type="email" placeholder="Email Address" required>
-        <input id="regPassword" class="input-field" type="password" placeholder="Password (6+ chars)" minlength="6" required>
-        <button type="submit" class="primary-btn" style="margin-top:4px;">CREATE ACCOUNT</button>
-        <p style="text-align:center; font-size:13px; margin-top:14px; color:var(--text-sub);">Already registered? <button type="button" id="showLogin" style="background:none; border:none; color:var(--primary-blue); font-weight:700; cursor:pointer;">Login</button></p>
-      </form>
-    </div>
+    <form id="registerForm" class="hidden">
+      <input id="regName" class="inp" type="text" placeholder="Player Name" required>
+      <input id="regEmail" class="inp" type="email" placeholder="Email Address" required>
+      <input id="regPassword" class="inp" type="password" placeholder="Password (6+ chars)" minlength="6" required>
+      <button type="submit" class="btn-main">CREATE ACCOUNT</button>
+      <p style="text-align:center;font-size:12px;margin-top:14px;color:var(--sub);">Have account? <button type="button" id="showLogin" style="background:none;border:none;color:var(--blue);font-weight:700;">Login</button></p>
+    </form>
   </section>
 
-  <!-- Main User App Container -->
+  <!-- Main User App -->
   <section id="appScreen" class="hidden">
-    <header class="app-topbar">
-      <div class="topbar-left">
-        <div class="app-logo-circle">
-          <img id="appLogoImg" src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="Logo">
-        </div>
-        <div class="brand-meta">
-          <h1 id="appHeaderTitle">FF PANEL</h1>
-          <p id="appHeaderSub">Tournament Platform</p>
+    <header class="topbar">
+      <div class="logo-box">
+        <img id="appLogoImg" src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="Logo">
+        <div>
+          <div id="appHeaderTitle" style="font-size:16px;font-weight:800;">FF PANEL</div>
+          <div id="appHeaderSub" style="font-size:11px;opacity:0.85;">Tournament Platform</div>
         </div>
       </div>
-      <div class="topbar-right">
-        <button class="bell-btn" id="notifBellBtn" type="button">🔔</button>
-        <div class="coin-pill" id="topWalletPill">
-          <div class="coin-pill-icon">★</div>
-          <b id="coins">0.00</b>
-        </div>
+      <div class="coin-pill" id="topWalletPill">
+        <span style="color:var(--gold);">★</span> <span id="coins">0.00</span>
       </div>
     </header>
 
-    <!-- ================= TAB 1: HOME ================= -->
+    <!-- TAB 1: HOME -->
     <main id="homeView">
-      <div class="welcome-banner">
-        <div class="welcome-icon-box">📢</div>
-        <div class="welcome-text" id="appNoticeText">Welcome to FF PANEL</div>
+      <div class="banner">
+        <div class="banner-icon">📢</div>
+        <div id="appNoticeText" style="padding:0 12px;font-size:13px;font-weight:700;">Welcome to FF PANEL</div>
       </div>
 
-      <div class="section-heading">Account Details</div>
-      <div class="account-circles-grid">
-        <button class="circle-item" id="actionProfile" type="button">
-          <div class="circle-icon">👤</div>
-          <span>My Profile</span>
-        </button>
-        <button class="circle-item" id="actionMatches" type="button">
-          <div class="circle-icon">🎮</div>
-          <span>My Matches</span>
-        </button>
-        <button class="circle-item" id="actionTopPlayers" type="button">
-          <div class="circle-icon">📊</div>
-          <span>Top Players</span>
-        </button>
-        <button class="circle-item" id="actionContact" type="button">
-          <div class="circle-icon">🎧</div>
-          <span>Contact Us</span>
-        </button>
+      <div class="sec-title">Account Details</div>
+      <div class="grid-4">
+        <button class="circle-btn" id="actionProfile"><div class="circle-ico">👤</div><span>My Profile</span></button>
+        <button class="circle-btn" id="actionMatches"><div class="circle-ico">🎮</div><span>My Matches</span></button>
+        <button class="circle-btn" id="actionTopPlayers"><div class="circle-ico">📊</div><span>Top Players</span></button>
+        <button class="circle-btn" id="actionContact"><div class="circle-ico">🎧</div><span>Contact Us</span></button>
       </div>
 
-      <div class="support-banner-card">
-        <div class="support-banner-left">
-          <h3>GET SUPPORT</h3>
-          <p>CONTACT US VIA</p>
-          <div class="social-badges-row">
-            <button id="btnWhatsapp" class="social-pill" style="background:#25D366;" type="button">WhatsApp</button>
-            <button id="btnTelegram" class="social-pill" style="background:#0088cc;" type="button">Telegram</button>
-            <button id="btnInsta" class="social-pill" style="background:#E1306C;" type="button">Instagram</button>
+      <div class="support-card">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--gold);">GET SUPPORT</div>
+          <div style="font-size:10px;margin:4px 0 10px;">CONTACT US VIA</div>
+          <div>
+            <button id="btnWhatsapp" class="pill-btn" style="background:#25D366;">WhatsApp</button>
+            <button id="btnTelegram" class="pill-btn" style="background:#0088cc;">Telegram</button>
+            <button id="btnInsta" class="pill-btn" style="background:#E1306C;">Instagram</button>
           </div>
         </div>
-        <div style="font-size:42px;">🎧</div>
+        <div style="font-size:36px;">🎧</div>
       </div>
 
-      <div class="section-heading">Esports Games</div>
-      <div class="esports-grid">
-        <div class="esport-card" data-mode="BATTLE ROYALE">
-          <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&auto=format&fit=crop" alt="BR">
-          <div class="esport-title">BATTLE ROYALE</div>
-        </div>
-        <div class="esport-card" data-mode="CLASH SQUAD">
-          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&auto=format&fit=crop" alt="CS">
-          <div class="esport-title">CLASH SQUAD</div>
-        </div>
-        <div class="esport-card" data-mode="LONE WOLF">
-          <img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop" alt="LW">
-          <div class="esport-title">LONE WOLF</div>
-        </div>
-        <div class="esport-card" data-mode="BR SURVIVAL">
-          <img src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=300&auto=format&fit=crop" alt="BRS">
-          <div class="esport-title">BR SURVIVAL</div>
-        </div>
-        <div class="esport-card" data-mode="CLASH SQUAD">
-          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop" alt="CS2">
-          <div class="esport-title">CLASH SQUAD</div>
-        </div>
-        <div class="esport-card" data-mode="LONE WOLF">
-          <img src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=300&auto=format&fit=crop" alt="LW2">
-          <div class="esport-title">LONE WOLF 2</div>
-        </div>
-        <div class="esport-card" data-mode="GUN CHALLENGE">
-          <img src="https://images.unsplash.com/photo-1552824722-ddab137b0169?w=300&auto=format&fit=crop" alt="GC">
-          <div class="esport-title">GUN CHALLENGE</div>
-        </div>
-        <div class="esport-card" data-mode="BR 4V4">
-          <img src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=300&auto=format&fit=crop" alt="BR4">
-          <div class="esport-title">BR 4V4</div>
-        </div>
-        <div class="esport-card" data-mode="CS 4V4">
-          <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop" alt="CS4">
-          <div class="esport-title">CS 4V4</div>
-        </div>
+      <div class="sec-title">Esports Games</div>
+      <div class="grid-3">
+        <div class="game-card" data-mode="BATTLE ROYALE"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200" alt=""><div>BATTLE ROYALE</div></div>
+        <div class="game-card" data-mode="CLASH SQUAD"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200" alt=""><div>CLASH SQUAD</div></div>
+        <div class="game-card" data-mode="LONE WOLF"><img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=200" alt=""><div>LONE WOLF</div></div>
+        <div class="game-card" data-mode="BR SURVIVAL"><img src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=200" alt=""><div>BR SURVIVAL</div></div>
+        <div class="game-card" data-mode="CLASH SQUAD"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200" alt=""><div>CLASH SQUAD 2</div></div>
+        <div class="game-card" data-mode="LONE WOLF"><img src="https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=200" alt=""><div>LONE WOLF 2</div></div>
+        <div class="game-card" data-mode="GUN CHALLENGE"><img src="https://images.unsplash.com/photo-1552824722-ddab137b0169?w=200" alt=""><div>GUN CHALLENGE</div></div>
+        <div class="game-card" data-mode="BR 4V4"><img src="https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=200" alt=""><div>BR 4V4</div></div>
+        <div class="game-card" data-mode="CS 4V4"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=200" alt=""><div>CS 4V4</div></div>
       </div>
 
-      <div class="section-heading" style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="sec-title" style="display:flex;justify-content:space-between;align-items:center;">
         <span id="liveMatchHeading">Live Matches</span>
-        <button id="refreshTournaments" type="button" style="background:none; border:1px solid var(--card-border); color:var(--text-sub); padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Show All</button>
+        <button id="refreshTournaments" style="background:none;border:1px solid var(--border);color:var(--sub);padding:4px 10px;border-radius:6px;font-size:11px;">Show All</button>
       </div>
-      <div id="tournamentList" style="padding:0 16px 16px 16px;">
-        <div style="text-align:center; color:var(--text-sub); font-size:13px;">Loading tournaments...</div>
-      </div>
+      <div id="tournamentList" style="padding:0 16px;">Loading matches...</div>
     </main>
 
-    <!-- ================= TAB 2: VIDEO ================= -->
+    <!-- TAB 2: VIDEO -->
     <main id="videoView" class="hidden">
-      <div class="video-search-wrap">
-        <input class="video-search-input" type="text" placeholder="Search by topic or title...">
-      </div>
-      <div class="section-heading">Tutorial Videos</div>
-      <div class="tutorial-item-card" id="videoTutorialCard">
-        <div class="tutorial-thumb">▶️</div>
-        <div class="tutorial-meta">
-          <h4 id="videoDynamicTitle">How To Change In-game Name And Level</h4>
-          <div class="topic-tag">Topic: match join</div>
-          <div class="yt-sub">Tap to watch in YouTube</div>
+      <div class="sec-title">Tutorial Videos</div>
+      <div class="card-box" id="videoTutorialCard" style="display:flex;align-items:center;gap:14px;cursor:pointer;">
+        <div style="width:70px;height:54px;background:#232634;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;">▶️</div>
+        <div>
+          <div id="videoDynamicTitle" style="font-weight:700;font-size:14px;">How To Join Match & Play</div>
+          <div style="font-size:12px;color:var(--blue);margin-top:3px;">Tap to watch on YouTube</div>
         </div>
       </div>
     </main>
 
-    <!-- ================= TAB 3: EARN ================= -->
+    <!-- TAB 3: EARN -->
     <main id="earnView" class="hidden">
-      <div class="section-heading" style="font-size:20px;">Earn Center</div>
-
-      <div class="earn-banner-card" id="earnCardRefer" style="background:#0d47a1;">
-        <div class="earn-icon-circle">👤</div>
-        <div class="earn-text-box">
-          <h3>Refer and Earn</h3>
-          <p>Invite to your friends to this app and Earn Huge!</p>
-        </div>
-      </div>
-
-      <div class="earn-banner-card" id="earnCardWatch" style="background:#a66c00;">
-        <div class="earn-icon-circle">▶️</div>
-        <div class="earn-text-box">
-          <h3>Watch and Earn</h3>
-          <p>Watch reward video and Earn!</p>
-        </div>
-      </div>
-
-      <div class="earn-banner-card" id="earnCardLucky" style="background:#137333;">
-        <div class="earn-icon-circle">★</div>
-        <div class="earn-text-box">
-          <h3>Lucky Draw</h3>
-          <p>Buy lottery ticket and try your luck!</p>
-        </div>
-      </div>
-
-      <div class="earn-banner-card" id="earnCardPlay" style="background:#252732;">
-        <div class="earn-icon-circle">🎮</div>
-        <div class="earn-text-box">
-          <h3>Play and Earn</h3>
-          <p>Join Tournament and Earn!</p>
-        </div>
-      </div>
+      <div class="sec-title">Earn Center</div>
+      <div class="earn-card" id="earnCardRefer" style="background:#0d47a1;"><div style="font-size:26px;">👤</div><div><b>Refer and Earn</b><div style="font-size:12px;opacity:0.85;">Invite friends and earn coins!</div></div></div>
+      <div class="earn-card" id="earnCardWatch" style="background:#a66c00;"><div style="font-size:26px;">▶️</div><div><b>Watch and Earn</b><div style="font-size:12px;opacity:0.85;">Watch reward video and earn!</div></div></div>
+      <div class="earn-card" id="earnCardLucky" style="background:#137333;"><div style="font-size:26px;">★</div><div><b>Lucky Draw</b><div style="font-size:12px;opacity:0.85;">Try your luck daily!</div></div></div>
+      <div class="earn-card" id="earnCardPlay" style="background:#252732;"><div style="font-size:26px;">🎮</div><div><b>Play and Earn</b><div style="font-size:12px;opacity:0.85;">Join tournaments to win prizes!</div></div></div>
     </main>
 
-    <!-- ================= TAB 4: WALLET ================= -->
+    <!-- TAB 4: WALLET -->
     <main id="walletView" class="hidden">
-      <div class="wallet-hero-card">
-        <p>Total Wallet Balance</p>
-        <div class="wallet-balance-row">
-          <div class="wallet-gold-coin">★</div>
-          <h2 id="walletTotalBalance">0.00</h2>
-        </div>
+      <div class="wallet-hero">
+        <div style="font-size:13px;opacity:0.9;">Total Wallet Balance</div>
+        <div style="font-size:28px;font-weight:800;margin-top:6px;">★ <span id="walletTotalBalance">0.00</span></div>
       </div>
-
-      <div class="wallet-sub-grid">
-        <div class="wallet-sub-card"><span>Deposit</span><b id="walletDeposit">0.00</b></div>
-        <div class="wallet-sub-card"><span>Winnings</span><b id="walletWinnings">0.00</b></div>
-        <div class="wallet-sub-card"><span>Bonus</span><b id="walletBonus">0.00</b></div>
-        <div class="wallet-sub-card"><span>Referral</span><b id="walletReferral">0.00</b></div>
+      <div class="grid-2">
+        <div class="sub-card"><span style="font-size:12px;color:var(--sub);">Deposit</span><br><b id="walletDeposit" style="font-size:17px;">0.00</b></div>
+        <div class="sub-card"><span style="font-size:12px;color:var(--sub);">Winnings</span><br><b id="walletWinnings" style="font-size:17px;">0.00</b></div>
+        <div class="sub-card"><span style="font-size:12px;color:var(--sub);">Bonus</span><br><b id="walletBonus" style="font-size:17px;">0.00</b></div>
+        <div class="sub-card"><span style="font-size:12px;color:var(--sub);">Referral</span><br><b id="walletReferral" style="font-size:17px;">0.00</b></div>
       </div>
-
-      <div class="wallet-actions-row">
-        <button class="btn-add-funds" id="addFundsBtn" type="button">Add Funds</button>
-        <button class="btn-withdraw" id="withdrawBtnAction" type="button">Withdraw</button>
-      </div>
-
-      <div class="transactions-card">
-        <div class="trans-head">
-          <h3>Latest 10<br>Transactions</h3>
-          <button class="view-all-pill" type="button">View all</button>
-        </div>
-        <p style="margin:0; font-size:12px; color:var(--text-sub);">No Firebase transactions found</p>
+      <div class="grid-2">
+        <button id="addFundsBtn" class="btn-main" style="border-radius:25px;color:#000;">Add Funds</button>
+        <button id="withdrawBtnAction" class="btn-main" style="border-radius:25px;background:transparent;border:1px solid rgba(255,255,255,0.3);">Withdraw</button>
       </div>
     </main>
 
-    <!-- ================= TAB 5: PROFILE ================= -->
+    <!-- TAB 5: PROFILE -->
     <main id="profileView" class="hidden">
-      <div class="profile-top-box">
-        <div class="profile-letter-circle" id="profileAvatarLetter">P</div>
-        <div class="profile-meta-info">
-          <h2 id="profileDisplayName">PLAYER</h2>
-          <p id="profileDisplayEmail">player@gmail.com</p>
-          <small id="profileDisplayUsername">@player</small>
+      <div class="card-box" style="margin-top:16px;display:flex;align-items:center;gap:14px;">
+        <div id="profileAvatarLetter" style="width:52px;height:52px;border-radius:50%;background:#5a66f1;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;">P</div>
+        <div>
+          <div id="profileDisplayName" style="font-weight:800;font-size:15px;">PLAYER</div>
+          <div id="profileDisplayEmail" style="font-size:12px;color:var(--sub);">player@gmail.com</div>
         </div>
       </div>
-
-      <div class="profile-options-list">
-        <div class="profile-option-item" id="rowMyProfile">
-          <div class="opt-left"><span class="opt-icon">👤</span><div class="opt-text"><h4>My Profile</h4><p>Username: <span id="kycUsername">player</span> • KYC: NONE</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowNotification">
-          <div class="opt-left"><span class="opt-icon">🔔</span><div class="opt-text"><h4>Notification Settings</h4><p>Enable alerts and manage topic subscriptions</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowWallet">
-          <div class="opt-left"><span class="opt-icon">💳</span><div class="opt-text"><h4>My Wallet</h4><p>Total Balance Coin-<span id="walletRowBalance">0.00</span></p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowRewards">
-          <div class="opt-left"><span class="opt-icon">🎁</span><div class="opt-text"><h4>My Rewards</h4><p>View Your Rewards History</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowTransactions">
-          <div class="opt-left"><span class="opt-icon">🕒</span><div class="opt-text"><h4>Transaction History</h4><p>View your deposits and withdrawals</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowMyMatches">
-          <div class="opt-left"><span class="opt-icon">🎮</span><div class="opt-text"><h4>My Matches</h4><p>View your Matches</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowGameRules">
-          <div class="opt-left"><span class="opt-icon">📋</span><div class="opt-text"><h4>Game Rules</h4><p>Know how to play and win</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowContact">
-          <div class="opt-left"><span class="opt-icon">🎧</span><div class="opt-text"><h4>Contact Us</h4><p>Get help or report an issue</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowTopPlayers">
-          <div class="opt-left"><span class="opt-icon">📊</span><div class="opt-text"><h4>Top Players</h4><p>See the leaderboard</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowFaq">
-          <div class="opt-left"><span class="opt-icon">❓</span><div class="opt-text"><h4>FAQ</h4><p>Frequently asked questions</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowAbout">
-          <div class="opt-left"><span class="opt-icon">ℹ️</span><div class="opt-text"><h4>About Us</h4><p>Learn more about our app</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowOfficialSite">
-          <div class="opt-left"><span class="opt-icon">🌐</span><div class="opt-text"><h4>Official Site</h4><p>Visit our website</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowPrivacy">
-          <div class="opt-left"><span class="opt-icon">🛡️</span><div class="opt-text"><h4>Privacy Policy</h4><p>How we protect your data</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowTerms">
-          <div class="opt-left"><span class="opt-icon">📄</span><div class="opt-text"><h4>Terms & Conditions</h4><p>Read our policies</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowRate">
-          <div class="opt-left"><span class="opt-icon">★</span><div class="opt-text"><h4>Rate App</h4><p>Share your experience</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowShare">
-          <div class="opt-left"><span class="opt-icon">🔗</span><div class="opt-text"><h4>Share App</h4><p>Invite friends to join</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowMoreApps">
-          <div class="opt-left"><span class="opt-icon">🎛️</span><div class="opt-text"><h4>More Apps</h4><p>Explore our other creations</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-        <div class="profile-option-item" id="rowLogout">
-          <div class="opt-left"><span class="opt-icon" style="color:#ff5252;">🚪</span><div class="opt-text"><h4 style="color:#ff5252;">Logout</h4><p>Sign out of your account</p></div></div><span class="opt-arrow">❯</span>
-        </div>
-      </div>
+      <div class="opt-item" id="rowWallet"><span>💳 My Wallet</span><span id="walletRowBalance" style="color:var(--gold);font-weight:700;">0.00</span></div>
+      <div class="opt-item" id="rowMyMatches"><span>🎮 My Matches</span><span>❯</span></div>
+      <div class="opt-item" id="rowGameRules"><span>📋 Game Rules</span><span>❯</span></div>
+      <div class="opt-item" id="rowContact"><span>🎧 Contact Support</span><span>❯</span></div>
+      <div class="opt-item" id="rowOfficialSite"><span>🌐 Official Website</span><span>❯</span></div>
+      <div class="opt-item" id="rowShare"><span>🔗 Share App</span><span>❯</span></div>
+      <div class="opt-item" id="rowLogout"><span style="color:#ff5252;font-weight:700;">🚪 Logout</span><span>❯</span></div>
     </main>
 
-    <!-- Bottom 5-Tab Bar -->
     <nav class="bottom-nav">
-      <button class="nav-btn active" id="navHome" type="button"><div class="nav-pill">🏠</div><span>Home</span></button>
-      <button class="nav-btn" id="navVideo" type="button"><div class="nav-pill">▶️</div><span>Video</span></button>
-      <button class="nav-btn" id="navEarn" type="button"><div class="nav-pill">🎁</div><span>Earn</span></button>
-      <button class="nav-btn" id="navWallet" type="button"><div class="nav-pill">💳</div><span>Wallet</span></button>
-      <button class="nav-btn" id="navProfile" type="button"><div class="nav-pill">👤</div><span>Profile</span></button>
+      <button class="nav-btn active" id="navHome"><span>🏠</span><span>Home</span></button>
+      <button class="nav-btn" id="navVideo"><span>▶️</span><span>Video</span></button>
+      <button class="nav-btn" id="navEarn"><span>🎁</span><span>Earn</span></button>
+      <button class="nav-btn" id="navWallet"><span>💳</span><span>Wallet</span></button>
+      <button class="nav-btn" id="navProfile"><span>👤</span><span>Profile</span></button>
     </nav>
   </section>
 
   <!-- Withdraw Modal -->
-  <div id="withdrawModal" class="modal-overlay hidden">
-    <div class="modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3 style="margin:0; font-size:16px;">💳 Withdraw Coins</h3>
-        <button id="closeWithdrawBtn" type="button" style="background:none; border:none; color:#888; font-size:22px; cursor:pointer;">&times;</button>
-      </div>
+  <div id="withdrawModal" class="modal hidden">
+    <div class="card-box" style="width:100%;max-width:340px;margin:0;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><b>💳 Withdraw Coins</b><span id="closeWithdrawBtn" style="cursor:pointer;">✖</span></div>
       <form id="withdrawForm">
-        <select id="withdrawMethod" class="input-field" required>
-          <option value="">Select Method</option>
-          <option value="UPI">UPI / GPay / PhonePe</option>
-          <option value="Paytm">Paytm</option>
-          <option value="bKash">bKash</option>
-        </select>
-        <input id="withdrawNumber" class="input-field" type="text" placeholder="Enter UPI ID or Number" required>
-        <input id="withdrawCoins" class="input-field" type="number" min="50" placeholder="Amount (Min 50 Coins)" required>
-        <button type="submit" class="primary-btn">Submit Request</button>
+        <select id="withdrawMethod" class="inp" required><option value="UPI">UPI / GPay</option><option value="Paytm">Paytm</option><option value="bKash">bKash</option></select>
+        <input id="withdrawNumber" class="inp" type="text" placeholder="Enter UPI ID or Number" required>
+        <input id="withdrawCoins" class="inp" type="number" min="50" placeholder="Amount (Min 50)" required>
+        <button type="submit" class="btn-main">Submit Request</button>
       </form>
     </div>
   </div>
 
-  <!-- Info / Rules / Add Funds Popup Modal -->
-  <div id="infoModal" class="modal-overlay hidden">
-    <div class="modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 id="infoModalTitle" style="margin:0; font-size:16px; color:var(--primary-blue);">Information</h3>
-        <button id="closeInfoBtn" type="button" style="background:none; border:none; color:#888; font-size:22px; cursor:pointer;">&times;</button>
-      </div>
-      <p id="infoModalBody" style="font-size:13px; color:#ddd; line-height:1.5; white-space:pre-line; margin-bottom:16px;"></p>
-      <button id="infoModalActionBtn" type="button" class="primary-btn">OK</button>
+  <!-- Info Modal -->
+  <div id="infoModal" class="modal hidden">
+    <div class="card-box" style="width:100%;max-width:340px;margin:0;">
+      <b id="infoModalTitle" style="color:var(--blue);">Information</b>
+      <p id="infoModalBody" style="font-size:13px;color:#ddd;white-space:pre-line;margin:12px 0;"></p>
+      <button id="closeInfoBtn" class="btn-main">OK</button>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import {
-      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-      setPersistence, browserLocalPersistence, onAuthStateChanged, signOut
-    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-    import {
-      getFirestore, doc, setDoc, onSnapshot, collection, addDoc, getDocs,
-      query, orderBy, serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCxIXXfNW4vizhU3lpjfk2rjUd70Bj7QGI",
@@ -608,290 +229,136 @@
       projectId: "nk-ff-a89ee",
       storageBucket: "nk-ff-a89ee.firebasestorage.app",
       messagingSenderId: "106376072531",
-      appId: "1:106376072531:web:ebb5be26decf66e25fe5a6",
-      measurementId: "G-YTX39QEV12"
+      appId: "1:106376072531:web:ebb5be26decf66e25fe5a6"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    try { setPersistence(auth, browserLocalPersistence); } catch(e) {}
-
     const $ = id => document.getElementById(id);
-    let currentUser = null;
-    let currentProfile = null;
-    let allMatches = [];
 
-    // Dynamic Config Variables (Controlled by Admin)
-    let appConfig = {
-      whatsapp: "https://t.me/nkwithprifut101",
-      telegram: "https://t.me/nkwithprifut101",
-      insta: "https://instagram.com",
-      website: "https://t.me/nkwithprifut101",
-      videoUrl: "https://youtube.com",
-      addFundsMsg: "Contact Support on WhatsApp or Telegram to add coins to your wallet.",
-      rules: "1. Do not use hacks or emulators.\n2. Room ID & Password will be shared 15 mins before match start.",
-      minWithdraw: 50
-    };
+    let currentUser = null, currentProfile = null, allMatches = [];
+    let cfg = { whatsapp:"https://t.me/nkwithprifut101", telegram:"https://t.me/nkwithprifut101", insta:"https://instagram.com", website:"https://t.me/nkwithprifut101", videoUrl:"https://youtube.com", addFundsMsg:"Contact Support on WhatsApp/Telegram to add coins.", rules:"1. No hacks or emulators.\n2. Room ID shared 15m before start.", minWithdraw:50 };
 
-    function toast(msg) {
-      const t = $("toast");
-      t.textContent = msg;
-      t.style.display = "block";
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => t.style.display = "none", 2500);
-    }
-
-    function showPopup(title, text) {
-      $("infoModalTitle").textContent = title;
-      $("infoModalBody").textContent = text;
-      $("infoModal").classList.remove("hidden");
-    }
+    function toast(m) { const t=$("toast"); t.textContent=m; t.style.display="block"; setTimeout(()=>t.style.display="none",2500); }
+    function pop(t,b) { $("infoModalTitle").textContent=t; $("infoModalBody").textContent=b; $("infoModal").classList.remove("hidden"); }
     $("closeInfoBtn").onclick = () => $("infoModal").classList.add("hidden");
-    $("infoModalActionBtn").onclick = () => $("infoModal").classList.add("hidden");
 
-    // REAL-TIME ADMIN SETTINGS LISTENER
-    onSnapshot(doc(db, "settings", "global"), snap => {
-      if (!snap.exists()) return;
-      const d = snap.data();
-      if (d.appName) {
-        $("appHeaderTitle").textContent = d.appName;
-        $("authBrandTitle").textContent = d.appName;
-        document.title = d.appName;
-      }
-      if (d.appSub) $("appHeaderSub").textContent = d.appSub;
-      if (d.themeColor) {
-        document.documentElement.style.setProperty("--primary-blue", d.themeColor);
-        $("metaThemeColor").setAttribute("content", d.themeColor);
-      }
-      if (d.logoUrl) $("appLogoImg").src = d.logoUrl;
-      if (d.notice) $("appNoticeText").textContent = d.notice;
-      if (d.videoTitle) $("videoDynamicTitle").textContent = d.videoTitle;
-      if (d.whatsapp) appConfig.whatsapp = d.whatsapp;
-      if (d.telegram) appConfig.telegram = d.telegram;
-      if (d.insta) appConfig.insta = d.insta;
-      if (d.website) appConfig.website = d.website;
-      if (d.videoUrl) appConfig.videoUrl = d.videoUrl;
-      if (d.addFundsMsg) appConfig.addFundsMsg = d.addFundsMsg;
-      if (d.rules) appConfig.rules = d.rules;
-      if (d.minWithdraw) {
-        appConfig.minWithdraw = Number(d.minWithdraw);
-        $("withdrawCoins").min = appConfig.minWithdraw;
-        $("withdrawCoins").placeholder = `Amount (Min ${appConfig.minWithdraw} Coins)`;
-      }
+    onSnapshot(doc(db,"settings","global"), s => {
+      if(!s.exists()) return;
+      const d = s.data();
+      if(d.appName) { $("appHeaderTitle").textContent=d.appName; $("authBrandTitle").textContent=d.appName; }
+      if(d.appSub) $("appHeaderSub").textContent=d.appSub;
+      if(d.themeColor) document.documentElement.style.setProperty("--blue",d.themeColor);
+      if(d.logoUrl) $("appLogoImg").src=d.logoUrl;
+      if(d.notice) $("appNoticeText").textContent=d.notice;
+      if(d.videoTitle) $("videoDynamicTitle").textContent=d.videoTitle;
+      Object.assign(cfg, d);
     });
 
-    // Login / Register Toggle
-    $("showRegister").onclick = () => {
-      $("loginForm").classList.add("hidden");
-      $("registerForm").classList.remove("hidden");
-    };
-    $("showLogin").onclick = () => {
-      $("registerForm").classList.add("hidden");
-      $("loginForm").classList.remove("hidden");
-    };
+    $("showRegister").onclick = () => { $("loginForm").classList.add("hidden"); $("registerForm").classList.remove("hidden"); };
+    $("showLogin").onclick = () => { $("registerForm").classList.add("hidden"); $("loginForm").classList.remove("hidden"); };
 
     $("registerForm").onsubmit = async e => {
       e.preventDefault();
-      const name = $("regName").value.trim();
-      const email = $("regEmail").value.trim();
-      const password = $("regPassword").value;
       try {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, "users", cred.user.uid), {
-          name, email, role: "user", coins: 0, deposit: 0, winnings: 0, bonus: 0, referral: 0, createdAt: serverTimestamp()
-        });
-        toast("Account Created!");
-      } catch (err) { toast(err.message); }
+        const c = await createUserWithEmailAndPassword(auth, $("regEmail").value.trim(), $("regPassword").value);
+        await setDoc(doc(db,"users",c.user.uid), { name:$("regName").value.trim(), email:$("regEmail").value.trim(), coins:0, deposit:0, winnings:0, createdAt:serverTimestamp() });
+      } catch(err) { toast(err.message); }
     };
 
     $("loginForm").onsubmit = async e => {
       e.preventDefault();
-      try {
-        await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value);
-      } catch (err) { toast(err.message); }
+      try { await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value); }
+      catch(err) { toast(err.message); }
     };
 
-    let unsubUser = null;
-    onAuthStateChanged(auth, async user => {
-      currentUser = user;
-      if (unsubUser) unsubUser();
-      if (!user) {
-        $("authScreen").classList.remove("hidden");
-        $("appScreen").classList.add("hidden");
-        return;
-      }
-      $("authScreen").classList.add("hidden");
-      $("appScreen").classList.remove("hidden");
-
-      // Real-time User Wallet Sync
-      unsubUser = onSnapshot(doc(db, "users", user.uid), snap => {
-        currentProfile = snap.exists() ? snap.data() : {};
-        const name = currentProfile.name || "Player";
-        const email = currentProfile.email || user.email || "";
-        const username = name.toLowerCase().replace(/\s+/g, "") + user.uid.slice(0, 3).toLowerCase();
-        const coins = Number(currentProfile.coins || 0).toFixed(2);
-
-        $("coins").textContent = coins;
-        $("walletTotalBalance").textContent = coins;
-        $("walletDeposit").textContent = Number(currentProfile.deposit || coins).toFixed(2);
-        $("walletWinnings").textContent = Number(currentProfile.winnings || 0).toFixed(2);
-        $("walletBonus").textContent = Number(currentProfile.bonus || 0).toFixed(2);
-        $("walletReferral").textContent = Number(currentProfile.referral || 0).toFixed(2);
-        $("walletRowBalance").textContent = coins;
-
-        $("profileAvatarLetter").textContent = name.charAt(0).toUpperCase();
-        $("profileDisplayName").textContent = name.toUpperCase();
-        $("profileDisplayEmail").textContent = email;
-        $("profileDisplayUsername").textContent = "@" + username;
-        $("kycUsername").textContent = username;
+    onAuthStateChanged(auth, u => {
+      currentUser = u;
+      if(!u) { $("authScreen").classList.remove("hidden"); $("appScreen").classList.add("hidden"); return; }
+      $("authScreen").classList.add("hidden"); $("appScreen").classList.remove("hidden");
+      onSnapshot(doc(db,"users",u.uid), s => {
+        currentProfile = s.exists() ? s.data() : {};
+        const c = Number(currentProfile.coins||0).toFixed(2);
+        $("coins").textContent = c; $("walletTotalBalance").textContent = c;
+        $("walletDeposit").textContent = Number(currentProfile.deposit||c).toFixed(2);
+        $("walletWinnings").textContent = Number(currentProfile.winnings||0).toFixed(2);
+        $("walletRowBalance").textContent = c;
+        const nm = currentProfile.name || "Player";
+        $("profileAvatarLetter").textContent = nm.charAt(0).toUpperCase();
+        $("profileDisplayName").textContent = nm.toUpperCase();
+        $("profileDisplayEmail").textContent = currentProfile.email || u.email;
       });
-
-      loadTournaments();
+      loadMatches("ALL");
     });
 
     $("rowLogout").onclick = () => signOut(auth);
 
-    async function loadTournaments(filterMode = "ALL") {
-      const list = $("tournamentList");
+    async function loadMatches(mode="ALL") {
       try {
-        const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"));
-        const snap = await getDocs(q);
-        allMatches = [];
-        snap.forEach(d => allMatches.push({ id: d.id, ...d.data() }));
-        renderMatches(filterMode);
-      } catch (e) {}
+        const snap = await getDocs(query(collection(db,"tournaments"), orderBy("createdAt","desc")));
+        allMatches = []; snap.forEach(d => allMatches.push({id:d.id, ...d.data()}));
+        renderMatches(mode);
+      } catch(e) {}
     }
 
-    function renderMatches(filterMode = "ALL") {
-      const list = $("tournamentList");
-      $("liveMatchHeading").textContent = filterMode === "ALL" ? "Live Matches" : `${filterMode} Matches`;
-      const filtered = filterMode === "ALL"
-        ? allMatches
-        : allMatches.filter(m => !m.category || m.category === "ALL" || m.category === filterMode);
-
-      if (filtered.length === 0) {
-        list.innerHTML = '<div style="text-align:center; color:#8a90a2; font-size:12px;">No matches available in this mode right now.</div>';
-        return;
-      }
-      list.innerHTML = "";
-      filtered.forEach(data => {
-        const card = document.createElement("div");
-        card.style.cssText = "background:#15171e; padding:14px; border-radius:12px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06);";
-        const roomHtml = data.roomId ? `<div style="background:#0b0c10; padding:8px; border-radius:8px; font-size:11px; color:#ffb703; margin-bottom:10px;">🔑 Room ID: <b>${data.roomId}</b> | Pass: <b>${data.roomPass || "---"}</b></div>` : "";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <b style="font-size:14px; color:#fff;">${data.name}</b>
-            <span style="font-size:11px; color:var(--primary-blue); font-weight:700;">${(data.status || "LIVE").toUpperCase()}</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:#8a90a2; margin-bottom:10px;">
-            <span>Entry: <b style="color:#fff;">🪙 ${data.entry || 0}</b></span>
-            <span>Prize: <b style="color:#ffb703;">🪙 ${data.prize || 0}</b></span>
-            <span>${data.dateText || ""}</span>
-          </div>
-          ${roomHtml}
-          <button data-join="true" style="width:100%; padding:10px; border-radius:8px; background:var(--primary-blue); color:#fff; border:none; font-weight:700; cursor:pointer;">JOIN MATCH</button>
+    function renderMatches(mode="ALL") {
+      const box = $("tournamentList");
+      $("liveMatchHeading").textContent = mode==="ALL" ? "Live Matches" : mode;
+      const list = mode==="ALL" ? allMatches : allMatches.filter(m => !m.category || m.category==="ALL" || m.category===mode);
+      if(!list.length) { box.innerHTML = '<div style="text-align:center;color:var(--sub);font-size:12px;">No matches right now.</div>'; return; }
+      box.innerHTML = "";
+      list.forEach(m => {
+        const d = document.createElement("div");
+        d.className = "card-box"; d.style.margin = "0 0 10px 0";
+        d.innerHTML = `
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><b>${m.name}</b><span style="color:var(--blue);font-size:11px;font-weight:700;">${m.status||"OPEN"}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-bottom:10px;"><span>Entry: <b style="color:#fff;">🪙 ${m.entry}</b></span><span>Prize: <b style="color:var(--gold);">🪙 ${m.prize}</b></span><span>${m.dateText||""}</span></div>
+          ${m.roomId ? `<div style="background:#0b0c10;padding:6px;border-radius:6px;font-size:11px;color:var(--gold);margin-bottom:8px;">🔑 ID: <b>${m.roomId}</b> \vert{} Pass: <b>${m.roomPass||""}</b></div>` : ""}
+          <button class="btn-main" style="padding:9px;">JOIN MATCH</button>
         `;
-        card.querySelector('[data-join="true"]').onclick = () => toast("Match Joined Successfully!");
-        list.appendChild(card);
+        d.querySelector("button").onclick = () => toast("Match Joined!");
+        box.appendChild(d);
       });
     }
 
-    $("refreshTournaments").onclick = () => loadTournaments("ALL");
+    $("refreshTournaments").onclick = () => loadMatches("ALL");
 
-    // 5-Tab Navigation
-    const tabViews = {
-      navHome: $("homeView"),
-      navVideo: $("videoView"),
-      navEarn: $("earnView"),
-      navWallet: $("walletView"),
-      navProfile: $("profileView")
-    };
-
-    function switchTab(btnId) {
-      document.querySelectorAll(".bottom-nav .nav-btn").forEach(b => b.classList.remove("active"));
-      Object.values(tabViews).forEach(v => v.classList.add("hidden"));
-      $(btnId).classList.add("active");
-      tabViews[btnId].classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    const tabs = { navHome:$("homeView"), navVideo:$("videoView"), navEarn:$("earnView"), navWallet:$("walletView"), navProfile:$("profileView") };
+    function goTab(id) {
+      Object.keys(tabs).forEach(k => { $(k).classList.remove("active"); tabs[k].classList.add("hidden"); });
+      $(id).classList.add("active"); tabs[id].classList.remove("hidden"); window.scrollTo(0,0);
     }
+    Object.keys(tabs).forEach(k => $(k).onclick = () => goTab(k));
 
-    Object.keys(tabViews).forEach(btnId => {
-      $(btnId).onclick = () => switchTab(btnId);
-    });
+    $("actionProfile").onclick = () => goTab("navProfile");
+    $("topWalletPill").onclick = () => goTab("navWallet");
+    $("rowWallet").onclick = () => goTab("navWallet");
+    const toMatch = () => { goTab("navHome"); setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),100); };
+    $("actionMatches").onclick = toMatch; $("rowMyMatches").onclick = toMatch; $("earnCardPlay").onclick = toMatch;
 
-    $("actionProfile").onclick = () => switchTab("navProfile");
-    $("topWalletPill").onclick = () => switchTab("navWallet");
-    $("rowWallet").onclick = () => switchTab("navWallet");
-    $("rowTransactions").onclick = () => switchTab("navWallet");
+    document.querySelectorAll(".game-card").forEach(c => c.onclick = () => { renderMatches(c.dataset.mode); toMatch(); });
 
-    const scrollToMatches = () => {
-      switchTab("navHome");
-      setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }), 150);
-    };
-    $("actionMatches").onclick = scrollToMatches;
-    $("rowMyMatches").onclick = scrollToMatches;
-    $("earnCardPlay").onclick = scrollToMatches;
-
-    document.querySelectorAll(".esport-card").forEach(card => {
-      card.onclick = () => {
-        const mode = card.getAttribute("data-mode");
-        renderMatches(mode);
-        scrollToMatches();
-      };
-    });
-
-    // Dynamic Support & Social Buttons
-    $("btnWhatsapp").onclick = () => window.open(appConfig.whatsapp, "_blank");
-    $("btnTelegram").onclick = () => window.open(appConfig.telegram, "_blank");
-    $("btnInsta").onclick = () => window.open(appConfig.insta, "_blank");
-    $("actionContact").onclick = () => window.open(appConfig.telegram, "_blank");
-    $("rowContact").onclick = () => window.open(appConfig.telegram, "_blank");
-    $("rowOfficialSite").onclick = () => window.open(appConfig.website, "_blank");
-
-    $("videoTutorialCard").onclick = () => window.open(appConfig.videoUrl, "_blank");
-    $("addFundsBtn").onclick = () => showPopup("💳 Add Funds / Deposit", appConfig.addFundsMsg);
-    $("rowGameRules").onclick = () => showPopup("📋 Game Rules", appConfig.rules);
+    $("btnWhatsapp").onclick = () => window.open(cfg.whatsapp,"_blank");
+    $("btnTelegram").onclick = () => window.open(cfg.telegram,"_blank");
+    $("btnInsta").onclick = () => window.open(cfg.insta,"_blank");
+    $("actionContact").onclick = () => window.open(cfg.telegram,"_blank");
+    $("rowContact").onclick = () => window.open(cfg.telegram,"_blank");
+    $("rowOfficialSite").onclick = () => window.open(cfg.website,"_blank");
+    $("videoTutorialCard").onclick = () => window.open(cfg.videoUrl,"_blank");
+    $("addFundsBtn").onclick = () => pop("💳 Add Funds", cfg.addFundsMsg);
+    $("rowGameRules").onclick = () => pop("📋 Game Rules", cfg.rules);
 
     $("withdrawBtnAction").onclick = () => $("withdrawModal").classList.remove("hidden");
     $("closeWithdrawBtn").onclick = () => $("withdrawModal").classList.add("hidden");
 
     $("withdrawForm").onsubmit = async e => {
       e.preventDefault();
-      const method = $("withdrawMethod").value;
-      const number = $("withdrawNumber").value.trim();
-      const coins = Number($("withdrawCoins").value);
-      if (coins < appConfig.minWithdraw) {
-        toast(`Minimum withdrawal is ${appConfig.minWithdraw} Coins!`);
-        return;
-      }
-      if ((currentProfile?.coins || 0) < coins) {
-        toast("Insufficient Wallet Balance!");
-        return;
-      }
-      try {
-        await addDoc(collection(db, "withdrawals"), {
-          userId: currentUser.uid, userEmail: currentUser.email, method, number, coins, createdAt: serverTimestamp()
-        });
-        toast("Withdrawal Request Submitted!");
-        $("withdrawModal").classList.add("hidden");
-        $("withdrawForm").reset();
-      } catch (err) { toast(err.message); }
+      const amt = Number($("withdrawCoins").value);
+      if((currentProfile?.coins||0) < amt) return toast("Insufficient Balance!");
+      await addDoc(collection(db,"withdrawals"), { userId:currentUser.uid, userEmail:currentUser.email, method:$("withdrawMethod").value, number:$("withdrawNumber").value, coins:amt, createdAt:serverTimestamp() });
+      toast("Request Sent!"); $("withdrawModal").classList.add("hidden");
     };
-
-    const topMsg = () => toast("Leaderboard updating for current season!");
-    $("actionTopPlayers").onclick = topMsg;
-    $("rowTopPlayers").onclick = topMsg;
-
-    const shareApp = () => {
-      if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
-      else toast("Invite Link Copied!");
-    };
-    $("earnCardRefer").onclick = shareApp;
-    $("rowShare").onclick = shareApp;
-
-    $("earnCardWatch").onclick = () => toast("Reward videos loading...");
-    $("earnCardLucky").onclick = () => toast("Lucky Draw opens at 8:00 PM!");
   </script>
 </body>
 </html>
