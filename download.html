@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#0b0c10">
+  <title>Download FF PANEL - Official App</title>
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #15171e;
+      --blue: #1a90ff;
+      --gold: #ffb703;
+      --green: #00e676;
+      --sub: #8a90a2;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #162238 0%, #0b0c10 60%);
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .app-icon-box {
+      width: 96px;
+      height: 96px;
+      margin: 10px auto 16px;
+      border-radius: 24px;
+      background: #000;
+      padding: 14px;
+      box-shadow: 0 8px 25px rgba(26, 144, 255, 0.35);
+      border: 2px solid var(--blue);
+    }
+    .app-icon-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(0, 230, 118, 0.15);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 230, 118, 0.3);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    h1 span { color: var(--blue); }
+
+    .tagline {
+      color: var(--sub);
+      font-size: 13px;
+      margin: 6px 0 24px;
+    }
+
+    /* Main Download Button */
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #1a90ff 0%, #005ce6 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(26, 144, 255, 0.4);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .download-btn:active {
+      transform: scale(0.97);
+    }
+
+    .web-play-btn {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 26px 0;
+      background: var(--card);
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .stat-box b {
+      display: block;
+      font-size: 15px;
+      color: var(--gold);
+    }
+    .stat-box span {
+      font-size: 11px;
+      color: var(--sub);
+    }
+
+    .features-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .features-card h3 {
+      margin: 0 0 12px 0;
+      font-size: 15px;
+      color: #fff;
+    }
+    .feat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #d1d5db;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 16px;
+      font-size: 11px;
+      color: var(--sub);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="badge">✔ 100% Safe & Verified APK</div>
+
+    <div class="app-icon-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="FF PANEL Logo">
+    </div>
+
+    <h1>FF <span>PANEL</span></h1>
+    <p class="tagline">India's Best Daily Esports Tournament Platform</p>
+
+    <!-- Direct APK Download Button -->
+    <a href="ffpanel.apk" download="FF_PANEL.apk" class="download-btn" id="dlBtn">
+      <span>📥</span> DOWNLOAD NOW
+    </a>
+
+    <!-- Instant Web Open Option -->
+    <a href="index.html" class="web-play-btn">
+      🌐 Or Open Directly in Browser
+    </a>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <b>4.9 ★</b>
+        <span>Rating</span>
+      </div>
+      <div class="stat-box">
+        <b>~5 MB</b>
+        <span>App Size</span>
+      </div>
+      <div class="stat-box">
+        <b>10K+</b>
+        <span>Players</span>
+      </div>
+    </div>
+
+    <div class="features-card">
+      <h3>🔥 Why Play on FF PANEL?</h3>
+      <div class="feat-item"><span>🎮</span> Daily Battle Royale, Clash Squad & Lone Wolf</div>
+      <div class="feat-item"><span>⚡</span> Instant Withdraw via UPI, Paytm & bKash</div>
+      <div class="feat-item"><span>🎁</span> Refer Friends & Watch Videos to Earn Free Coins</div>
+      <div class="feat-item"><span>🎧</span> 24/7 Fast Customer Support on WhatsApp & Telegram</div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 FF PANEL Official. All Rights Reserved.
+  </footer>
+
+  <script>
+    document.getElementById("dlBtn").addEventListener("click", function() {
+      const btn = this;
+      btn.innerHTML = "⏳ Downloading APK...";
+      setTimeout(() => {
+        btn.innerHTML = "✅ Download Started!";
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>
