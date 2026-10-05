@@ -42,37 +42,6 @@
 
     .hidden { display: none !important; }
 
-    /* ========== Splash Screen ========== */
-    #splashScreen {
-      position: fixed;
-      inset: 0;
-      background: #0b0c10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-    #splashScreen.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .splash-logo {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: #000;
-      border: 2px solid var(--primary-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      margin-bottom: 14px;
-      box-shadow: 0 0 25px rgba(26, 144, 255, 0.4);
-    }
-
     /* ========== Top Blue Header ========== */
     .app-topbar {
       position: sticky;
@@ -110,7 +79,6 @@
       font-size: 17px;
       font-weight: 800;
       color: #ffffff;
-      letter-spacing: 0.3px;
     }
     .brand-meta p {
       margin: 1px 0 0 0;
@@ -138,7 +106,6 @@
       border-radius: 25px;
       gap: 6px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     }
     .coin-pill-icon {
       width: 18px;
@@ -225,10 +192,8 @@
       font-size: 20px;
       margin-bottom: 8px;
       color: #ffffff;
-      transition: transform 0.15s;
     }
     .circle-item:active .circle-icon {
-      transform: scale(0.92);
       background: var(--primary-blue);
     }
     .circle-item span {
@@ -240,7 +205,6 @@
     .support-banner-card {
       margin: 18px 16px;
       border-radius: 14px;
-      overflow: hidden;
       background: linear-gradient(135deg, #2a0808 0%, #10121a 100%);
       border: 1px solid rgba(255, 80, 80, 0.25);
       padding: 16px;
@@ -254,7 +218,6 @@
       font-size: 16px;
       font-weight: 800;
       color: var(--accent-gold);
-      letter-spacing: 0.5px;
     }
     .support-banner-left p {
       margin: 4px 0 10px 0;
@@ -272,9 +235,6 @@
       font-size: 11px;
       font-weight: 700;
       color: #fff;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
     }
 
     /* 3x3 Esports Games Grid */
@@ -293,11 +253,6 @@
       cursor: pointer;
       text-align: center;
       padding: 6px;
-      transition: transform 0.15s;
-    }
-    .esport-card:active {
-      transform: scale(0.95);
-      border-color: var(--primary-blue);
     }
     .esport-card img {
       width: 100%;
@@ -358,7 +313,6 @@
       margin: 0 0 5px 0;
       font-size: 14px;
       color: #ffffff;
-      line-height: 1.3;
     }
     .tutorial-meta .topic-tag {
       font-size: 12px;
@@ -380,9 +334,7 @@
       align-items: center;
       gap: 16px;
       cursor: pointer;
-      transition: transform 0.15s;
     }
-    .earn-banner-card:active { transform: scale(0.98); }
     .earn-icon-circle {
       width: 52px;
       height: 52px;
@@ -405,7 +357,6 @@
       margin: 0;
       font-size: 12px;
       color: rgba(255, 255, 255, 0.88);
-      line-height: 1.35;
     }
 
     /* ========== Wallet Tab ========== */
@@ -420,7 +371,6 @@
       margin: 0 0 10px 0;
       font-size: 14px;
       font-weight: 600;
-      opacity: 0.95;
     }
     .wallet-balance-row {
       display: flex;
@@ -514,7 +464,6 @@
     .trans-head h3 {
       margin: 0;
       font-size: 16px;
-      line-height: 1.3;
     }
     .view-all-pill {
       background: transparent;
@@ -523,7 +472,6 @@
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 12px;
-      cursor: pointer;
     }
 
     /* ========== Profile Tab (18 Options) ========== */
@@ -583,7 +531,6 @@
       justify-content: space-between;
       cursor: pointer;
     }
-    .profile-option-item:active { background: #1e2029; }
     .opt-left {
       display: flex;
       align-items: center;
@@ -647,7 +594,6 @@
       align-items: center;
       justify-content: center;
       font-size: 16px;
-      transition: background 0.2s;
     }
     .nav-btn.active {
       color: var(--primary-blue);
@@ -720,18 +666,10 @@
       font-size: 13px;
       display: none;
       z-index: 100000;
-      white-space: nowrap;
     }
   </style>
 </head>
 <body>
-
-  <!-- Splash Screen -->
-  <div id="splashScreen">
-    <div class="splash-logo">🔥</div>
-    <div style="font-size: 24px; font-weight: 800; letter-spacing: 1px;">FF <span style="color:var(--primary-blue)">PANEL</span></div>
-    <p style="font-size: 12px; color: var(--text-sub); margin-top: 4px;">Tournament Platform</p>
-  </div>
 
   <div id="toast"></div>
 
@@ -807,7 +745,6 @@
         </button>
       </div>
 
-      <!-- Support Banner -->
       <div class="support-banner-card" id="promoSupportCard">
         <div class="support-banner-left">
           <h3>GET SUPPORT</h3>
@@ -861,7 +798,6 @@
         </div>
       </div>
 
-      <!-- Live Tournaments Section -->
       <div class="section-heading" style="display:flex; justify-content:space-between; align-items:center;">
         <span>Live Matches</span>
         <button id="refreshTournaments" type="button" style="background:none; border:1px solid var(--card-border); color:var(--text-sub); padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Refresh</button>
@@ -1082,19 +1018,256 @@
     </div>
   </div>
 
-  <script>
-    if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock('portrait-primary').catch(function(){});
-    }
-    setTimeout(function() {
-      var sp = document.getElementById('splashScreen');
-      if (sp) {
-        sp.classList.add('fade-out');
-        setTimeout(function() { sp.style.display = 'none'; }, 400);
-      }
-    }, 1200);
-  </script>
+  <!-- ALL-IN-ONE EMBEDDED JAVASCRIPT (NO EXTERNAL APP.JS NEEDED) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import {
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      setPersistence, browserLocalPersistence, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import {
+      getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs,
+      query, orderBy, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
-  <script type="module" src="app.js"></script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxIXXfNW4vizhU3lpjfk2rjUd70Bj7QGI",
+      authDomain: "nk-ff-a89ee.firebaseapp.com",
+      projectId: "nk-ff-a89ee",
+      storageBucket: "nk-ff-a89ee.firebasestorage.app",
+      messagingSenderId: "106376072531",
+      appId: "1:106376072531:web:ebb5be26decf66e25fe5a6",
+      measurementId: "G-YTX39QEV12"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    try { setPersistence(auth, browserLocalPersistence); } catch(e) {}
+
+    let supportUrl = "https://t.me/nkwithprifut101";
+    const $ = id => document.getElementById(id);
+    let currentUser = null;
+    let currentProfile = null;
+
+    function toast(msg) {
+      const t = $("toast");
+      if (!t) return;
+      t.textContent = msg;
+      t.style.display = "block";
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => t.style.display = "none", 2500);
+    }
+
+    // Toggle Login & Register
+    $("showRegister").onclick = () => {
+      $("loginForm").classList.add("hidden");
+      $("registerForm").classList.remove("hidden");
+    };
+    $("showLogin").onclick = () => {
+      $("registerForm").classList.add("hidden");
+      $("loginForm").classList.remove("hidden");
+    };
+
+    // Register User
+    $("registerForm").onsubmit = async e => {
+      e.preventDefault();
+      const name = $("regName").value.trim();
+      const email = $("regEmail").value.trim();
+      const password = $("regPassword").value;
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", cred.user.uid), {
+          name, email, role: "user", coins: 0, deposit: 0, winnings: 0, bonus: 0, referral: 0, createdAt: serverTimestamp()
+        });
+        toast("Welcome to FF PANEL!");
+      } catch (err) { toast(err.message); }
+    };
+
+    // Login User
+    $("loginForm").onsubmit = async e => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value);
+      } catch (err) { toast(err.message); }
+    };
+
+    // Auth State Check
+    onAuthStateChanged(auth, async user => {
+      currentUser = user;
+      if (!user) {
+        $("authScreen").classList.remove("hidden");
+        $("appScreen").classList.add("hidden");
+        return;
+      }
+      $("authScreen").classList.add("hidden");
+      $("appScreen").classList.remove("hidden");
+      await loadGlobalSettings();
+      await refreshUser();
+      await loadTournaments();
+    });
+
+    $("rowLogout").onclick = () => signOut(auth);
+
+    async function loadGlobalSettings() {
+      try {
+        const snap = await getDoc(doc(db, "settings", "global"));
+        if (snap.exists()) {
+          const d = snap.data();
+          if (d.notice) $("appNoticeText").textContent = d.notice;
+          if (d.telegram) supportUrl = d.telegram;
+        }
+      } catch (e) {}
+    }
+
+    async function refreshUser() {
+      if (!currentUser) return;
+      try {
+        const snap = await getDoc(doc(db, "users", currentUser.uid));
+        currentProfile = snap.exists() ? snap.data() : {};
+
+        const name = currentProfile.name || "Player";
+        const email = currentProfile.email || currentUser.email || "";
+        const username = name.toLowerCase().replace(/\s+/g, "") + currentUser.uid.slice(0, 3).toLowerCase();
+        const coins = Number(currentProfile.coins || 0).toFixed(2);
+
+        $("coins").textContent = coins;
+        $("walletTotalBalance").textContent = coins;
+        $("walletDeposit").textContent = Number(currentProfile.deposit || coins).toFixed(2);
+        $("walletWinnings").textContent = Number(currentProfile.winnings || 0).toFixed(2);
+        $("walletBonus").textContent = Number(currentProfile.bonus || 0).toFixed(2);
+        $("walletReferral").textContent = Number(currentProfile.referral || 0).toFixed(2);
+        $("walletRowBalance").textContent = coins;
+
+        $("profileAvatarLetter").textContent = name.charAt(0).toUpperCase();
+        $("profileDisplayName").textContent = name.toUpperCase();
+        $("profileDisplayEmail").textContent = email;
+        $("profileDisplayUsername").textContent = "@" + username;
+        $("kycUsername").textContent = username;
+      } catch (e) {}
+    }
+
+    async function loadTournaments() {
+      const list = $("tournamentList");
+      try {
+        const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          list.innerHTML = '<div style="text-align:center; color:#8a90a2; font-size:12px;">No matches scheduled right now.</div>';
+          return;
+        }
+        list.innerHTML = "";
+        snap.forEach(d => {
+          const data = d.data();
+          const card = document.createElement("div");
+          card.style.cssText = "background:#15171e; padding:14px; border-radius:12px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06);";
+          card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <b style="font-size:14px; color:#fff;">${data.name}</b>
+              <span style="font-size:11px; color:#1a90ff; font-weight:700;">${(data.status || "LIVE").toUpperCase()}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#8a90a2; margin-bottom:12px;">
+              <span>Entry: <b style="color:#fff;">🪙 ${data.entry || 0}</b></span>
+              <span>Prize: <b style="color:#ffb703;">🪙 ${data.prize || 0}</b></span>
+              <span>${data.dateText || ""}</span>
+            </div>
+            <button data-join="true" style="width:100%; padding:10px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:700; cursor:pointer;">JOIN MATCH</button>
+          `;
+          card.querySelector('[data-join="true"]').onclick = () => toast("Match Joined Successfully!");
+          list.appendChild(card);
+        });
+      } catch (e) {}
+    }
+
+    $("refreshTournaments").onclick = loadTournaments;
+
+    // 5-Tab Navigation System
+    const tabViews = {
+      navHome: $("homeView"),
+      navVideo: $("videoView"),
+      navEarn: $("earnView"),
+      navWallet: $("walletView"),
+      navProfile: $("profileView")
+    };
+
+    function switchTab(btnId) {
+      document.querySelectorAll(".bottom-nav .nav-btn").forEach(b => b.classList.remove("active"));
+      Object.values(tabViews).forEach(v => v.classList.add("hidden"));
+
+      $(btnId).classList.add("active");
+      tabViews[btnId].classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    Object.keys(tabViews).forEach(btnId => {
+      $(btnId).onclick = () => switchTab(btnId);
+    });
+
+    // Shortcuts & Actions
+    $("actionProfile").onclick = () => switchTab("navProfile");
+    $("topWalletPill").onclick = () => switchTab("navWallet");
+    $("rowWallet").onclick = () => switchTab("navWallet");
+    $("rowTransactions").onclick = () => switchTab("navWallet");
+
+    const scrollToMatches = () => {
+      switchTab("navHome");
+      setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }), 150);
+    };
+    $("actionMatches").onclick = scrollToMatches;
+    $("rowMyMatches").onclick = scrollToMatches;
+    $("earnCardPlay").onclick = scrollToMatches;
+
+    document.querySelectorAll(".esport-card").forEach(card => {
+      card.onclick = () => {
+        toast(`Selected: ${card.getAttribute("data-mode")}`);
+        scrollToMatches();
+      };
+    });
+
+    const openSupport = () => window.open(supportUrl, "_blank");
+    $("actionContact").onclick = openSupport;
+    $("promoSupportCard").onclick = openSupport;
+    $("rowContact").onclick = openSupport;
+
+    $("videoTutorialCard").onclick = () => window.open("https://youtube.com", "_blank");
+    $("addFundsBtn").onclick = () => toast("Add Funds via UPI opening soon!");
+    $("withdrawBtnAction").onclick = () => $("withdrawModal").classList.remove("hidden");
+    $("closeWithdrawBtn").onclick = () => $("withdrawModal").classList.add("hidden");
+
+    $("withdrawForm").onsubmit = async e => {
+      e.preventDefault();
+      const method = $("withdrawMethod").value;
+      const number = $("withdrawNumber").value.trim();
+      const coins = Number($("withdrawCoins").value);
+      if ((currentProfile?.coins || 0) < coins) {
+        toast("Insufficient Wallet Balance!");
+        return;
+      }
+      try {
+        await addDoc(collection(db, "withdrawals"), {
+          userId: currentUser.uid, userEmail: currentUser.email, method, number, coins, createdAt: serverTimestamp()
+        });
+        toast("Withdrawal Request Submitted!");
+        $("withdrawModal").classList.add("hidden");
+        $("withdrawForm").reset();
+      } catch (err) { toast(err.message); }
+    };
+
+    const topMsg = () => toast("Leaderboard updating for current season!");
+    $("actionTopPlayers").onclick = topMsg;
+    $("rowTopPlayers").onclick = topMsg;
+
+    const shareApp = () => {
+      if (navigator.share) navigator.share({ title: "FF PANEL", url: window.location.href });
+      else toast("Invite Link Copied!");
+    };
+    $("earnCardRefer").onclick = shareApp;
+    $("rowShare").onclick = shareApp;
+
+    $("earnCardWatch").onclick = () => toast("Reward videos loading...");
+    $("earnCardLucky").onclick = () => toast("Lucky Draw opens at 8:00 PM!");
+    $("rowGameRules").onclick = () => alert("Game Rules:\n1. Do not use hacks or emulators.\n2. Room ID & Password will be shared 15 mins before start.");
+  </script>
 </body>
 </html>
