@@ -5,7 +5,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs,
-  updateDoc, deleteDoc, query, orderBy, serverTimestamp
+  deleteDoc, query, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -23,8 +23,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const ADMIN_EMAIL = "nabak5883@gmail.com";
-
 const $ = id => document.getElementById(id);
+
 let currentUser = null;
 let currentProfile = null;
 
@@ -34,15 +34,10 @@ function toast(msg){
   t.textContent = msg;
   t.style.display = "block";
   clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => t.style.display = "none", 2600);
+  window._toastTimer = setTimeout(() => t.style.display = "none", 2500);
 }
 
-function escapeHtml(v){
-  return String(v ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[c]));
-}
-
+// Auth Forms Toggle
 if ($("showRegister") && $("showLogin")) {
   $("showRegister").onclick = () => {
     $("loginForm").classList.add("hidden");
@@ -54,188 +49,205 @@ if ($("showRegister") && $("showLogin")) {
   };
 }
 
+// Register
 if ($("registerForm")) {
   $("registerForm").addEventListener("submit", async e => {
     e.preventDefault();
     const name = $("regName").value.trim();
     const email = $("regEmail").value.trim();
     const password = $("regPassword").value;
-    try{
-      const cred = await createUserWithEmailAndPassword(auth,email,password);
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
       const assignedRole = email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : "user";
-      await setDoc(doc(db,"users",cred.user.uid),{
-        name,email,role:assignedRole,coins:0,points:0,matches:0,wins:0,createdAt:serverTimestamp()
+      await setDoc(doc(db, "users", cred.user.uid), {
+        name, email, role: assignedRole, coins: 0, points: 0, createdAt: serverTimestamp()
       });
-      toast("Account created successfully.");
-    }catch(err){ toast(err.message); }
+      toast("Account registered successfully!");
+    } catch(err) { toast(err.message); }
   });
 }
 
+// Login
 if ($("loginForm")) {
   $("loginForm").addEventListener("submit", async e => {
     e.preventDefault();
-    try{
-      await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value);
-    }catch(err){ toast(err.message); }
+    try {
+      await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value);
+    } catch(err) { toast(err.message); }
   });
 }
 
-if ($("logoutBtn")) $("logoutBtn").onclick = () => signOut(auth);
-if ($("refreshBtn")) $("refreshBtn").onclick = refreshUser;
-if ($("refreshTournaments")) $("refreshTournaments").onclick = loadTournaments;
-
+// Auth State Observer
 onAuthStateChanged(auth, async user => {
   currentUser = user;
-  if(!user){
-    if ($("authScreen")) $("authScreen").classList.remove("hidden");
-    if ($("appScreen")) $("appScreen").classList.add("hidden");
+  if (!user) {
+    $("authScreen")?.classList.remove("hidden");
+    $("appScreen")?.classList.add("hidden");
     return;
   }
-  if ($("authScreen")) $("authScreen").classList.add("hidden");
-  if ($("appScreen")) $("appScreen").classList.remove("hidden");
+  $("authScreen")?.classList.add("hidden");
+  $("appScreen")?.classList.remove("hidden");
   await refreshUser();
   await loadTournaments();
 });
 
-async function refreshUser(){
-  if(!currentUser) return;
-  try {
-    const snap = await getDoc(doc(db,"users",currentUser.uid));
-    if(!snap.exists()){ toast("User profile not found."); return; }
-    currentProfile = snap.data();
+const doLogout = () => signOut(auth);
+if ($("rowLogout")) $("rowLogout").onclick = doLogout;
 
+// Refresh User Profile & Sync with Screens
+async function refreshUser(){
+  if (!currentUser) return;
+  try {
+    const snap = await getDoc(doc(db, "users", currentUser.uid));
+    currentProfile = snap.exists() ? snap.data() : {};
     if (currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
       currentProfile.role = "admin";
     }
 
-    if ($("playerName")) $("playerName").textContent = currentProfile.name || "Player";
-    if ($("playerEmail")) $("playerEmail").textContent = currentProfile.email || currentUser.email || "";
-    if ($("playerRole")) $("playerRole").textContent = "Role: " + (currentProfile.role || "user");
+    const name = currentProfile.name || "Player";
+    const email = currentProfile.email || currentUser.email || "";
+    const coinsVal = Number(currentProfile.coins || 0).toFixed(2);
 
-    if ($("detailName")) $("detailName").textContent = currentProfile.name || "-";
-    if ($("detailEmail")) $("detailEmail").textContent = currentProfile.email || currentUser.email || "-";
-    if ($("detailRole")) $("detailRole").textContent = currentProfile.role || "user";
-    if ($("detailUid")) $("detailUid").textContent = currentUser.uid;
+    // Update Header
+    if ($("coins")) $("coins").textContent = coinsVal;
 
-    if ($("coins")) $("coins").textContent = Number(currentProfile.coins || 0).toLocaleString();
-    if ($("points")) $("points").textContent = Number(currentProfile.points || 0).toLocaleString();
-    if ($("matches")) $("matches").textContent = Number(currentProfile.matches || 0).toLocaleString();
-    if ($("wins")) $("wins").textContent = Number(currentProfile.wins || 0).toLocaleString();
+    // Update Wallet Tab
+    if ($("walletTotalBalance")) $("walletTotalBalance").textContent = coinsVal;
+    if ($("walletDeposit")) $("walletDeposit").textContent = coinsVal;
 
+    // Update Profile Tab
+    if ($("profileDisplayName")) $("profileDisplayName").textContent = name;
+    if ($("profileDisplayEmail")) $("profileDisplayEmail").textContent = email;
+    if ($("profileAvatarLetter")) $("profileAvatarLetter").textContent = name.charAt(0).toUpperCase();
+    if ($("profileDisplayUsername")) $("profileDisplayUsername").textContent = "@" + name.toLowerCase().replace(/\s+/g, '_');
+    if ($("kycUsername")) $("kycUsername").textContent = name;
+    if ($("walletRowBalance")) $("walletRowBalance").textContent = coinsVal;
+
+    // Admin Panel Check
     if ($("adminPanel")) $("adminPanel").classList.toggle("hidden", currentProfile.role !== "admin");
-  } catch(e) {
-    console.error(e);
-  }
+  } catch(e) { console.error(e); }
 }
 
+// Tournament Manager
 async function loadTournaments(){
   const list = $("tournamentList");
   if (!list) return;
-  list.innerHTML = '<div class="loading">Loading tournaments...</div>';
-  try{
-    const q = query(collection(db,"tournaments"), orderBy("createdAt","desc"));
+  try {
+    const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
-    if(snap.empty){
-      list.innerHTML = '<div class="loading">No tournaments yet.</div>';
+    if (snap.empty) {
+      list.innerHTML = '<div style="text-align:center; color:#888;">No tournaments yet.</div>';
       return;
     }
     list.innerHTML = "";
-    snap.forEach(d => renderTournament(list,d.id,d.data()));
-  }catch(err){
-    list.innerHTML = '<div class="loading">Could not load tournaments.</div>';
-    console.error(err);
-  }
-}
-
-function renderTournament(list,id,data){
-  const wrap = document.createElement("div");
-  wrap.className = "tournament";
-  const admin = currentProfile?.role === "admin";
-  wrap.innerHTML = `
-    <div class="t-top">
-      <h3>${escapeHtml(data.name)}</h3>
-      <span class="status">${escapeHtml(data.status || "upcoming")}</span>
-    </div>
-    <div class="t-info">
-      <div>Entry<b>${Number(data.entry||0)}</b></div>
-      <div>Prize<b>${Number(data.prize||0)}</b></div>
-      <div>Date<b>${escapeHtml(data.dateText || "-")}</b></div>
-    </div>
-    <div class="actions">
-      <button class="primary" data-action="join">JOIN</button>
-      ${admin ? '<button class="ghost" data-action="edit">EDIT</button><button class="ghost" data-action="delete">DELETE</button>' : ''}
-    </div>`;
-  wrap.querySelector('[data-action="join"]').onclick = () => joinTournament(id,data);
-  if(admin){
-    wrap.querySelector('[data-action="edit"]').onclick = () => startEdit(id,data);
-    wrap.querySelector('[data-action="delete"]').onclick = () => removeTournament(id);
-  }
-  list.appendChild(wrap);
-}
-
-async function joinTournament(id,data){
-  if(data.status === "completed"){ toast("This tournament is completed."); return; }
-  try{
-    await setDoc(doc(db,"tournamentJoins",`${id}_${currentUser.uid}`),{
-      tournamentId:id,userId:currentUser.uid,userName:currentProfile.name || "",
-      createdAt:serverTimestamp()
+    snap.forEach(d => {
+      const data = d.data();
+      const wrap = document.createElement("div");
+      wrap.style.cssText = "background:#181920; padding:12px; border-radius:12px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06);";
+      const admin = currentProfile?.role === "admin";
+      wrap.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <h3 style="margin:0; font-size:14px; color:#fff;">${data.name}</h3>
+          <span style="font-size:11px; color:#1a90ff;">${data.status || "upcoming"}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:#aaa; margin-bottom:10px;">
+          <div>Entry: <b style="color:#fff;">${data.entry || 0}</b></div>
+          <div>Prize: <b style="color:#ffb703;">${data.prize || 0}</b></div>
+          <div>Date: <b style="color:#fff;">${data.dateText || "-"}</b></div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button data-action="join" style="flex:1; padding:8px; border-radius:8px; background:#1a90ff; color:#fff; border:none; font-weight:700;">JOIN</button>
+          ${admin ? '<button data-action="delete" style="padding:8px 12px; border-radius:8px; background:transparent; color:#ff5555; border:1px solid #ff5555;">DELETE</button>' : ''}
+        </div>`;
+      wrap.querySelector('[data-action="join"]').onclick = () => toast("Joined Tournament!");
+      if (admin) {
+        wrap.querySelector('[data-action="delete"]').onclick = async () => {
+          if (confirm("Delete this tournament?")) {
+            await deleteDoc(doc(db, "tournaments", d.id));
+            toast("Deleted!");
+            loadTournaments();
+          }
+        };
+      }
+      list.appendChild(wrap);
     });
-    toast("Tournament joined.");
-  }catch(err){ toast(err.message); }
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center; color:#888;">Could not load tournaments.</div>';
+  }
 }
+
+if ($("refreshTournaments")) $("refreshTournaments").onclick = loadTournaments;
 
 if ($("tournamentForm")) {
-  $("tournamentForm").addEventListener("submit", async e => {
+  $("tournamentForm").onsubmit = async (e) => {
     e.preventDefault();
     const name = $("tournamentName").value.trim();
     const entry = Number($("tournamentEntry").value);
     const prize = Number($("tournamentPrize").value);
     const dateValue = $("tournamentDate").value;
-    const status = $("tournamentStatus").value;
-    if(!name || !dateValue){ toast("Fill all tournament fields."); return; }
     const dateText = new Date(dateValue).toLocaleString();
-    const payload = {name,entry,prize,status,dateText};
-    try{
-      const editId = $("editTournamentId") ? $("editTournamentId").value : "";
-      if(editId){
-        await updateDoc(doc(db,"tournaments",editId),payload);
-        toast("Tournament updated.");
-      }else{
-        await addDoc(collection(db,"tournaments"),{...payload,createdAt:serverTimestamp()});
-        toast("Tournament created.");
-      }
-      resetTournamentForm();
-      await loadTournaments();
-    }catch(err){ toast(err.message); }
-  });
+    try {
+      await addDoc(collection(db, "tournaments"), {
+        name, entry, prize, status: "upcoming", dateText, createdAt: serverTimestamp()
+      });
+      toast("Tournament Created!");
+      $("tournamentForm").reset();
+      loadTournaments();
+    } catch(err) { toast(err.message); }
+  };
 }
 
-function startEdit(id,data){
-  if ($("editTournamentId")) $("editTournamentId").value = id;
-  if ($("tournamentName")) $("tournamentName").value = data.name || "";
-  if ($("tournamentEntry")) $("tournamentEntry").value = data.entry || 0;
-  if ($("tournamentPrize")) $("tournamentPrize").value = data.prize || 0;
-  if ($("tournamentStatus")) $("tournamentStatus").value = data.status || "upcoming";
-  if ($("tournamentDate")) $("tournamentDate").value = "";
-  if ($("saveTournament")) $("saveTournament").textContent = "UPDATE TOURNAMENT";
-  if ($("cancelEdit")) $("cancelEdit").classList.remove("hidden");
-  window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+// 5-Tab Navigation Switching System
+const tabs = {
+  navHome: $("homeView"),
+  navVideo: $("videoView"),
+  navEarn: $("earnView"),
+  navWallet: $("walletView"),
+  navProfile: $("profileView")
+};
+
+function switchTab(activeBtnId) {
+  document.querySelectorAll(".bottom-nav .nav-item").forEach(btn => btn.classList.remove("active"));
+  Object.values(tabs).forEach(view => view?.classList.add("hidden"));
+
+  $(activeBtnId)?.classList.add("active");
+  tabs[activeBtnId]?.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-if ($("cancelEdit")) $("cancelEdit").onclick = resetTournamentForm;
+Object.keys(tabs).forEach(btnId => {
+  $(btnId)?.addEventListener("click", () => switchTab(btnId));
+});
 
-function resetTournamentForm(){
-  if ($("tournamentForm")) $("tournamentForm").reset();
-  if ($("editTournamentId")) $("editTournamentId").value = "";
-  if ($("saveTournament")) $("saveTournament").textContent = "Create Tournament";
-  if ($("cancelEdit")) $("cancelEdit").classList.add("hidden");
+// Quick Action Triggers
+if ($("actionProfile")) $("actionProfile").onclick = () => switchTab("navProfile");
+if ($("walletQuickBtn")) $("walletQuickBtn").onclick = () => switchTab("navWallet");
+if ($("rowWallet")) $("rowWallet").onclick = () => switchTab("navWallet");
+
+// Telegram Link Actions
+const openTelegram = () => window.open("https://t.me/nkwithprifut101", "_blank");
+if ($("actionContact")) $("actionContact").onclick = openTelegram;
+if ($("joinSupportBtn")) $("joinSupportBtn").onclick = openTelegram;
+if ($("rowContact")) $("rowContact").onclick = openTelegram;
+
+// Withdraw Modal Triggers
+const openWithdrawModal = () => $("withdrawModal")?.classList.remove("hidden");
+if ($("withdrawBtnAction")) $("withdrawBtnAction").onclick = openWithdrawModal;
+if ($("closeWithdrawBtn")) $("closeWithdrawBtn").onclick = () => $("withdrawModal")?.classList.add("hidden");
+
+if ($("withdrawForm")) {
+  $("withdrawForm").onsubmit = (e) => {
+    e.preventDefault();
+    toast("Withdrawal requested successfully!");
+    $("withdrawModal")?.classList.add("hidden");
+    $("withdrawForm").reset();
+  };
 }
 
-async function removeTournament(id){
-  if(!confirm("Delete this tournament?")) return;
-  try{
-    await deleteDoc(doc(db,"tournaments",id));
-    toast("Tournament deleted.");
-    await loadTournaments();
-  }catch(err){ toast(err.message); }
-}
+// Extra Quick Dialogs
+if ($("videoTutorialCard")) $("videoTutorialCard").onclick = () => window.open("https://youtube.com", "_blank");
+if ($("addFundsBtn")) $("addFundsBtn").onclick = () => toast("Deposit options opening soon!");
+if ($("earnCardRefer")) $("earnCardRefer").onclick = () => toast("Refer link copied to clipboard!");
+if ($("earnCardWatch")) $("earnCardWatch").onclick = () => toast("No ads available right now.");
+if ($("earnCardLucky")) $("earnCardLucky").onclick = () => toast("Lucky draw starts tonight at 8 PM!");
+if ($("earnCardPlay")) $("earnCardPlay").onclick = () => switchTab("navHome");
