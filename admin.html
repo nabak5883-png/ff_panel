@@ -178,7 +178,7 @@
           <input id="setLogoUrl" class="input-field" type="url" placeholder="https://...">
 
           <label>Home Notice Text (Scrolling/Banner)</label>
-          <input id="setNotice" class="input-field" type="text" placeholder="Welcome to FF PANEL!">
+          <input id="setNotice" class="input-field" type="text" placeholder="Welcome to NK TOURNAMENT HUB!">
 
           <div class="grid-2">
             <div>
@@ -214,7 +214,16 @@
           <label>Game Rules Text</label>
           <textarea id="setRules" class="input-field" placeholder="1. No hacks allowed..."></textarea>
 
-          <button type="submit" class="btn">💾 Save All App Changes</button>
+          <button type="submit" class="btn"> Save All App Changes</button>
+        </form>
+      </div>
+
+      <!-- Edit 9 Esports Game Modes Card -->
+      <div class="card">
+        <h2>🕹️ Edit Esports Game Modes (9 Boxes)</h2>
+        <form id="modesForm">
+          <div id="modesInputsContainer"></div>
+          <button type="submit" class="btn" style="background:var(--gold); color:#000;">💾 Save All Game Modes</button>
         </form>
       </div>
 
@@ -535,6 +544,54 @@
     }
 
     $("refreshWithdrawals").onclick = loadWithdrawals;
+    // --- 9 Game Modes Edit Logic ---
+    const defaultModes = [
+      { title: "BATTLE ROYALE", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200" },
+      { title: "CLASH SQUAD", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200" },
+      { title: "LONE WOLF", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=200" },
+      { title: "BR SURVIVAL", img: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=200" },
+      { title: "CLASH SQUAD 2", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200" },
+      { title: "LONE WOLF 2", img: "https://images.unsplash.com/photo-1612287232230-671cc2b5d496?w=200" },
+      { title: "GUN CHALLENGE", img: "https://images.unsplash.com/photo-1552824722-ddab137b0169?w=200" },
+      { title: "BR 4V4", img: "https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=200" },
+      { title: "CS 4V4", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=200" }
+    ];
+
+    function renderModeInputs(list) {
+      const box = document.getElementById("modesInputsContainer");
+      if (!box) return;
+      box.innerHTML = "";
+      list.forEach((m, i) => {
+        box.innerHTML += `
+          <div style="background:#0b0c10; padding:10px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border);">
+            <b style="font-size:12px; color:var(--gold); display:block; margin-bottom:6px;">Box #${i + 1}</b>
+            <input type="text" id="modeTitle_${i}" class="input-field" value="${m.title}" placeholder="Mode Name" required>
+            <input type="url" id="modeImg_${i}" class="input-field" style="margin-bottom:0;" value="${m.img}" placeholder="Image URL" required>
+          </div>`;
+      });
+    }
+
+    renderModeInputs(defaultModes);
+
+    getDoc(doc(db, "settings", "global")).then(snap => {
+      if (snap.exists() && snap.data().gameModes) {
+        renderModeInputs(snap.data().gameModes);
+      }
+    });
+
+    document.getElementById("modesForm").onsubmit = async e => {
+      e.preventDefault();
+      const updatedModes = [];
+      for (let i = 0; i < 9; i++) {
+        updatedModes.push({
+          title: document.getElementById(`modeTitle_${i}`).value.trim().toUpperCase(),
+          img: document.getElementById(`modeImg_${i}`).value.trim()
+        });
+      }
+      await setDoc(doc(db, "settings", "global"), { gameModes: updatedModes }, { merge: true });
+      toast("✅ All 9 Game Modes Updated!");
+    };
+
   </script>
 </body>
 </html>
