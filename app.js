@@ -37,25 +37,25 @@ function toast(msg){
   window._toastTimer = setTimeout(() => t.style.display = "none", 2500);
 }
 
-// Auth Forms Toggle
+// Toggle Auth Forms
 if ($("showRegister") && $("showLogin")) {
   $("showRegister").onclick = () => {
-    $("loginForm").classList.add("hidden");
-    $("registerForm").classList.remove("hidden");
+    $("loginForm")?.classList.add("hidden");
+    $("registerForm")?.classList.remove("hidden");
   };
   $("showLogin").onclick = () => {
-    $("registerForm").classList.add("hidden");
-    $("loginForm").classList.remove("hidden");
+    $("registerForm")?.classList.add("hidden");
+    $("loginForm")?.classList.remove("hidden");
   };
 }
 
-// Register
+// Registration
 if ($("registerForm")) {
   $("registerForm").addEventListener("submit", async e => {
     e.preventDefault();
-    const name = $("regName").value.trim();
-    const email = $("regEmail").value.trim();
-    const password = $("regPassword").value;
+    const name = $("regName")?.value.trim();
+    const email = $("regEmail")?.value.trim();
+    const password = $("regPassword")?.value;
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const assignedRole = email.toLowerCase() === ADMIN_EMAIL.toLowerCase() ? "admin" : "user";
@@ -72,12 +72,12 @@ if ($("loginForm")) {
   $("loginForm").addEventListener("submit", async e => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value);
+      await signInWithEmailAndPassword(auth, $("loginEmail")?.value.trim(), $("loginPassword")?.value);
     } catch(err) { toast(err.message); }
   });
 }
 
-// Auth State Observer
+// Auth State
 onAuthStateChanged(auth, async user => {
   currentUser = user;
   if (!user) {
@@ -94,7 +94,7 @@ onAuthStateChanged(auth, async user => {
 const doLogout = () => signOut(auth);
 if ($("rowLogout")) $("rowLogout").onclick = doLogout;
 
-// Refresh User Profile & Sync with Screens
+// Refresh User Profile
 async function refreshUser(){
   if (!currentUser) return;
   try {
@@ -108,27 +108,22 @@ async function refreshUser(){
     const email = currentProfile.email || currentUser.email || "";
     const coinsVal = Number(currentProfile.coins || 0).toFixed(2);
 
-    // Update Header
     if ($("coins")) $("coins").textContent = coinsVal;
-
-    // Update Wallet Tab
     if ($("walletTotalBalance")) $("walletTotalBalance").textContent = coinsVal;
     if ($("walletDeposit")) $("walletDeposit").textContent = coinsVal;
+    if ($("walletRowBalance")) $("walletRowBalance").textContent = coinsVal;
 
-    // Update Profile Tab
     if ($("profileDisplayName")) $("profileDisplayName").textContent = name;
     if ($("profileDisplayEmail")) $("profileDisplayEmail").textContent = email;
     if ($("profileAvatarLetter")) $("profileAvatarLetter").textContent = name.charAt(0).toUpperCase();
     if ($("profileDisplayUsername")) $("profileDisplayUsername").textContent = "@" + name.toLowerCase().replace(/\s+/g, '_');
     if ($("kycUsername")) $("kycUsername").textContent = name;
-    if ($("walletRowBalance")) $("walletRowBalance").textContent = coinsVal;
 
-    // Admin Panel Check
     if ($("adminPanel")) $("adminPanel").classList.toggle("hidden", currentProfile.role !== "admin");
   } catch(e) { console.error(e); }
 }
 
-// Tournament Manager
+// Tournaments
 async function loadTournaments(){
   const list = $("tournamentList");
   if (!list) return;
@@ -181,10 +176,10 @@ if ($("refreshTournaments")) $("refreshTournaments").onclick = loadTournaments;
 if ($("tournamentForm")) {
   $("tournamentForm").onsubmit = async (e) => {
     e.preventDefault();
-    const name = $("tournamentName").value.trim();
-    const entry = Number($("tournamentEntry").value);
-    const prize = Number($("tournamentPrize").value);
-    const dateValue = $("tournamentDate").value;
+    const name = $("tournamentName")?.value.trim();
+    const entry = Number($("tournamentEntry")?.value);
+    const prize = Number($("tournamentPrize")?.value);
+    const dateValue = $("tournamentDate")?.value;
     const dateText = new Date(dateValue).toLocaleString();
     try {
       await addDoc(collection(db, "tournaments"), {
@@ -197,7 +192,7 @@ if ($("tournamentForm")) {
   };
 }
 
-// 5-Tab Navigation Switching System
+// 5-Tab Navigation System
 const tabs = {
   navHome: $("homeView"),
   navVideo: $("videoView"),
@@ -216,38 +211,24 @@ function switchTab(activeBtnId) {
 }
 
 Object.keys(tabs).forEach(btnId => {
-  $(btnId)?.addEventListener("click", () => switchTab(btnId));
+  const btn = $(btnId);
+  if (btn) btn.onclick = () => switchTab(btnId);
 });
 
-// Quick Action Triggers
+// Quick Triggers
 if ($("actionProfile")) $("actionProfile").onclick = () => switchTab("navProfile");
 if ($("walletQuickBtn")) $("walletQuickBtn").onclick = () => switchTab("navWallet");
 if ($("rowWallet")) $("rowWallet").onclick = () => switchTab("navWallet");
 
-// Telegram Link Actions
 const openTelegram = () => window.open("https://t.me/nkwithprifut101", "_blank");
 if ($("actionContact")) $("actionContact").onclick = openTelegram;
 if ($("joinSupportBtn")) $("joinSupportBtn").onclick = openTelegram;
 if ($("rowContact")) $("rowContact").onclick = openTelegram;
 
-// Withdraw Modal Triggers
-const openWithdrawModal = () => $("withdrawModal")?.classList.remove("hidden");
-if ($("withdrawBtnAction")) $("withdrawBtnAction").onclick = openWithdrawModal;
-if ($("closeWithdrawBtn")) $("closeWithdrawBtn").onclick = () => $("withdrawModal")?.classList.add("hidden");
-
-if ($("withdrawForm")) {
-  $("withdrawForm").onsubmit = (e) => {
-    e.preventDefault();
-    toast("Withdrawal requested successfully!");
-    $("withdrawModal")?.classList.add("hidden");
-    $("withdrawForm").reset();
-  };
-}
-
-// Extra Quick Dialogs
 if ($("videoTutorialCard")) $("videoTutorialCard").onclick = () => window.open("https://youtube.com", "_blank");
 if ($("addFundsBtn")) $("addFundsBtn").onclick = () => toast("Deposit options opening soon!");
-if ($("earnCardRefer")) $("earnCardRefer").onclick = () => toast("Refer link copied to clipboard!");
+if ($("withdrawBtnAction")) $("withdrawBtnAction").onclick = () => toast("Withdraw feature updating!");
+if ($("earnCardRefer")) $("earnCardRefer").onclick = () => toast("Refer link copied!");
 if ($("earnCardWatch")) $("earnCardWatch").onclick = () => toast("No ads available right now.");
-if ($("earnCardLucky")) $("earnCardLucky").onclick = () => toast("Lucky draw starts tonight at 8 PM!");
+if ($("earnCardLucky")) $("earnCardLucky").onclick = () => toast("Lucky draw starts at 8 PM!");
 if ($("earnCardPlay")) $("earnCardPlay").onclick = () => switchTab("navHome");
