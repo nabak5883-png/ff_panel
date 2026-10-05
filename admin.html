@@ -148,6 +148,23 @@
 
     <div class="container">
 
+      <!-- 0. Under Maintenance Mode ON/OFF Card -->
+      <div class="card" style="border: 1px solid #ff4d4d;">
+        <h2 style="color: #ff4d4d;">🛠️ Under Maintenance Control</h2>
+        <form id="maintenanceForm">
+          <label>Maintenance Mode Status</label>
+          <select id="setMaintStatus" class="input-field" style="font-weight:700;">
+            <option value="OFF">🟢 OFF (App is Live & Open)</option>
+            <option value="ON">🔴 ON (Lock App for Maintenance)</option>
+          </select>
+
+          <label>Maintenance Message for Players</label>
+          <textarea id="setMaintMsg" class="input-field" placeholder="App is currently under maintenance for server upgrade. We will be back soon!"></textarea>
+
+          <button type="submit" class="btn" style="background: #ff4d4d;">💾 Update Maintenance Status</button>
+        </form>
+      </div>
+
       <!-- 1. Full App Design, Links & Texts -->
       <div class="card">
         <h2>🎨 1. App Design, Links & Rules (No-Code)</h2>
@@ -621,6 +638,25 @@
       syncInputsToArray();
       await setDoc(doc(db, "settings", "global"), { gameModes: currentModesList }, { merge: true });
       toast("✅ Game Modes Saved!");
+    };
+    // --- Under Maintenance ON/OFF Logic ---
+    getDoc(doc(db, "settings", "global")).then(snap => {
+      if (snap.exists()) {
+        const d = snap.data();
+        if (d.maintenanceMode) document.getElementById("setMaintStatus").value = d.maintenanceMode;
+        if (d.maintenanceMsg) document.getElementById("setMaintMsg").value = d.maintenanceMsg;
+      }
+    });
+
+    document.getElementById("maintenanceForm").onsubmit = async e => {
+      e.preventDefault();
+      const status = document.getElementById("setMaintStatus").value;
+      const msg = document.getElementById("setMaintMsg").value.trim() || "App is currently under maintenance. Please check back soon!";
+      await setDoc(doc(db, "settings", "global"), {
+        maintenanceMode: status,
+        maintenanceMsg: msg
+      }, { merge: true });
+      toast(status === "ON" ? "🔴 Maintenance Mode Activated!" : "🟢 App is Live Now!");
     };
 
   </script>
